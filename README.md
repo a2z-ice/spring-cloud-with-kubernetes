@@ -1,4 +1,4 @@
-# spring-cloud
+# spring-cloud container(Docker container) managed microservice
 # run multiple container
 docker-compose up
 
