@@ -1,0 +1,6 @@
+target
+.project
+.mvn
+.classpath
+.DS_Store
+

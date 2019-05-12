@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  eureka-server:
+    container_name: eureka-server
+    build: ./eureka-server
+    ports:
+      - 8761:8761
+  eureka-tollrate-service:
+    container_name: eureka-tollrate-service
+    build: ./eureka-tollrate-service
+    ports: 
+      - 8085:8085
+    depends_on: 
+      - eureka-server
