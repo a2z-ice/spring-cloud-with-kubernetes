@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Toll Rate Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+	<link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet" />
+</head>
+<body>
+	<div class="row">
+		<div class="col-md-12" style="text-align:center">
+			<h1>Toll Billboard</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8" style="background-color:black;color:#ff9966;height:300px;font-family: 'Bungee Inline', cursive; border: 5px solid #ff9966">
+			<div class="pull-left" style="height:150px; margin-top:70px; font-size:60px">CURRENT RATE:&nbsp;&nbsp;</div><div class="pull-left" style="height:150px; font-size:60px; margin-top:70px" th:text="${rate}"></div>
+			<div class="pull-left" style="font-size:30px">Please drive responsibly.</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+    
+</body>
+</html>

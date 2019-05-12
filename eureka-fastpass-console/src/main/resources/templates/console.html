@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FastPass Console</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+</head>
+<body>
+	<div class="row">
+		<div class="col-md-12" style="text-align:center">
+			<h1>Fast Pass Console</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6" style="background-color:white;color:black;height:300px;font-family:Arial; border: 15px solid gray">
+			<table class="table" style="font-size:30px">
+				<tr>
+					<td style="text-align:right;font-weight:bold">ID:</td>
+					<td th:text="${customer.fastPassId}"></td>
+					<td rowspan="3"><img src="Head_Profile_Gray.png" width="170" height="187" /></td>
+				</tr>
+				<tr>
+					<td style="text-align:right;font-weight:bold">Name:</td>
+					<td th:text="${customer.customerFullName}"></td>	
+				</tr>
+				<tr>
+					<td style="text-align:right;font-weight:bold">Balance:</td>
+					<td th:text="${customer.currentBalance}"></td>	
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+    
+</body>
+</html>
