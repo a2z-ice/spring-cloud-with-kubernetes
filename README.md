@@ -11,8 +11,8 @@ docker-compose up -d
 http://localhost:8761/
 
 # To run only one server like eurika server only, run following commands:
-mvn package
-docker build -t eureka-server .
-docker run -d --name eureka-server -p 8761:8761 eureka-server
+mvn package<br>
+docker build -t eureka-server .<br>
+docker run -d --name eureka-server -p 8761:8761 eureka-server<br>
 
 
