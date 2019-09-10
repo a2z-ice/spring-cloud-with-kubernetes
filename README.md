@@ -10,4 +10,9 @@ docker-compose up -d
 # Enjoy your Eereka server and there you will find all other microservice please explore
 http://localhost:8761/
 
+# To run only one server like eurika server only, run following commands:
+mvn package<br>
+docker build -t eureka-server .<br>
+docker run -d --name eureka-server -p 8761:8761 eureka-server<br>
+
 
