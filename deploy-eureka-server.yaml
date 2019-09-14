@@ -1,4 +1,4 @@
-piVersion: extensions/v1beta1
+Version: extensions/v1beta1
 kind: Deployment
 metadata:
   annotations:
@@ -28,12 +28,14 @@ spec:
         run: eureka-server
     spec:
       containers:
-      - image: eureka-server
-        imagePullPolicy: Never
+      - image: registry.gitlab.com/assad-group/spring-cloud:eureka-server
+        imagePullPolicy: Always
         name: eureka-server
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+      imagePullSecrets:
+        - name: gitlab-registry  
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
