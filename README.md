@@ -23,7 +23,7 @@ kubectl create secret docker-registry gitlab-registry \
                       --docker-password=gitlabpassword \
                       --docker-email=gitlabemailaddress
 </code></pre>                      
- # Do not forgate to add imagePullSecrets in container section example found https://spring.io/projects[here]
+ Do not forgate to add imagePullSecrets in container section example found https://spring.io/projects[here]
                       
              
 
