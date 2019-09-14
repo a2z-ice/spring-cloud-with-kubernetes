@@ -24,7 +24,8 @@ kubectl create secret docker-registry gitlab-registry \
                       --docker-email=gitlabemailaddress
 </code></pre>  
 
-# Do not forgate to add imagePullSecrets in container section example found https://github.com/a2z-ice/spring-cloud/blob/advance/deploy-eureka-server.yaml[here]
+# Do not forgate to add imagePullSecrets in container section example:
+https://github.com/a2z-ice/spring-cloud/blob/advance/deploy-eureka-server.yaml
                       
              
 
