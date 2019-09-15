@@ -15,4 +15,18 @@ mvn package<br>
 docker build -t eureka-server .<br>
 docker run -d --name eureka-server -p 8761:8761 eureka-server<br>
 
+# Imperetive style of adding kubernetes secret for private containter registry in gitlab/other
+<pre><code>
+kubectl create secret docker-registry gitlab-registry \
+                      --docker-server=registry.gitlab.com \
+                      --docker-username=gitlabusername \
+                      --docker-password=gitlabpassword \
+                      --docker-email=gitlabemailaddress
+</code></pre>  
+
+# Do not forgate to add imagePullSecrets in container section example:
+https://github.com/a2z-ice/spring-cloud/blob/advance/deploy-eureka-server.yaml
+                      
+             
+
 
