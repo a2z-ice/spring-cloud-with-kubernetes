@@ -4,5 +4,16 @@ docker login registry.gitlab.com -u assaduzzaman
 docker push registry.gitlab.com/assad-group/spring-cloud:eureka-server  
 docker pull registry.gitlab.com/assad-group/spring-cloud:eureka-server  
 docker run -d --name eureka-server -p 8761:8761 registry.gitlab.com/assad-group/spring-cloud:eureka-server  
+
+
+# pushting image to docker hub
+docker login --username=assaduzzaman
+$ docker images
+REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
+assaduzzaman/eureka-server   pi                  b8390e1be8d2        7 minutes ago       575MB
+eureka-server                pi                  b8390e1be8d2        7 minutes ago       575MB
+arm32v7/openjdk              8                   403fda3916a3        5 months ago        531MB
+$ docker tag b8390e1be8d2 assaduzzaman/eureka-server:pi
+docker push assaduzzaman/eureka-server
 </code></pre>
 
