@@ -11,7 +11,6 @@ docker run -d --name eureka-server -p 8761:8761 registry.gitlab.com/assad-group/
 docker login --username=assaduzzaman
 $ docker images
 REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
-assaduzzaman/eureka-server   pi                  b8390e1be8d2        7 minutes ago       575MB
 eureka-server                pi                  b8390e1be8d2        7 minutes ago       575MB
 arm32v7/openjdk              8                   403fda3916a3        5 months ago        531MB
 $ docker tag b8390e1be8d2 assaduzzaman/eureka-server:pi
