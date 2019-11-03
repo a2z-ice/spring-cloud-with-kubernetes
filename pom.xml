@@ -19,5 +19,7 @@
     <module>eureka-server</module>
     <module>eureka-tollrate-service</module>
     <module>eureka-tollrate-billboard</module>
+    <module>eureka-fastpass-console</module>
+    <module>eureka-fastpass-service</module>
   </modules>
 </project>
