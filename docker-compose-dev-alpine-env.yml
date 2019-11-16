@@ -31,3 +31,20 @@ services:
     depends_on: 
       - eureka-tollrate-service
 
+  eureka-fastpass-service:
+    container_name: eureka-fastpass-service
+    build:
+      context: ./eureka-fastpass-service
+      dockerfile: alpine-java.Dockerfile
+    ports: 
+      - 8086:8086
+    depends_on: 
+      - eureka-server
+
+  eureka-fastpass-console:
+    container_name: eureka-fastpass-console
+    image: "assaduzzaman/eureka-fastpass-console:${TAG}"
+    ports: 
+      - 8082:8082
+    depends_on: 
+      - eureka-fastpass-service
