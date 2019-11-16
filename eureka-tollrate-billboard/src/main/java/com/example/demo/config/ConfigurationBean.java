@@ -13,10 +13,13 @@ import org.springframework.web.client.RestTemplate;
 public class ConfigurationBean {
 
 	private final String tollrateServiceLocation;
+	private final String envName;
 	public ConfigurationBean(
-			@Value("${toll.rate.service.location=}") String fastPassServiceLocation
+			@Value("${toll.rate.service.location}") String fastPassServiceLocation,
+			@Value("${env_name:default_value}") String envName
 			) {
 		this.tollrateServiceLocation = fastPassServiceLocation;
+		this.envName = envName;
 	}
 	
 	@LoadBalanced
@@ -29,7 +32,9 @@ public class ConfigurationBean {
 		return tollrateServiceLocation;
 	}
 		
-	
+	public String getEnvName() {
+		return envName;
+	}
 	
 	
 }

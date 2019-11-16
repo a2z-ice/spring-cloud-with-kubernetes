@@ -29,6 +29,7 @@ public class DashboardController {
 		
 		TollRate tr = restTemplate.getForObject(configuration.getTollrateServiceLocation() + stationId, TollRate.class);
 		System.out.println("stationId: " + stationId);
+		System.out.println("env name: " + configuration.getEnvName());
 		m.addAttribute("rate", tr.getCurrentRate());
 		return "dashboard";
 	}

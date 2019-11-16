@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile.alpine-java   
+    ports:
+      - 8761:8761
+  eureka-tollrate-service:
+    container_name: eureka-tollrate-service
+    build:
+      context: ./eureka-tollrate-service
+      dockerfile: Dockerfile.alpine-java
+    ports: 
+      - 8085:8085
+    env_file: 
+      - ./eureka-tollrate-service.env
+    depends_on: 
+      - eureka-server
+  eureka-tollrate-billboard:
+    container_name: eureka-tollrate-billboard
+    build:
+      context: ./eureka-tollrate-billboard
+      dockerfile: Dockerfile.alpine-java
+    ports: 
+      - 8081:8081
+    env_file: 
+      - ./eureka-tollrate-billboard.env      
+    depends_on: 
+      - eureka-tollrate-service
+
