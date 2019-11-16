@@ -3,9 +3,10 @@
 mvn package -Dspring.profiles.active=docker
 # After build run following command to run the microservices -d is for detached mode
 docker-compose -f docker-compose-dev.yml up -d
-# Alpine version docker compose
-docker-compose -f docker-compose-dev-alpine.yml up -d
-docker-compose -f docker-compose-dev-alpine.yml down
+# Alpine version docker compose up
+docker-compose -f docker-compose-dev-alpine-env.yml up -d<br>
+# Alpine version docker compose down
+docker-compose -f docker-compose-dev-alpine-env.yml down
 
 # Environment veriables docker-compose exec {service-name} env:
 docker-compose exec eureka-tollrate-service env
