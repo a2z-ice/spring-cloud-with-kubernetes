@@ -43,6 +43,7 @@ services:
 
   eureka-fastpass-console:
     container_name: eureka-fastpass-console
+    # The value of ${TAG} comes from .env file
     image: "assaduzzaman/eureka-fastpass-console:${TAG}"
     ports: 
       - 8082:8082
