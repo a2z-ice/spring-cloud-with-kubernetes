@@ -1,0 +1,37 @@
+apiVersion: app/v1
+kind: ReplicaSet
+metadata:
+  name: eureka-server
+spec:
+  selector:
+    matchLabels:
+      app: eureka-server  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+      - name: eureka-server
+        image: assaduzzaman/eureka-server:pi
+---        
+apiVersion: v1
+kind: Service
+metadata:
+  name: pi-eureka-server
+
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: eureka-server
+
+  ports:
+    - name: http
+      port: 8761
+      targetPort: 8761
+      nodePort: 30061
+
+  type: NodePort
