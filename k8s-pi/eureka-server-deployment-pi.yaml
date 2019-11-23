@@ -1,8 +1,9 @@
 apiVersion: app/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
   name: eureka-server
 spec:
+  #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
   selector:
     matchLabels:
       app: eureka-server  
