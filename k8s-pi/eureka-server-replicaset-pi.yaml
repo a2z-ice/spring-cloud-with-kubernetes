@@ -1,0 +1,17 @@
+apiVersion: app/v1
+kind: ReplicaSet
+metadata:
+  name: eureka-server
+spec:
+  selector:
+    matchLabels:
+      app: eureka-server  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+      - name: eureka-server
+        image: assaduzzaman/eureka-server:pi

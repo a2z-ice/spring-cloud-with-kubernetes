@@ -1,0 +1,4 @@
+#delete all pod
+kubectl delete po --all
+kubectl get all
+
