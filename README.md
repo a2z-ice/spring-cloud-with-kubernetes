@@ -8,6 +8,7 @@ docker-compose -f docker-compose-dev-alpine-env.yml up -d<br>
 # Alpine version docker compose down
 docker-compose -f docker-compose-dev-alpine-env.yml down
 
+
 # Environment veriables docker-compose exec {service-name} env:
 docker-compose exec eureka-tollrate-service env
 
