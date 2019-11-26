@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastpass-service
+spec:
+  #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
+  selector:
+    matchLabels:
+      app: fastpass-service  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      labels:
+        app: fastpass-service
+    spec:
+      containers:
+      - name: fastpass-service
+        image: assaduzzaman/eureka-fastpass-service:pi
+      restartPolicy: Always  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastpass-service
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: fastpass-service
+
+  ports:
+    - name: http
+      port: 8086
+      targetPort: 8086
+  type: ClusterIP

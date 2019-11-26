@@ -1,38 +1,37 @@
-version: '3'
+version: '3.7'
 
 services:
   eureka-server:
     container_name: eureka-server
     build:
       context: ./eureka-server
-      dockerfile: Dockerfile.alpine-java   
+      dockerfile: alpine-java.Dockerfile   
     ports:
       - 8761:8761
-  eureka-tollrate-service:
-    container_name: eureka-tollrate-service
+  tollrate-service:
+    container_name: tollrate-service
     build:
       context: ./eureka-tollrate-service
-      dockerfile: Dockerfile.alpine-java
+      dockerfile: alpine-java.Dockerfile
     ports: 
       - 8085:8085
     env_file: 
       - ./eureka-tollrate-service.env
     depends_on: 
       - eureka-server
-  eureka-tollrate-billboard:
-    container_name: eureka-tollrate-billboard
+  tollrate-billboard:
+    container_name: tollrate-billboard
     build:
       context: ./eureka-tollrate-billboard
-      dockerfile: Dockerfile.alpine-java
+      dockerfile: alpine-java.Dockerfile
     ports: 
       - 8081:8081
     env_file: 
       - ./eureka-tollrate-billboard.env      
     depends_on: 
-      - eureka-tollrate-service
-
-  eureka-fastpass-service:
-    container_name: eureka-fastpass-service
+      - tollrate-service
+  fastpass-service:
+    container_name: fastpass-service
     build:
       context: ./eureka-fastpass-service
       dockerfile: alpine-java.Dockerfile
@@ -40,12 +39,13 @@ services:
       - 8086:8086
     depends_on: 
       - eureka-server
-
-  eureka-fastpass-console:
-    container_name: eureka-fastpass-console
+  fastpass-console:
+    container_name: fastpass-console
     # The value of ${TAG} comes from .env file
-    image: "assaduzzaman/eureka-fastpass-console:${TAG}"
+    build:
+      context: ./eureka-fastpass-console
+      dockerfile: alpine-java.Dockerfile
     ports: 
       - 8082:8082
     depends_on: 
-      - eureka-fastpass-service
+      - fastpass-service

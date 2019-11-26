@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./eureka-server
+      dockerfile: arm-java-pi.Dockerfile   
+    ports:
+      - 8761:8761
+  tollrate-service:
+    container_name: tollrate-service
+    build:
+      context: ./eureka-tollrate-service
+      dockerfile: arm-java-pi.Dockerfile
+    ports: 
+      - 8085:8085
+    depends_on: 
+      - eureka-server
+  tollrate-billboard:
+    container_name: tollrate-billboard
+    build:
+      context: ./eureka-tollrate-billboard
+      dockerfile: arm-java-pi.Dockerfile
+    ports: 
+      - 8081:8081
+    depends_on: 
+      - tollrate-service
+  fastpass-service:
+    container_name: fastpass-service
+    build:
+      context: ./eureka-fastpass-service
+      dockerfile: arm-java-pi.Dockerfile
+    ports: 
+      - 8086:8086
+    depends_on: 
+      - eureka-server
+  fastpass-console:
+    container_name: fastpass-console
+    # The value of ${TAG} comes from .env file
+    build:
+      context: ./eureka-fastpass-console
+      dockerfile: arm-java-pi.Dockerfile
+    ports: 
+      - 8082:8082
+    depends_on: 
+      - fastpass-service

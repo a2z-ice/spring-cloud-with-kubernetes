@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: assaduzzaman/eureka-server:${TAG}
+    ports:
+      - 8761:8761
+    networks:
+      - my-newtork
+  fastpass-service:
+    container_name: fastpass-service
+    image: assaduzzaman/eureka-fastpass-service:${TAG}
+    ports:
+      - 8086:8086
+    networks:
+      - my-newtork  
+    depends_on: 
+      -  eureka-server
+  fastpass-console:
+    container_name: fastpass-console
+    # The value of ${TAG} comes from .env file
+    image: assaduzzaman/eureka-fastpass-console:${TAG}
+    ports: 
+      - 8082:8082
+    networks:
+      - my-newtork
+    depends_on: 
+      - fastpass-service  
+  tollrate-service:
+    container_name: tollrate-service
+    image: assaduzzaman/eureka-tollrate-service:${TAG}
+    ports: 
+      - 8085:8085
+    networks:
+      - my-newtork
+    depends_on: 
+      - eureka-server   
+  tollrate-billboard:
+    container_name: tollrate-billboard
+    image: assaduzzaman/eureka-tollrate-billboard:${TAG}
+    ports: 
+      - 8081:8081
+    depends_on: 
+      - tollrate-service
+    networks:
+      - my-newtork                   
+networks:
+  my-newtork:
+  

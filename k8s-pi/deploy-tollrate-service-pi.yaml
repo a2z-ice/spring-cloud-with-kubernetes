@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tollrate-service
+spec:
+  #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
+  selector:
+    matchLabels:
+      app: tollrate-service  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      labels:
+        app: tollrate-service
+    spec:
+      containers:
+      - name: tollrate-service
+        image: assaduzzaman/eureka-tollrate-service:pi
+        imagePullPolicy: Always
+      restartPolicy: Always  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tollrate-service
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: tollrate-service
+
+  ports:
+    - name: http
+      port: 8085
+      targetPort: 8085
+  type: ClusterIP
