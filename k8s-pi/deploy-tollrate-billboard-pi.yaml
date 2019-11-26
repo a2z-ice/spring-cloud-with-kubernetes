@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tollrate-billboard
+spec:
+  #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
+  selector:
+    matchLabels:
+      app: tollrate-billboard  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      labels:
+        app: tollrate-billboard
+    spec:
+      containers:
+      - name: tollrate-billboard
+        image: assaduzzaman/eureka-tollrate-billboard:pi
+        imagePullPolicy: Always
+      restartPolicy: Always  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tollrate-billboard
+spec:
+  selector:
+    app: tollrate-billboard
+
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+      nodePort: 30081
+  type: ClusterIP
