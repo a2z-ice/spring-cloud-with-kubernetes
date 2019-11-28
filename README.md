@@ -46,6 +46,8 @@ if you do not set any default value then go to eclipse maven runconfigure and th
 
 # To see certificate detail
 keytool -list -keystore cacerts -storepass changeit -noprompt |grep -i "gts ca"
+# To import TLS certificate into cacert
+keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias oss_net_bd -file oss_net_bd.crt
                       
              
 
