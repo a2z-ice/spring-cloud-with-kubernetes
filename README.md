@@ -44,7 +44,8 @@ https://github.com/a2z-ice/spring-cloud/blob/advance/deploy-eureka-server.yaml
 # For environment veriable to run maven successfully
 if you do not set any default value then go to eclipse maven runconfigure and there you need to select environment tab and there need to add environment veriable you need
 
-
+# To see certificate detail
+keytool -list -keystore cacerts -storepass changeit -noprompt |grep -i "gts ca"
                       
              
 
