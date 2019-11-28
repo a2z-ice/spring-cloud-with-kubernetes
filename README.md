@@ -48,6 +48,9 @@ if you do not set any default value then go to eclipse maven runconfigure and th
 keytool -list -keystore cacerts -storepass changeit -noprompt |grep -i "gts ca"
 # To import TLS certificate into cacert
 keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias oss_net_bd -file oss_net_bd.crt
+
+# add hosts to running container hosts file
+docker exec -u 0 <container-name> /bin/sh -c "echo '<ip> <name> >> /etc/hosts"
                       
              
 
