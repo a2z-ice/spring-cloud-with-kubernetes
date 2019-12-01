@@ -21,5 +21,6 @@
     <module>eureka-tollrate-billboard</module>
     <module>eureka-fastpass-console</module>
     <module>eureka-fastpass-service</module>
+    <module>eureka-zuul-apiproxy</module>
   </modules>
 </project>

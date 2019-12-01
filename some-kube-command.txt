@@ -1,5 +1,0 @@
-#delete all pod
-kubectl delete po --all
-kubectl delete rs name_of_replicaset
-kubectl get all
-

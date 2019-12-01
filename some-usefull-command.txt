@@ -1,0 +1,10 @@
+#delete all pod
+kubectl delete po --all
+kubectl delete rs name_of_replicaset
+kubectl get all
+
+# docker run with name
+docker run --name eureka-server -p 8761:8761 -d assaduzzaman/eureka-server:pc
+
+# docker build with current context 
+docker build -t eureka-fastpass-service:crt -f alpine-java-cacert.Dockerfile .
