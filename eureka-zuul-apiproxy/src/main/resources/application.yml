@@ -19,6 +19,8 @@ zuul:
    trproxy:
      url: http://localhost:8086
      path: /tollproxy/**
+     
+     #http://localhost:8087/tollproxy/fastpass?fastpassid=100
 
 
   
