@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8087
   
 spring:
   application:
@@ -8,7 +8,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:${server.port}/eureka/
+      defaultZone: http://localhost:8761/eureka/
       
 zuul:
   ignoredServices: '*'
@@ -17,7 +17,8 @@ zuul:
    socket-timeout-millis: 20000
   routes:
    trproxy:
-     url: http://localhost:8085
+     url: http://localhost:8086
+     path: /tollproxy/**
 
 
   
