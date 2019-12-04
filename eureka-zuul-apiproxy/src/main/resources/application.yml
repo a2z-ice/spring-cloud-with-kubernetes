@@ -11,16 +11,15 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
       
 zuul:
+  prefix: /api #<--proxey url prefix
   ignoredServices: '*'
   host:
    connect-timeout-millis: 20000
    socket-timeout-millis: 20000
   routes:
-   trproxy:
-     url: http://localhost:8086
-     path: /tollproxy/**
-     
-     #http://localhost:8087/tollproxy/fastpass?fastpassid=100
+   trproxy: #<- name of proxy route
+     path: /tollproxy/** #<--prefix
+     service-id: tollrate-service #<--name of service
 
 
   
