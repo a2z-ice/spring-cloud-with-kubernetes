@@ -16,6 +16,7 @@ spec:
       containers:
       - name: fastpass-console
         image: assaduzzaman/eureka-fastpass-console:pi
+        imagePullPolicy: Always
       restartPolicy: Always  
 ---
 apiVersion: v1

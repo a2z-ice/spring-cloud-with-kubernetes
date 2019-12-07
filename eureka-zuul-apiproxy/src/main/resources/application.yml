@@ -2,6 +2,10 @@ spring:
   profiles:
     active:
     - '@spring.profiles.active@' 
+    
+eureka:
+  instance:
+    hostname: ${spring.application.name}
 
 zuul:
   prefix: /api #<--proxey url prefix

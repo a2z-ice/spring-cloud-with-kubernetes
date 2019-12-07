@@ -1,37 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastpass-service
+  name: api-proxy
 spec:
   #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
   selector:
     matchLabels:
-      app: fastpass-service  
+      app: api-proxy  
   replicas: 1
   template: #template for the pods
     metadata:
       labels:
-        app: fastpass-service
+        app: api-proxy
     spec:
       containers:
-      - name: fastpass-service
-        image: assaduzzaman/eureka-fastpass-service:pi
+      - name: api-proxy
+        image: assaduzzaman/eureka-zuul-apiproxy:pi
         imagePullPolicy: Always
-      restartPolicy: Always  
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: fastpass-service
+  name: api-proxy
+
 spec:
   # This defines which pods are going to be represented by this Service
   # The service becomes a network endpoint for either other services
-  # or maybe external users to connect to (eg browser)
+  # or maybe external users to connect to (i.e. browser)
   selector:
-    app: fastpass-service
+    app: api-proxy
 
   ports:
     - name: http
-      port: 8086
-      targetPort: 8086
-  type: ClusterIP
+      port: 8087
+      targetPort: 8087
+      nodePort: 30087
+
+  type: NodePort        

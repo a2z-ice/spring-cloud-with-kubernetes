@@ -16,7 +16,8 @@ spec:
       containers:
       - name: eureka-server
         image: assaduzzaman/eureka-server:pi
-
+        imagePullPolicy: Always
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
