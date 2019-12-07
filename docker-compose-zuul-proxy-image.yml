@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: assaduzzaman/eureka-server:pc
+    ports:
+      - 8761:8761
+  api-proxy:
+    container_name: api-proxy
+    image: assaduzzaman/eureka-zuul-apiproxy:pc
+    ports:
+      - 8087:8087
+    depends_on:
+      - eureka-server      
+  fastpass-service:
+    container_name: fastpass-service
+    image: assaduzzaman/eureka-fastpass-service:pc
+    ports:
+      - 8086:8086
+    depends_on: 
+      - api-proxy
+  fastpass-console:
+    container_name: fastpass-console
+    image: assaduzzaman/eureka-fastpass-console:pc
+    ports:
+      - 8082:8082
+    depends_on: 
+      - fastpass-service
+

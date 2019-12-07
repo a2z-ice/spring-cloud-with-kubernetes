@@ -1,15 +1,8 @@
-server:
-  port: 8087
-  
 spring:
-  application:
-    name: api-proxy
-  
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-      
+  profiles:
+    active:
+    - '@spring.profiles.active@' 
+
 zuul:
   prefix: /api #<--proxey url prefix
   ignoredServices: '*'
@@ -24,5 +17,31 @@ zuul:
      path: /fsconsol/**
      service-id: fastpass-console
 
-
-  
+#server:
+#  port: 8087
+#  
+#spring:
+#  application:
+#    name: api-proxy
+#  
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#      
+#zuul:
+#  prefix: /api #<--proxey url prefix
+#  ignoredServices: '*'
+#  host:
+#   connect-timeout-millis: 20000
+#   socket-timeout-millis: 20000
+#  routes:
+#   trproxy: #<- name of proxy route
+#     path: /tollproxy/** #<--prefix
+#     service-id: tollrate-service #<--name of service
+#   fsproxy:
+#     path: /fsconsol/**
+#     service-id: fastpass-console
+#
+#
+#  
