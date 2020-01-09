@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: assaduzzaman/eureka-server:latest
+    ports:
+      - 8761:8761
+    networks:      
+      - my-newtork 
+  eureka-fastpass-service:
+    container_name: eureka-fastpass-service
+    image: assaduzzaman/eureka-fastpass-service:pc
+    ports:
+      - 8086:8086
+    networks:
+      - my-newtork  
+    depends_on: 
+      -  eureka-server
+  eureka-fastpass-console:
+    container_name: eureka-fastpass-console
+    # The value of ${TAG} comes from .env file
+    image: assaduzzaman/eureka-fastpass-console:0.0.1-SNAPSHOT
+    ports: 
+      - 8082:8082
+    networks:      
+      - my-newtork 
+    depends_on: 
+      - eureka-fastpass-service
+networks:     
+  my-newtork:
