@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  fastpass-service:
+    container_name: fastpass-service
+    image: assaduzzaman/eureka-fastpass-service:pc
+    networks:
+      - dashboard
+    ports:
+      - 8086:8086
+networks:
+  dashboard:
+    external: true

@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: assaduzzaman/eureka-server:pc
+    networks:
+      - dashboard
+    ports:
+      - 8761:8761
+networks:
+  dashboard:
+    external: true
