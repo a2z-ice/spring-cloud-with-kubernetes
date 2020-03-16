@@ -50,8 +50,9 @@ keytool -list -keystore cacerts -storepass changeit -noprompt |grep -i "gts ca"
 keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias oss_net_bd -file oss_net_bd.crt
 
 # add hosts to running container hosts file
+<code><pre>
 docker exec -u 0 <container-name> /bin/sh -c "echo '<ip> <name> >> /etc/hosts"
-                      
+</code></pre>                      
              
 
 
