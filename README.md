@@ -1,4 +1,7 @@
 # spring-cloud
+# Deploy pod to specific node:
+[change node label and assign pod to that node](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/)
+
 # For docker build run following maven command
 mvn package -Dspring.profiles.active=docker
 # After build run following command to run the microservices -d is for detached mode
