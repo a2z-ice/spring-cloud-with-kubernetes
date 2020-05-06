@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastpass-console
+spec:
+  #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
+  selector:
+    matchLabels:
+      app: fastpass-console  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      labels:
+        app: fastpass-console
+      namespace: industry-4-0  
+    spec:
+      containers:
+      - name: fastpass-console
+        image: assaduzzaman/eureka-fastpass-console:pc
+        imagePullPolicy: Always
+      restartPolicy: Always  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastpass-console
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: fastpass-console
+
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+      nodePort: 30082
+  type: NodePort
