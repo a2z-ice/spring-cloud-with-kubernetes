@@ -16,9 +16,36 @@ spec:
     spec:
       containers:
       - name: fastpass-service
-        image: assaduzzaman/eureka-fastpass-service:ns-industry
-        imagePullPolicy: Always
-      restartPolicy: Always
+        image: assaduzzaman/eureka-fastpass-service:java-mem-100-host-name
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"      
+#------------------ports---------------              
+        ports:
+        - name: fss-cport
+          containerPort: 8086
+#-------------liveness readyness-------------------
+        # livenessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: fss-cport
+        #   initialDelaySeconds: 20
+        #   timeoutSeconds: 30
+#------------- readyness-------------------          
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: fss-cport
+          initialDelaySeconds: 20
+          timeoutSeconds: 30
+#--------------------------------          
+      restartPolicy: Always  
+
 #      nodeSelector:
 #         nodeTwo: node153
 ---
@@ -35,7 +62,7 @@ spec:
     app: fastpass-service
 
   ports:
-    - name: http
+    - name: fss-cport
       port: 8086
       targetPort: 8086
       nodePort: 30086

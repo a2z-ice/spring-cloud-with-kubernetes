@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,11 @@ public class FastPassController {
 	}
 	
 	@RequestMapping(path="/fastpass", params={"fastpassid"})
-	public FastPassCustomer getFastPassById(@RequestParam String fastpassid) {
+	public FastPassCustomer getFastPassById(@RequestParam String fastpassid, HttpServletRequest request) {
 		
 		Predicate<FastPassCustomer> p = c-> c.getFastPassId().equals(fastpassid);
 		FastPassCustomer customer = customerlist.stream().filter(p).findFirst().get();
+		customer.setWhichServer(request.getRemoteAddr() + " name: " + request.getRemoteHost());
 		System.out.println("customer details retrieved");
 		return customer;
 	}

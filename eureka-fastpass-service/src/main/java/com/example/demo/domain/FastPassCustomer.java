@@ -8,9 +8,11 @@ public class FastPassCustomer {
 	private String customerFullName;
 	private String fastPassPhone;
 	private BigDecimal currentBalance;
+	private String whichServer;
 	
 	public FastPassCustomer() {}
-	public FastPassCustomer (String fastPassId, String customerFullName, String fastPassPhone, BigDecimal currentBalance) {
+	public FastPassCustomer (String fastPassId, String customerFullName, 
+			String fastPassPhone, BigDecimal currentBalance) {
 		this.fastPassId = fastPassId;
 		this.customerFullName = customerFullName;
 		this.fastPassPhone = fastPassPhone;
@@ -41,5 +43,12 @@ public class FastPassCustomer {
 	public void setFastPassPhone(String fastPassPhone) {
 		this.fastPassPhone = fastPassPhone;
 	}
+	public String getWhichServer() {
+		return whichServer;
+	}
+	public void setWhichServer(String whichServer) {
+		this.whichServer = whichServer;
+	}
+	
 
 }
