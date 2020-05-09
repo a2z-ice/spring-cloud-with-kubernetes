@@ -11,12 +11,14 @@ spec:
   replicas: 1
   template: #template for the pods
     metadata:
+      annotations:
+        kubernetes.io/change-cause: "image version java-mem"
       labels:
         app: fastpass-service
     spec:
       containers:
       - name: fastpass-service
-        image: assaduzzaman/eureka-fastpass-service:java-mem-100-host-name
+        image: assaduzzaman/eureka-fastpass-service:java-mem
         imagePullPolicy: IfNotPresent
         resources:
           requests:

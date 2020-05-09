@@ -34,8 +34,8 @@ public class FastPassController {
 		
 		Predicate<FastPassCustomer> p = c-> c.getFastPassId().equals(fastpassid);
 		FastPassCustomer customer = customerlist.stream().filter(p).findFirst().get();
-		customer.setWhichServer(request.getRemoteAddr() + " name: " + request.getRemoteHost());
 		System.out.println("customer details retrieved");
+//		if(true) throw new RuntimeException("Internal server error");
 		return customer;
 	}
 	
