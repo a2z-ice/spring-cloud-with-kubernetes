@@ -12,3 +12,12 @@ kubectl rollout history deployment.v1.apps/fastpass-service -n industry-4-0
 
 # Rollout to specific version
 kubectl rollout undo deploy fastpass-service -n industry-4-0 --to-revision=3
+
+# To access secrete token for dashboard
+
+<pre><code>
+kube-system describe sa dashboard-admin
+
+kubectl -n kube-system describe secret ${name-of-secret}
+</code></pre>
+ 

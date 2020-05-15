@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eureka-server
-  namespace: industry-4-0
+  namespace: test-namespace
 spec:
   #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
   selector:
@@ -24,7 +24,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: eureka-server
-  namespace: industry-4-0
+  namespace: test-namespace
 spec:
   # This defines which pods are going to be represented by this Service
   # The service becomes a network endpoint for either other services
@@ -36,6 +36,6 @@ spec:
     - name: http
       port: 8761
       targetPort: 8761
-      nodePort: 30061
+      nodePort: 30161
 
   type: NodePort
