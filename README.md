@@ -1,3 +1,9 @@
+# Deployment rollout
+<pre><code>
+kubectl rollout history deploy fastpass-service -n industry-4-0 ⇐ fastpass-service name of deployment
+kubectl rollout undo deploy fastpass-service -n industry-4-0 --to-revision=1
+</code></pre>
+
 # spring-cloud
 # Deploy pod to specific node:
 [change node label and assign pod to that node](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/)
