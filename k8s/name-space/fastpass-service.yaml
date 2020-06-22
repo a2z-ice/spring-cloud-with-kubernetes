@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: fastpass-service
-        image: assaduzzaman/eureka-fastpass-service:java-mem
+        image: assaduzzaman/eureka-fastpass-service:pc
         imagePullPolicy: IfNotPresent
         resources:
           requests:
