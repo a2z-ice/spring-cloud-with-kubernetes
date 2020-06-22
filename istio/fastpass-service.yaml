@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastpass-service
+  namespace: test-ns
+spec:
+  #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
+  selector:
+    matchLabels:
+      app: fastpass-service  
+  replicas: 1
+  template: #template for the pods
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "image version java-mem"
+      labels:
+        app: fastpass-service
+    spec:
+      containers:
+      - name: fastpass-service
+        image: assaduzzaman/eureka-fastpass-service:pc
+        imagePullPolicy: IfNotPresent
+          
+#------------------ports---------------              
+        ports:
+        - name: fss-cport
+          containerPort: 8086        
+      restartPolicy: Always  
+
+#      nodeSelector:
+#         nodeTwo: node153
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastpass-service
+  namespace: test-ns
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: fastpass-service
+
+  ports:
+    - name: fss-cport
+      port: 8086
+      targetPort: 8086
+      nodePort: 30086
+  #type: ClusterIP
+  type: NodePort
