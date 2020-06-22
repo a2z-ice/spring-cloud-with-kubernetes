@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastpass-console
+  namespace: industry-4-0
 spec:
   #minReadySeconds: 30 #30 seconds delay after ready all its pods and replicaset
   selector:
@@ -11,8 +12,7 @@ spec:
   template: #template for the pods
     metadata:
       labels:
-        app: fastpass-console
-      namespace: industry-4-0  
+        app: fastpass-console 
     spec:
       containers:
       - name: fastpass-console
