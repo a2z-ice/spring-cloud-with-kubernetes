@@ -17,7 +17,7 @@ spec:
       containers:
       - name: eureka-server
         image: assaduzzaman/eureka-server:pc
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
       restartPolicy: Always
 ---
 apiVersion: v1
