@@ -1,4 +1,13 @@
 <pre><code>
+#Run maven on docker
+docker run --rm \
+-v /home/assad/rand/java-memory/spring-cloud-with-kubernetes/eureka-server:/app \
+-v /home/assad/.m2:/root/.m2/ -w /app \
+maven:3-alpine \
+mvn clean package -B \
+-Dmaven.test.skip=true
+
+
 # Building and pushing image to gitlab
 docker build -t registry.gitlab.com/assad-group/spring-cloud:eureka-server -f Dockerfile.multi .  
 docker login registry.gitlab.com -u assaduzzaman  
