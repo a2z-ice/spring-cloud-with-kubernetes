@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastpass-service
+  namespace: test-env
+spec:
+  selector:
+    matchLabels:
+      app: fastpass-service  
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "image version java-mem"
+      labels:
+        app: fastpass-service
+    spec:
+      containers:
+      - name: fastpass-service
+        image: assaduzzaman/eureka-fastpass-service:pc
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "128Mi"
+          limits:
+            memory: "450Mi"                  
+        ports:
+        - name: fss-cport
+          containerPort: 8086  
+      restartPolicy: Always
+      hostAliases:
+      - ip: "192.168.151.115"
+        hostnames:
+        - "bidanid.oss.net.bd"
