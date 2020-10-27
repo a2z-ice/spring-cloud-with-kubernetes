@@ -9,7 +9,25 @@ metadata:
 rules:
 - apiGroups:
   - ""
-  resources: ["*"]
+  resources:
+ - bindings
+ - componentstatuses
+ - configmaps
+ - endpoints
+ - events
+ - limitranges
+ - namespaces
+ - nodes
+ - persistentvolumeclaims
+ - persistentvolumes
+ - pods
+ - pods/log
+ - pods/exec
+ - podtemplates
+ - replicationcontrollers
+ - resourcequotas
+ - serviceaccounts
+ - services  
   verbs:
   - get
   - list
