@@ -48,7 +48,7 @@ kubectl create secret docker-registry gitlab-registry \
 </code></pre>  
 
 # Do not forgate to add imagePullSecrets in container section example:
-https://github.com/a2z-ice/spring-cloud/blob/advance/deploy-eureka-server.yaml
+https://github.com/a2z-ice/spring-cloud-with-kubernetes/blob/advance/k8s/deploy-eureka-server.yaml
 
 # For environment veriable to run maven successfully
 if you do not set any default value then go to eclipse maven runconfigure and there you need to select environment tab and there need to add environment veriable you need
