@@ -1,3 +1,8 @@
+# Docker login
+```
+docker login -u docker-user docker_host
+
+```
 # Deployment rollout
 <pre><code>
 kubectl rollout history deploy fastpass-service -n industry-4-0 ⇐ fastpass-service name of deployment
