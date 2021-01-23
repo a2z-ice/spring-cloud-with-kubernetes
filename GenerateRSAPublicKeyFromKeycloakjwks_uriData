@@ -1,0 +1,74 @@
+package idprsa;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+
+public class GenerateRSAPublicKeyFromKeycloakjwks_uriData {
+	
+	public static void main(String [] args) throws IOException {
+		String modulusStr = "value_of_n";
+		String exponentStr = "value_of_e";
+		
+//		BigInteger modulus = new BigInteger(1, base64Decode(modulusStr));
+//		BigInteger publicExponent = new BigInteger(1, base64Decode(exponentStr));
+
+		
+		BigInteger modulus = new BigInteger(1, base64UrlDecode(modulusStr));
+		BigInteger publicExponent = new BigInteger(1, base64UrlDecode(exponentStr));
+		
+		try {
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PublicKey publicKey = kf.generatePublic(new RSAPublicKeySpec(modulus, publicExponent));
+			
+			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey.getEncoded());
+			RSAPublicKey rsa = (RSAPublicKey) kf.generatePublic(keySpec);
+			
+			Base64.Encoder encoder = Base64.getEncoder();
+			FileWriter out = new FileWriter("publicrsa.pub");
+			out.write("-----BEGIN RSA PUBLIC KEY-----\n");
+			out.write(encoder.encodeToString(rsa.getEncoded()));
+			out.write("\n-----END RSA PUBLIC KEY-----\n");
+			out.close();
+			
+//			PublicKey pub_recovered = kf.generatePublic(new X509EncodedKeySpec(publicKey.getEncoded()));
+			System.out.println(rsa);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static byte [] base64UrlDecode(String base64) {
+		return Base64.getUrlDecoder().decode(base64);
+	}
+	
+
+	// The Base64 strings that come from a JWKS need some manipilation before they can be decoded.
+	// we do that here
+	public static byte[] base64Decode(String base64) throws IOException {
+		base64 = base64.replaceAll("-", "+");
+		base64 = base64.replaceAll("_", "/");
+		switch (base64.length() % 4) // Pad with trailing '='s
+		{
+			case 0:
+				break; // No pad chars in this case
+			case 2:
+				base64 += "==";
+				break; // Two pad chars
+			case 3:
+				base64 += "=";
+				break; // One pad char
+			default:
+				throw new RuntimeException(
+						"Illegal base64url string!");
+		}
+		return Base64.getDecoder().decode(base64);
+	}
+
+}
