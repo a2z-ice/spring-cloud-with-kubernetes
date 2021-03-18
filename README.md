@@ -1,3 +1,7 @@
+# Build manve without installing maven 
+docker run --rm -v $(pwd):/app -v /home/landnid/.m2/:/root/.m2/ -w /app maven:3-alpine mvn clean package -B -Dmaven.test.skip=true -Dactive.profile=k8s 
+
+
 # Docker login
 ```
 docker login -u docker-user docker_host
