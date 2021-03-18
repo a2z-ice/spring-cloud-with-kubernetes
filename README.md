@@ -1,3 +1,16 @@
+# Debuging
+```
+#First create Dockerfile with followings
+FROM alpine
+RUN apk add --no-cache tzdata
+# Now build docker file like
+docker build -t alpine-timezone .
+docker run -it --rm -e TZ=Asia/Dhaka alpine-timezone /bin/ash
+
+# in shell prompt run following 
+date
+```
+
 # Build manve without installing maven 
 docker run --rm -v $(pwd):/app -v /home/landnid/.m2/:/root/.m2/ -w /app maven:3-alpine mvn clean package -B -Dmaven.test.skip=true -Dactive.profile=k8s 
 
