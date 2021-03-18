@@ -1,7 +1,8 @@
 # Stop specific/single service from docker compose
+```
 docker-compose -f 3-land-microservice.yml rm -s -v  broker-cron-job
 docker-compose -f 3-land-microservice.yml up -d broker-cron-job
-
+```
 
 # for maven build go to desirec project and run following
 ```
