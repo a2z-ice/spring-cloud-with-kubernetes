@@ -13,7 +13,8 @@ mvn clean package -B \
 -Dactive.profile=k8s
 
 -------------or------------------------
-docker run --rm -v $(pwd):/app -v /home/landnid/.m2/:/root/.m2/ -w /app maven:3-alpine mvn clean package -B -Dmaven.test.skip=true -Dactive.profile=k8s 
+docker run --rm -v $(pwd):/app -v /home/landnid/.m2/:/root/.m2/ -w /app maven:3-alpine \
+mvn clean package -B -Dmaven.test.skip=true -Dactive.profile=k8s 
 
 ```
 # Other build
