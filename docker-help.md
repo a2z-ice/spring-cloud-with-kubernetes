@@ -51,7 +51,7 @@ docker run --rm -v $PROJECT_LOCATION:/app -v $M2_REPO:/root/.m2/ -w /app \
 
 # Debuging
 ```
-#First create Dockerfile with followings
+#First create Dockerfile with followings for FROM openjdk:8u222-slim image RUN apk add --no-cache tzdata do not needed
 FROM alpine
 #Set environemnt from docker file below example
 #ENV TZ="Africa/Lusaka"
