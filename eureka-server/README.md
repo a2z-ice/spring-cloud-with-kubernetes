@@ -1,3 +1,8 @@
+```
+To register multiple instance on eureka add following configuration to each and every eureka client
+eureka.instance.instance-id=${spring.application.name}:${spring.application.instance_id:$random.value}}
+```
+
 <pre><code>
 #Run maven on docker
 docker run --rm \
