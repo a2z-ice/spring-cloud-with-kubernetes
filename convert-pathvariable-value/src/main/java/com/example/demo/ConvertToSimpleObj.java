@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConvertToAnother implements Converter<String, SimpleObj> {
+public class ConvertToSimpleObj implements Converter<String, SimpleObj> {
 
 	@Override
 	public SimpleObj convert(String source) {
