@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  namespace: test-env
+spec:
+  selector:
+    matchLabels:
+      app: demo
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "test"
+      labels:
+        app: demo
+    spec:
+      volumes:
+      - name: datadir
+        persistentVolumeClaim:
+          claimName: demo-pvc
+
+      containers:
+      - name: demo
+        image: docker-reg.oss.net.bd/demo
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /test
+          name: datadir
+        resources:
+          limits:
+            memory: "750Mi" 
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: docker-reg-oss-net-bd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+  namespace: test-env
+spec:
+  selector:
+    app: demo
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: NodePort
+  
