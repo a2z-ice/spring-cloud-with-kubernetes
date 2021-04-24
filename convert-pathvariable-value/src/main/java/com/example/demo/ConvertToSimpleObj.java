@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConvertToSimpleObj implements Converter<String, SimpleObj> {
-	//This will convert
 	@Override
 	public SimpleObj convert(String source) {
 		return new SimpleObj(source + " convert");
