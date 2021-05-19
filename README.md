@@ -1,6 +1,7 @@
 # Calico with kind and multicluster example
 ```
-# Create kind-multicluster-config.yaml file with following contents (instruciton from https://alexbrand.dev/post/creating-a-kind-cluster-with-calico-networking/):
+# Create kind-multicluster-config.yaml file with following contents 
+(instruciton from https://alexbrand.dev/post/creating-a-kind-cluster-with-calico-networking/):
 
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
