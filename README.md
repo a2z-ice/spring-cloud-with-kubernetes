@@ -1,3 +1,22 @@
+# Calico with kind and multicluster example
+```
+# Create kind-multicluster-config.yaml file with following contents:
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  disableDefaultCNI: true # disable kindnet
+  podSubnet: 192.168.0.0/16
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+- role: worker
+
+kind create cluster --config kind-multicluster-config.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+
+```
 # Debuging
 ```
 #First create Dockerfile with followings
