@@ -38,5 +38,13 @@ password: guest
 # For amqp client
 
 python -m pip install pika --upgrade
+python -m pip install apscheduler --upgrade
+
+# Working standalong but not in flask
+python -m pip install schedule --upgrade
+
+
+
+
 
 ```
