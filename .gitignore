@@ -3,8 +3,10 @@ target
 .mvn
 .classpath
 .DS_Store
+.vscode
 
 /.metadata/
 /.recommenders/
 /.settings/
 /backup.inputrc
+ 
