@@ -9,6 +9,9 @@ virtualenv venv -p python3
 
 venv\Scripts\activate
 
+# Create requirements file
+pip freeze > requirements.txt
+
 # Install Flask
 pip install Flask 
 
@@ -30,5 +33,10 @@ docker run -d -p 15672:15672 -p 5672:5672 -p 5671:5671 rabbitmq:3.8.2-management
 http://localhost:15672/#/
 user: guest
 password: guest
+
+
+# For amqp client
+
+python -m pip install pika --upgrade
 
 ```
