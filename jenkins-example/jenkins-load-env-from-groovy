@@ -1,0 +1,90 @@
+
+pipeline {
+    agent any
+    parameters {
+        choice(choices: ['select','rabbitmq','redis'], description: 'Which package?', name: 'EXTERNAL_PACAGE')
+        }
+
+    environment {
+        K8S_NAMESPACE="industry-4-0"
+        DEPLOYMENT_ENVIRONMENT="prod"
+        
+        GIT_TAG=sh(returnStdout: true, script: '''
+            COMMIT_ID=$(git log -1|head -1|awk -F ' ' '{print $NF}')
+            echo "$COMMIT_ID"
+        ''').trim()
+     
+        //Host specific configuration
+        PROJECT_LOCATION="$HOST_VOLUME_LOCATION/workspace/$JOB_NAME"
+       
+        DEPLOYMENT_DIRECTORY="."
+
+        //k8s cluster specific configuration
+        K8S_SERVICE_NAME="$PROJECT_NAME"
+        
+
+
+        EXTERNAL_PACAGE=sh(returnStdout: true, script: '''
+                if [[ "$EXTERNAL_PACAGE" == '' ]]
+                then
+                    echo "select"
+                else
+                    echo "$EXTERNAL_PACAGE"
+                fi
+            '''
+        ).trim()
+    }
+
+    stages {     
+        stage('init') {
+            steps{
+
+                sh '''
+                if [ "$EXTERNAL_PACAGE" == 'select' ]
+                    then
+                        echo ERROR: Please select package you want to deploy
+                        exit 1 # terminate and indicate error
+                    else
+                        echo "$EXTERNAL_PACAGE pacage is being deploying"
+                fi
+                '''
+                
+                load "$DEPLOYMENT_DIRECTORY/$EXTERNAL_PACAGE/meta.groovy"
+            }
+            
+        }   
+        stage('Parameter Checking...') {
+            steps {
+                
+                echo "image name------------------------>>>${env.IMG_NAME_METADATA}<<<<"
+
+                sh '''
+                echo "Selected external pacakge--$IMG_NAME_METADATA"        
+                
+                '''
+            }
+        }
+        stage('Deploy Pacage') {
+            steps {
+                sh '''
+                echo "Start to deploy $SELECTED_EXTERNAL_PACAGE package"
+
+                for FILE in $DEPLOYMENT_DIRECTORY/$EXTERNAL_PACAGE/*.yaml
+                do
+                envsubst < $FILE | xargs -I{} echo {} && \
+                envsubst < $FILE | kubectl apply -f - 
+                done
+
+                '''
+            }
+        }
+        stage('Finish execution') {
+            steps {
+                sh '''
+                echo "********************$EXTERNAL_PACAGE***done!!!*******************"
+                '''
+            }
+        }        
+
+    }
+}

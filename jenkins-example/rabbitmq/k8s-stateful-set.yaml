@@ -1,0 +1,42 @@
+#------------StatefulSet deploy---------
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq-broker
+  namespace: $K8S_NAMESPACE
+spec:
+  serviceName: "rabbitmq-broker"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq-broker
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "$IMG_TAG_METADATA"
+      labels:
+        app: rabbitmq-broker
+    spec:
+      containers:
+      - name: rabbitmq-broker
+        image: $IMG_NAME_METADATA:$IMG_TAG_METADATA
+        env:
+          - name: RABBITMQ_ERLANG_COOKIE
+            value: '123456'
+        ports:
+        - name: rabbit-cport
+          containerPort: 15672      
+        readinessProbe:
+          httpGet:
+            path: /#/
+            port: rabbit-cport
+          initialDelaySeconds: 15
+          timeoutSeconds: 20          
+        volumeMounts:
+        - mountPath: /var/lib/rabbitmq
+          name: rabbitmq-data
+      volumes:
+        - name: rabbitmq-data
+          hostPath:
+            path: /data/rabbitmq
+            type: DirectoryOrCreate
