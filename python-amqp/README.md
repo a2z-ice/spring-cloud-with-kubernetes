@@ -6,8 +6,10 @@ pip3 install virtualenv
 virtualenv venv -p python3
 
 # Activate virtualenv from cmd
-
 venv\Scripts\activate
+
+# from git bash windows 10:
+source /f/projects/A2i/dashboard/venv/Scripts/activate
 
 # Create requirements file
 pip freeze > requirements.txt

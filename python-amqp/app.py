@@ -11,7 +11,7 @@ channel = connection.channel()
 def sensor():
     """ Function for test purposes. """
     connection.process_data_events
-    print("Scheduler is alive!")
+    print("Scheduler is alive!" + str(connection.is_closed))
 
 sched = BackgroundScheduler(daemon=True)
 sched.add_job(sensor,'interval',seconds=5)
@@ -21,9 +21,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
 
-    if connection.is_closed:
-        connection.reconnect()
-    
+   
     channel.queue_declare(queue='hello')
     channel.basic_publish(exchange='',
                       routing_key='hello',
