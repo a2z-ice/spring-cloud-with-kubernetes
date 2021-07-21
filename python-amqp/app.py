@@ -5,7 +5,17 @@ import time
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+# connection = pika.BlockingConnection(pika.ConnectionParameters(host="114.130.119.67",
+# port=80,virtual_host="/dashboard",
+# credentials=pika.PlainCredentials(username="test", password="test123")
+# ))
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(host="localhost",
+port=5672,virtual_host="/",
+credentials=pika.PlainCredentials(username="guest", password="guest")
+))
+
+
 channel = connection.channel()
 
 def sensor():
@@ -25,7 +35,7 @@ def index():
     channel.queue_declare(queue='hello')
     channel.basic_publish(exchange='',
                       routing_key='hello',
-                      body='Hello World!')
+                      body='Hello World! k8s cluster')
     print(" [x] Sent 'Hello World!'")
     # connection.close()
     return "Hello World" + str(connection.is_closed)

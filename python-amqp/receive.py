@@ -7,7 +7,11 @@ def main():
     channel.queue_declare(queue='hello')
 
     def callback(ch, method, properties, body):
+      
         print(" [x] Received %r" % body)
+        print(" [x] Received %r" % ch)
+        print(" [x] Received %r" % properties)
+        print(" [x] Received %r" % method)
 
     channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)
 
