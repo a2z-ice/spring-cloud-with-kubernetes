@@ -19,8 +19,10 @@ services:
     build: ./haproxy
     ports:
       - 80:80
+      - 8404:8404
     expose:
         - 80
+        - 8404
     depends_on: 
       - apache-1
       - apache-2
