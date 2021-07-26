@@ -1,0 +1,39 @@
+version: '3'
+ 
+services:
+    apache_img_1:
+        container_name: ${COMPOSE_PROJECT_NAME}_apache_con_1
+        build: ./apache/1
+        expose:
+            - ${APACHE_EXPOSED_PORT}
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_1_IP}
+    apache_img_2:
+        container_name: ${COMPOSE_PROJECT_NAME}_apache_con_2
+        build: ./apache/2
+        expose:
+            - ${APACHE_EXPOSED_PORT}
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_2_IP}
+    haproxy_img:
+        build: ./haproxy
+        ports:
+            - 80:80
+        expose:
+            - 80
+        networks:
+            public_net:
+                ipv4_address: ${HA_PROXY_IP}
+        environment:
+            - APACHE_1_IP=${APACHE_1_IP}
+            - APACHE_2_IP=${APACHE_2_IP}
+            - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
+networks:
+    public_net:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: ${NETWORK_SUBNET}
