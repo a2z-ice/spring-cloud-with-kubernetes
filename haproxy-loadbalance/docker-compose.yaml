@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  apache-1:
+    container_name: apache-1
+    build: ./apache/1
+    expose:
+        - 80
+    networks:
+        - my-newtork
+  apache-2:
+    container_name: apache-2
+    build: ./apache/2
+    expose:
+        - 80
+    networks:
+        - my-newtork
+  ha-proxy:
+    container_name: ha-proxy
+    build: ./haproxy
+    ports:
+      - 80:80
+    expose:
+        - 80
+    depends_on: 
+      - apache-1
+      - apache-2
+    networks:
+        - my-newtork
+networks:     
+    my-newtork:
