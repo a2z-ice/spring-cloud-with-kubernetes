@@ -1,14 +1,14 @@
 # User previlage
 
 ```
-in your case, you would want to set permissions like this:
-
 vhost: mainvhost
 user: foo
 configure: ""        <=== empty
 write: "^ex-foo.*"
 read: "^Q-foo.*"
-this will grant permissions for the foo user to write to any exchange that starts with ex-foo and to read from any queue that start with Q-foo
+
+this will grant permissions for the foo user to write to any exchange that starts with ex-foo 
+and to read from any queue that start with Q-foo
 and by configure empty means the user is not able to create any queue or exchange programmatically
 ```
 
