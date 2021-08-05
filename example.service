@@ -1,0 +1,12 @@
+[Unit]
+Description=Jboss Application Server For Keycloak
+After=network.target
+
+[Service]
+Type=idle
+User=root
+Group=root
+ExecStart=bash "./home/assad/demo/example.sh"
+
+[Install]
+WantedBy=multi-user.target
