@@ -10,4 +10,12 @@ Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
 -a----          9/1/2021  10:06 AM             67 application-dev.yaml
 
+You can also specify the configuration location in application.properties or application.yaml file which is 
+in your jar file with following configuration
+
+application.properties
+
+spring.config.import=configtree:C:/Users/DELL/Desktop/config/
+
+
 ```
