@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ha-proxy-rabit
+  namespace: rabbits
+  labels:
+    app: ha-proxy-rabit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ha-proxy-rabit
+  template:
+    metadata:
+      labels:
+        app: ha-proxy-rabit
+    spec:
+      imagePullSecrets:
+        - name: docker-hub.land.gov.bd
+      containers:
+      - name: ha-proxy-rabit
+        image: docker-hub.land.gov.bd/rabbit-haproxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ha-proxy-rabit-svc
+  namespace: rabbits
+spec:
+  type: NodePort
+  selector:
+    app: ha-proxy-rabit
+  ports:
+    - protocol: TCP
+      port: 9600
+      targetPort: 9600
+      name: haproxy-admin
+      nodePort: 30600
+    - protocol: TCP
+      port: 15672
+      targetPort: 15672
+      name: rabbitmq-admin
+      nodePort: 31672
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+      name: rabbitmq
+      nodePort: 30672
