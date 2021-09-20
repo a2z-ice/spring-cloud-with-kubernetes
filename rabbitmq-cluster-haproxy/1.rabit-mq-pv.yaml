@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 172.16.218.15
+    server: 192.168.0.103
     path: "/root/NFS_DATA/K8DATA/rabitmq"
 ---
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 172.16.218.15
+    server: 192.168.0.103
     path: "/root/NFS_DATA/K8DATA/rabitmq"
 ---
 apiVersion: v1
@@ -43,5 +43,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 172.16.218.15
+    server: 192.168.0.103
     path: "/root/NFS_DATA/K8DATA/rabitmq"

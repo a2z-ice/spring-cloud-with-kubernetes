@@ -2,26 +2,26 @@ https://drive.google.com/file/d/1iZFC7JIyDd6E8Ue9XV4uCMqj_Pz2ehRv/view?usp=shari
 
 
 ```
-Topic: reload.emutation.data.topic
+Topic: reload.emabc.data.topic
 
-Queue: reload.emutation.queue
+Queue: reload.emabc.queue
 Queue: reload.data.debug.queue
-Queue: reload.muktapath.queue
+Queue: reload.kukabc.queue
 
-Route key: reload.data.sync.emutation [for reload.emutation.queue on reload.emutation.data.topic]
-Route key:  reload.data.sync.* [for reload.data.debug.queue on reload.emutation.data.topic ]
-Route key: reload.data.sync.muktapath [ for reload.muktapath.queue on reload.emutation.data.topic]
+Route key: reload.data.sync.emabc [for reload.emabc.queue on reload.emabc.data.topic]
+Route key:  reload.data.sync.* [for reload.data.debug.queue on reload.emabc.data.topic ]
+Route key: reload.data.sync.kukabc [ for reload.kukabc.queue on reload.emabc.data.topic]
 
-Topic: sync.emutation.data.topic
-Topic: sync.muktapath.data.topic
+Topic: sync.emabc.data.topic
+Topic: sync.kukabc.data.topic
 
-Queue: sync.emutation.data.queue
+Queue: sync.emabc.data.queue
 Queue: debug.sync.data.queue
-Queue: sync.muktapath.data.queue
+Queue: sync.kukabc.data.queue
 
-Route key: sync.emutation.data [for sync.emutation.data.queue]
-Route key for debug : sync.*.data [for sync.emutation.data.queue queue]
-Route key: sync.muktapath.data [for sync.muktapath.data.queue]
+Route key: sync.emabc.data [for sync.emabc.data.queue]
+Route key for debug : sync.*.data [for sync.emabc.data.queue queue]
+Route key: sync.kukabc.data [for sync.kukabc.data.queue]
 ```
 
 
