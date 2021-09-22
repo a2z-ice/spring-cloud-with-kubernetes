@@ -1,0 +1,101 @@
+pipeline {
+    agent any
+    environment {
+        REGISTRY="docker-registry-domain"
+        dockerRegistryCredential='docker-registry-credential-created-on-jenkins'
+        dockerImage = ''
+        DOCKER_REGISTRY_URL="https://$REGISTRY"
+        CONFIG_MAP="name-of-configmap"
+        SECRET_REF="name-of-secret"
+        DEPLOYMENT_ENV="stage"
+      	NAMESPACE="stage"
+	    //VALUES="dev"
+	    //VALUE="$VALUES"
+        IMAGE_CREATED_BY="jenkins"
+        PROJECT_NAME="project-name"
+        DEPLOYMENT_NAME="name-of-deployment"
+ 
+        GIT_TAG=sh(returnStdout: true, script: '''        
+            echo $(git describe --tags)
+        ''').trim()
+
+
+        DEPLOYMENT_ENV_VERSION="$NAMESPACE"
+
+        PROJECT_LOCATION="$JENKINS_DATA_LOCATION/workspace/$JOB_NAME"
+        IMAGE_VERSION="$BUILD_NUMBER-$IMAGE_CREATED_BY-$DEPLOYMENT_ENV_VERSION"
+        DOCKER_TAG="$REGISTRY/$PROJECT_NAME:$IMAGE_VERSION"
+        DEPLOYMENT_DIRECTORY="."
+
+        //k8s cluster specific configuration
+        K8S_SERVICE_NAME="service-name"
+        K8S_CHANGE_CAUSE="$IMAGE_VERSION"
+
+        K8S_NODE_PORT=31810
+		
+	    }
+
+    stages {
+
+        stage('Init') {
+            steps {
+                sh '''
+                COMMIT_ID=$(git log -1|head -1|awk -F ' ' ' {print $NF}')
+                echo "........result of commit .... $COMMIT_ID"
+                '''
+            }
+        }
+
+      
+     stage('Building Docker image') { 
+            steps { 
+                script { 
+                    dockerImage = docker.build("$DOCKER_TAG", "-f ./Dockerfile .")
+                }
+                sh '''
+                docker images|grep $PROJECT_NAME
+                '''
+            } 
+        }
+
+      stage('Push docker image') {
+            steps{
+                script {
+                    docker.withRegistry( "$DOCKER_REGISTRY_URL", dockerRegistryCredential ) {
+                        dockerImage.push()
+                        sh "docker images|grep $PROJECT_NAME"
+                    }
+                    
+                }
+            }
+        }
+     
+
+     stage('Deleted image After upload to Registry') {
+            steps {
+                echo "Cleaning local docker registry $DOCKER_TAG image"
+                sh 'docker rmi $DOCKER_TAG'
+            }
+        }
+ 
+ 
+ stage('K8S Deployment') {
+            steps {
+                sh '''
+                envsubst < $DEPLOYMENT_DIRECTORY/deploy/frontend-stage-deploy.yaml | xargs -I{} echo {}
+                envsubst < $DEPLOYMENT_DIRECTORY/deploy/frontend-stage-deploy.yaml | kubectl apply -f -
+		        kubectl rollout status -n $NAMESPACE deployment $DEPLOYMENT_NAME --timeout 60s
+                
+                '''
+            }
+        }
+     stage('Deploy service') {
+            steps {
+                sh '''
+              envsubst < $DEPLOYMENT_DIRECTORY/deploy/frontend-stage-service.yaml | xargs -I{} echo {}
+              envsubst < $DEPLOYMENT_DIRECTORY/deploy/frontend-stage-service.yaml | kubectl apply -f -
+                '''
+            }
+        }
+    }
+}
