@@ -6,7 +6,7 @@ pipeline {
         }
 
     environment {
-        REGISTRY="docker-reg.oss.net.bd"
+        REGISTRY="docker-registry-domain"
         DEPLOYMENT_ENV="k8s"
         IMAGE_CREATED_BY="jenkins"
         PROJECT_NAME="broker-service-producer"
