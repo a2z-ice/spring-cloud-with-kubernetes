@@ -10,10 +10,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class BillboardConfig {
-    final String tollRateSvcUrl;
-    public BillboardConfig(@Value("${toll.rate.svc.location}") String tollRateSvcUrl){
-        this.tollRateSvcUrl = tollRateSvcUrl;
-    }
+    @Value("${toll.rate.svc.location}")
+    private String tollRateSvcUrl;
+
 
     @LoadBalanced
     @Bean
