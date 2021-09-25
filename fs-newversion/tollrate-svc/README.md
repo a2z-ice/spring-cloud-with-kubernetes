@@ -5,4 +5,6 @@
 
 # java jar example after build package
 java -jar .\tollrate-svc-0.0.1-SNAPSHOT.jar --server.port=8082
+
+http://localhost:{port}/tollrate/1
 ```
