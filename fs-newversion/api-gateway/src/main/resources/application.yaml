@@ -9,12 +9,12 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-
 eureka:
   client:
     enabled: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      # defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-0.eureka.default.svc:8761/eureka/,http://eureka-1.eureka.default.svc:8761/eureka/,http://eureka-2.eureka.default.svc:8761/eureka/
   instance:
     instance-id: ${spring.application.name}
     prefer-ip-address: true

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: multi-eureka-api-gw
+  name: multi-eureka-api-gw
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: multi-eureka-api-gw
+  type: NodePort
+status:
+  loadBalancer: {}

@@ -7,4 +7,12 @@
 java -jar .\tollrate-svc-0.0.1-SNAPSHOT.jar --server.port=8082
 
 http://localhost:{port}/tollrate/1
+
+http://localhost:8082/tollrate/1
+
+mvn clean package -Dmaven.test.skip=true
+
+
+
+
 ```
