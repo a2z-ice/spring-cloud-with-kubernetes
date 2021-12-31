@@ -84,3 +84,48 @@ $ taskset -pc 2-8 `cat /var/run/redis.pid`
 pid 8946's current affinity list: 0-8
 pid 8946's new affinity list: 2-8
 ```
+
+# Exercise - Saving a Snapshot
+```
+As we learned in the previous unit, Redis will save a snapshot of your database every hour if at least one key has changed, every five minutes if at least 100 keys have changed, or every 60 seconds if at least 10000 keys have changed.
+
+Let’s update this to a simplified hypothetical scenario where we want to save a snapshot if three keys have been modified in 20 seconds.
+
+Step 1
+Create a directory named 2.2 and in it prepare a redis.conf file.
+
+$ mkdir 2.2
+$ cd 2.2
+$ vim redis.conf
+The redis.conf file should specify a filename that will be used for the rdb file and a directive that will trigger the creation of a snapshot if 3 keys have been modified in 20 seconds, as described above.
+
+dbfilename my_backup_file.rdb
+save 20 3
+Step 2
+While inside of the 2.2 directory start a Redis server, passing it the redis.conf configuration file you just created.
+
+$ redis-server ./redis.conf
+In a separate terminal tab use the redis-cli to create three random keys, one after the other. For example:
+
+127.0.0.1:6379> SET a 1
+127.0.0.1:6379> SET b 2
+127.0.0.1:6379> SET c 3
+Run the ls command in the 2.2 directory to list all its contents. What changed?
+
+Step 3
+Now we’re ready to take our persistence a level higher and set up an AOF file. Modify your redis.conf file so that the server will log every new write command and force writing it to disk.
+
+Be careful! We have a running server and we want this configuration to be applied without restarting it.
+
+127.0.0.1:6379> CONFIG SET appendonly yes
+127.0.0.1:6379> CONFIG SET appendfsync always
+In order for these settings to be persisted to the redis.conf file we need to save them:
+
+127.0.0.1:6379> CONFIG REWRITE
+Step 4
+Create a few random keys through redis-cli. Check the contents of the directory 2.2 again. What changed?
+
+Step 5
+As a final step, restart the Redis server process (you can press Ctrl+C in the terminal to stop the process and re-run it again). If you run the SCAN 0 command you will see that all the keys you created are still in the database, even though we restarted the process.
+```
+
