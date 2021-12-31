@@ -1,0 +1,65 @@
+# Exercise - Enabling Basic Replication
+```
+Step 1
+First let’s create and configure the primary instance. We’ll start with a few configuration changes in its primary.conf configuration file.
+
+$ touch primary.conf  # Create the configuration file
+Now open the primary.conf file with your favourite text editor and set the following configuration directives:
+
+# Create a strong password here
+requirepass a_strong_password
+
+# AUTH password of the primary instance in case this instance becomes a replica
+masterauth a_strong_password
+
+# Enable AOF file persistence
+appendonly yes
+
+# Choose a name for the AOF file
+appendfilename "primary.aof"
+Finally, let’s start the primary instance:
+
+$ redis-server ./primary.conf
+Step 2
+Next, let’s prepare the configuration file for the replica:
+
+$ touch replica.conf
+Let’s add some settings to the file we just created:
+
+# Port on which the replica should run
+port 6380
+
+# Address of the primary instance
+replicaof 127.0.0.1 6379
+
+# AUTH password of the primary instance
+masterauth a_strong_password
+
+# AUTH password for the replica instance
+requirepass a_strong_password
+And let’s start the replica:
+
+$ redis-server ./replica.conf
+Step 3
+Open two terminal tabs and use them to start connections to the primary and replica instances:
+
+# Tab 1 (primary)
+$ redis-cli 
+
+# Tab 2 (replica)
+$ redis-cli -p 6380
+Authenticate on both tabs by running the command AUTH followed by your password:
+
+AUTH a_strong_password
+On the second (replica) tab run the MONITOR command which will allow you to see every command executed against that instance.
+
+Go back to the first (primary) tab and execute any write command, for example
+
+127.0.0.1:6379> SET foo bar
+In the second tab you should see that the command was already sent to the replica:
+
+1617230062.389077 [0 127.0.0.1:6379] "SELECT" "0"
+1617230062.389092 [0 127.0.0.1:6379] "set" "foo" "bar"
+Step 4
+Keep the instances running, or at least their configuration files around. We’ll need them for the next exercise.
+```
