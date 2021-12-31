@@ -1,4 +1,5 @@
 # Exercise - Sentinel Hands-on
+```
 Step 1
 If you still have the primary and replica instances we set up in the previous exercise (3.2) - great! We’ll reuse them to create our Sentinel setup. If not - refer back to the instructions and go through them again.
 
@@ -56,3 +57,4 @@ If we killed the primary Redis instance now by pressing Ctrl+C or by running the
 redis> SENTINEL get-master-addr-by-name myprimary
 1) "127.0.0.1"
 2) "6380"
+```
