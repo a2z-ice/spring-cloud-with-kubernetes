@@ -1,3 +1,8 @@
+# Container
+```
+# Exit from container without stoping shortcut
+ctr + p, q
+```
 
 # NFS
 ```
@@ -7,6 +12,7 @@ yum search nfs
 # Allow service to firewall
 firewall-cmd --add-service={nfs,mountd,rpc-bind} --perm
 firewall-cmd --list-services
+
 
 ```
 # Time server
