@@ -23,5 +23,11 @@ chcon -R -t httpd_sys_content_t /webdata/
 restorecon -v /webdata/
 # To make permanent have to write policy fcontext file context -a append -t type
 semanage fcontext -a -t httpd_sys_content_t /webdata
+# check -d option for directory
+ls -ltrdZ /webdata
+# No reflection will be found because the previously added security context policy is for file not folder
+
+# Location of selinux policy file
+
 
 ```
