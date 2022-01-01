@@ -8,6 +8,7 @@ setsebool ftp_home_dir on
 setsebool ftp_home_dir 1
 # To deactivate 
 setsebool ftp_home_dir off
+# Selinux bool policies store /sys/fs/selinux/booleans directory
 ```
 
 ```
