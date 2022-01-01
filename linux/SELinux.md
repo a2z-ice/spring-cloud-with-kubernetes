@@ -1,3 +1,8 @@
+# PAM
+```
+/etc/pam.d or /etc/security
+```
+
 # Container
 ```
 # Container with selinux
