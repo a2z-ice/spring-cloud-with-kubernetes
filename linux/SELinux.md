@@ -10,6 +10,8 @@ podman login registry.redhat.io
 
  mkdir -vp /web/1
  semanage fcontext -a -t container_file_t "/web/(/.*)?" 
+ restorecon -R -v /web
+ podman run -d -p 8800:80 --name web1 -v /web/1:/usr/local/apache2/htdocs/ httpd:2.4
 
 
 # Exit from container without stoping shortcut
