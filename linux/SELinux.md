@@ -2,6 +2,8 @@
 # Selinux log
 ```
 grep AVC /var/log/audit/audit.log
+
+# denguras ---> audit2allow -wa
 ```
 # Selinux context view
 ```
