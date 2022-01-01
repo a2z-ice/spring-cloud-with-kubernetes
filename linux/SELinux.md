@@ -19,7 +19,7 @@ mkdir -p .config/systemd/user
 cd .config/systemd/user
 
 podman run -d -p 8888:80 --name web001 nginx
-# Generate system file
+# Generate system file for container service
 podman generate systemd --name web001 --files
 ```
 
