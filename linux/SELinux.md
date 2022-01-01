@@ -11,7 +11,10 @@ echo container-mgr:hello | chpasswd
 
 # The user can run services even the user container-mgr is not loged on (login)
 loginctl enable-linger container-mgr
+loginctl show-user container-mgr
 
+# Switch to user container-mgr
+su - container-mgr
 
 ```
 
