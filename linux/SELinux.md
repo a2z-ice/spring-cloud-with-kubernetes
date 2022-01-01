@@ -3,7 +3,7 @@
 getsebool
 # To see more detail
 semanage boolean -l
-# To on the value
+# To on the value and to make permanent add -P option like  setsebool -P ftp_home_dir on
 setsebool ftp_home_dir on
 setsebool ftp_home_dir 1
 # To deactivate 
