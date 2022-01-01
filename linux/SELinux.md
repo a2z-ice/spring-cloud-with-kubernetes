@@ -1,3 +1,10 @@
+# Selinux booleans
+```
+getsebool
+# To see more detail
+semanage boolean -l
+```
+
 ```
 # show SELinux level/context with Z option
 
