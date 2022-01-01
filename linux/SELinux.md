@@ -1,6 +1,15 @@
 # PAM
 ```
+# PAM configuration
 /etc/pam.d or /etc/security
+
+# PAM module for 32 bit
+/lib/security
+# PAM module for 64 bit
+/lib64/security
+
+
+
 ```
 
 # Container
