@@ -2,6 +2,7 @@
 ```
 # Example on ftp service which is vftpd
 ps -efZ | grep -i vftpd
+# The home directory of vftpd service is /var/ftp
 
 getsebool
 # To see more detail
