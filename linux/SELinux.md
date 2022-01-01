@@ -1,7 +1,7 @@
 # Container
 ```
 # Exit from container without stoping shortcut
-ctr + p, q
+ctr + p, ctr + q
 ```
 
 # NFS
