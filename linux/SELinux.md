@@ -4,7 +4,7 @@
 grep AVC /var/log/audit/audit.log
 
 # To show possible solution to allow 
-audit2allow -wa
+audit2allow -wa <==Need to understand what actually audit2allow does
 ```
 # Selinux context view
 ```
