@@ -15,6 +15,11 @@ getsebool -a | grep -i ftp_home
 # To allow ftp_home access
 setsebool -P ftp_home_dir on
 
+# To see logs
+cd /var/log/audit
+cat audit.log | grep -i vsftpd
+# Also able to see the log graphically using selinux troublesooter
+
 getsebool
 # To see more detail
 semanage boolean -l
