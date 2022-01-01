@@ -1,3 +1,7 @@
+# Selinux status
+```
+sestatus
+```
 # Selinux booleans
 ```
 # Example on ftp service which is vftpd
@@ -15,10 +19,10 @@ getsebool -a | grep -i ftp_home
 # To allow ftp_home access
 setsebool -P ftp_home_dir on
 
-# To see logs
+# To see logs 
 cd /var/log/audit
 cat audit.log | grep -i vsftpd
-# Also able to see the log graphically using selinux troublesooter
+# Also able to see the log graphically using selinux troublesooter from Application (redhat manue) > Sundry 
 
 getsebool
 # To see more detail
