@@ -25,10 +25,14 @@ restorecon -v /webdata/
 semanage fcontext -a -t httpd_sys_content_t /webdata
 # check -d option for directory
 ls -ltrdZ /webdata
-# No reflection will be found because the previously added security context policy is for file not folder
+# No reflection will be found because the previously added security context policy is for file
 
 # Location of selinux policy file. Go to the location and do ll to list the all file context policies
 /etc/selinux/targeted/contexts/files
 ll
 
+# To reflect the changes do restore as follow
+restorecon -v /webdata
+# Now check and the reflectionu with be there
+ls -ltrdZ /webdata
 ```
