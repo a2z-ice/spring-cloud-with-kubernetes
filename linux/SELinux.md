@@ -22,6 +22,6 @@ chcon -R -t httpd_sys_content_t /webdata/
 # To restore
 restorecon -v /webdata/
 # To make permanent have to write policy fcontext file context -a append -t type
-semanage fcontext -a -t httpd_sys_content_t /webdata/
+semanage fcontext -a -t httpd_sys_content_t /webdata
 
 ```
