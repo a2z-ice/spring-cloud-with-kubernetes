@@ -1,4 +1,15 @@
 
+# Time server
+```
+yum info chrony
+yum install -y chrony
+# To see installed chrony service file info with status
+systemctl list-unit-files | grep chrony
+
+# to see configuration file of chrony
+rpm -qc chrony
+
+```
 # Selinux work with port
 ```
 seinfo --portcon 80
