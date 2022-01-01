@@ -5,6 +5,13 @@ ps -efZ | grep -i vftpd
 # The home directory of vftpd service is /var/ftp
 ls /var/ftp # this will show security context with public_content_t:s0 which is public means it is open to access for all
 
+# login to ftp
+ftp localhost
+User: anonymous
+Pass: abc@gmail.com (anything like email address)
+
+# To see service specific boolean settings
+getsebool -a | grep -i ftp_home
 
 
 getsebool
