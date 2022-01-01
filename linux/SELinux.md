@@ -15,6 +15,9 @@ loginctl show-user container-mgr
 
 # Switch to user container-mgr
 su - container-mgr
+mkdir -p .config/systemd/user
+cd .config/systemd/user
+
 
 ```
 
