@@ -5,6 +5,8 @@ ls -ldZ /root
 
 ls -ltrdZ /var
 
+# For file 
+ls -lZ index.html
 
 # SELinux context for process
 ps -efZ | less
