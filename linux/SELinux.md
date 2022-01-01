@@ -25,7 +25,9 @@ podman login registry.redhat.io
  systemctl daemon-reload
  systemctl enable --now container-web1
  systemctl status container-web1
-
+ 
+ reboot 
+ curl localhost:8800
 
 # Exit from container without stoping shortcut
 ctr + p, ctr + q
