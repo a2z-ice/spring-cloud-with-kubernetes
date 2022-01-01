@@ -27,7 +27,8 @@ semanage fcontext -a -t httpd_sys_content_t /webdata
 ls -ltrdZ /webdata
 # No reflection will be found because the previously added security context policy is for file not folder
 
-# Location of selinux policy file
-
+# Location of selinux policy file. Go to the location and do ll to list the all file context policies
+/etc/selinux/targeted/contexts/files
+ll
 
 ```
