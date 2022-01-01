@@ -1,3 +1,12 @@
+# Selinux context view
+```
+# For user
+id -Z
+# For file 
+ls -Z
+ls -Z /etc/group
+ps -Z
+```
 # Selinux status
 ```
 sestatus
