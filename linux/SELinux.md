@@ -3,6 +3,9 @@
 getsebool
 # To see more detail
 semanage boolean -l
+# To on the value
+setsebool ftp_home_dir on
+setsebool ftp_home_dir 1
 ```
 
 ```
