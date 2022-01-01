@@ -16,7 +16,9 @@ semanage port -l | grep http_port_t
 
 # To see all custom port like 666 selinux policy
 semanage port -l -C
-
+# Don't forgate to allow the port on firewall
+fireall-cmd --add-port=666/tcp --permanent
+fireall-cmd --add-port=666/tcp
 ```
 # Selinux log
 ```
