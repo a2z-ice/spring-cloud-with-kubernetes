@@ -34,7 +34,7 @@ usermod -aG ssh_users container-mgr
 ssh container-mgr@localhost
 # Now try to do daemon reload
 systemctl --user daemon-reload # will work now
-
+systemctl --user enable --now container-web001
 
 ```
 
