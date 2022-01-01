@@ -1,5 +1,8 @@
 # Selinux booleans
 ```
+# Example on ftp service which is vftpd
+ps -efZ | grep -i vftpd
+
 getsebool
 # To see more detail
 semanage boolean -l
