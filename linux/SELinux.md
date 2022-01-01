@@ -1,5 +1,18 @@
+
+
 # Selinux context view
 ```
+# To see selinux possible type of home
+seinfo -t | grep home
+
+# To see whether the domain (httpd) is interaction with apache httpd process
+sesearch --allow | grep wine_home_t | grep httpd
+
+# return empty means there is no interaction
+
+
+
+
 # For user
 id -Z
 # For file 
