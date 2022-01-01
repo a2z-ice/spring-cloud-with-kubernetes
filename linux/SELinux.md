@@ -9,6 +9,9 @@ systemctl list-unit-files | grep chrony
 # to see configuration file of chrony
 rpm -qc chrony
 
+# to show default time service. The /etc/chrony.conf is found from rpm -qc chrony command
+grep iburst /etc/chrony.conf
+
 ```
 # Selinux work with port
 ```
