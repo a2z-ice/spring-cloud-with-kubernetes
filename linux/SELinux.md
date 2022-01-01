@@ -1,5 +1,17 @@
 # Container
 ```
+# Container with selinux
+
+podman login registry.redhat.io
+ username: a2z....
+ password: ***
+
+ podman pull registry.redhat.io/rhel8/httpd-24
+
+ mkdir -vp /web/1
+ semanage fcontext -a -t container_file_t "/web/(/.*)?" 
+
+
 # Exit from container without stoping shortcut
 ctr + p, ctr + q
 
