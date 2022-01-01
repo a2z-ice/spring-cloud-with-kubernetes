@@ -12,6 +12,19 @@ podman login registry.redhat.io
  semanage fcontext -a -t container_file_t "/web/(/.*)?" 
  restorecon -R -v /web
  podman run -d -p 8800:80 --name web1 -v /web/1:/usr/local/apache2/htdocs/ httpd:2.4
+ podman ps
+
+ echo Welcome to our world > /web/1/index.html
+ curl localhost:8800
+ Welcome to our world
+
+ cd /etc/systemd/system
+
+ podman generate systemd --name web1 --files
+ # since it is a root container we do not need to user --user
+ systemctl daemon-reload
+ systemctl enable --now container-web1
+ systemctl status container-web1
 
 
 # Exit from container without stoping shortcut
