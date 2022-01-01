@@ -3,6 +3,9 @@
 # Example on ftp service which is vftpd
 ps -efZ | grep -i vftpd
 # The home directory of vftpd service is /var/ftp
+ls /var/ftp # this will show security context with public_content_t:s0 which is public means it is open to access for all
+
+
 
 getsebool
 # To see more detail
