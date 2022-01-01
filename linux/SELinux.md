@@ -4,6 +4,10 @@
 # Search package in yum
 yum search nfs
 
+# Allow service to firewall
+firewall-cmd --add-service={nfs,mountd,rpc-bind} --perm
+firewall-cmd --list-services
+
 ```
 # Time server
 ```
