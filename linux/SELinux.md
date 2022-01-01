@@ -1,5 +1,8 @@
 
-
+# Selinux log
+```
+grep AVC /var/log/audit/audit.log
+```
 # Selinux context view
 ```
 # To see selinux possible type of home
