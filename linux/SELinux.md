@@ -14,6 +14,9 @@ semanage port -a -t http_port_t -p tcp 666
 # verify
 semanage port -l | grep http_port_t
 
+# To see all custom port like 666 selinux policy
+semanage port -l -C
+
 ```
 # Selinux log
 ```
