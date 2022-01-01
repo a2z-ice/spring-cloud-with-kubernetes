@@ -1,4 +1,9 @@
 
+# Selinux work with port
+```
+seinfo --portcon 80
+
+```
 # Selinux log
 ```
 grep AVC /var/log/audit/audit.log
