@@ -12,7 +12,8 @@ Pass: abc@gmail.com (anything like email address)
 
 # To see service specific boolean settings
 getsebool -a | grep -i ftp_home
-
+# To allow ftp_home access
+setsebool -P ftp_home_dir on
 
 getsebool
 # To see more detail
