@@ -3,7 +3,8 @@
 ```
 grep AVC /var/log/audit/audit.log
 
-# denguras ---> audit2allow -wa
+# To show possible solution to allow 
+audit2allow -wa
 ```
 # Selinux context view
 ```
