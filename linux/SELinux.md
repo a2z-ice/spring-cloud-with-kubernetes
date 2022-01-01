@@ -21,6 +21,21 @@ cd .config/systemd/user
 podman run -d -p 8888:80 --name web001 nginx
 # Generate system file for container service
 podman generate systemd --name web001 --files
+ls
+container-web001.service
+
+systemctl --user daemon-reload # Will not work
+
+# Add container-mgr user to ssh_users group
+su - # back to root user
+usermod -aG ssh_users container-mgr
+
+# Now ssh with container-mgr
+ssh container-mgr@localhost
+# Now try to do daemon reload
+systemctl --user daemon-reload # will work now
+
+
 ```
 
 # NFS
