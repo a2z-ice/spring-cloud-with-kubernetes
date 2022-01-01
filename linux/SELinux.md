@@ -1,4 +1,10 @@
 
+# NFS
+```
+# Search package in yum
+yum search nfs
+
+```
 # Time server
 ```
 yum info chrony
