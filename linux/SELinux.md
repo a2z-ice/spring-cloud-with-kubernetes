@@ -2,6 +2,15 @@
 ```
 # Exit from container without stoping shortcut
 ctr + p, ctr + q
+
+# Container as a service 
+
+# First create user
+useradd container-mgr
+echo container-mgr:hello | chpasswd
+loginctl enable-linger container-mgr
+
+
 ```
 
 # NFS
