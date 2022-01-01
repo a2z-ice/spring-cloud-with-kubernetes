@@ -8,6 +8,8 @@ ctr + p, ctr + q
 # First create user
 useradd container-mgr
 echo container-mgr:hello | chpasswd
+
+# The user can run services even the user container-mgr is not loged on (login)
 loginctl enable-linger container-mgr
 
 
