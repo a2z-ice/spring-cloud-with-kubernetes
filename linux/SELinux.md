@@ -3,6 +3,17 @@
 ```
 seinfo --portcon 80
 
+semanage port -l | grep http_port_t
+
+# help / manual option
+man semanage-port
+
+# allow port 666
+semanage port -a -t http_port_t -p tcp 666
+
+# verify
+semanage port -l | grep http_port_t
+
 ```
 # Selinux log
 ```
