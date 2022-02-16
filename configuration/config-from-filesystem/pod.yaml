@@ -1,0 +1,20 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: default
+  name: conf-from-file
+  labels:
+    run: conf-from-file
+spec:
+  containers:
+    - name: conf-from-file
+      image: assaduzzaman/conf-from-file
+      volumeMounts:
+        - name: config-volume
+          mountPath: /config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: conf-from-file-configmap
+

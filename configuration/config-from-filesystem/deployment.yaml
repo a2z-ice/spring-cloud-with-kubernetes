@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: conf-from-file-configmap
+  namespace: default
+data:
+  application-dev.properties: |
+    spring.application.name=file-config-dev-k8s
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conf-from-file
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: conf-from-file
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: conf-from-file
+    spec:
+      containers:
+        - name: conf-from-file
+          image: assaduzzaman/conf-from-file
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: config-volume
+          configMap:
+            name: conf-from-file-configmap
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conf-from-file
+  namespace: default
+  labels:
+    app: conf-from-file
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: conf-from-file
