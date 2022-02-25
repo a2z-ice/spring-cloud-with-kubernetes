@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  selector:
+    matchLabels:
+      app: metrics
+      department: engineering
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: metrics
+        department: engineering
+    spec:
+      containers:
+      - name: hello
+        image: "gcr.io/google-samples/hello-app:2.0"
+        env:
+        - name: "PORT"
+          value: "8080"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-np-service
+spec:
+  type: NodePort
+  selector:
+    app: metrics
+    department: engineering
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 30080
