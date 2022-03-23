@@ -15,3 +15,5 @@ ENTRYPOINT ["/bin/sh", "-c" , "echo 192.168.0.101  example.com example >> /etc/h
 # && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias oss_net_bd -file oss_net_bd.crt
 
 
+# list 
+# keytool -list -v -keystore cacerts -storepass changeit
