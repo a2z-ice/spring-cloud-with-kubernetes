@@ -1,3 +1,7 @@
+# https://github.com/txn2/kubefwd
+```
+kubefwd is a command line utility built to port forward multiple services within one or more namespaces on one or more Kubernetes clusters. kubefwd uses the same port exposed by the service and forwards it from a loopback IP address on your local workstation. kubefwd temporally adds domain entries to your /etc/hosts file with the service names it forwards.
+```
 # Calico with kind and multicluster example
 ```
 # Create kind-multicluster-config.yaml file with following contents 
