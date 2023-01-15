@@ -2,6 +2,7 @@ package com.example.l2cache;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
+@Slf4j
 @RestController
 public class CityController {
     private final CityService cityService;
@@ -23,6 +25,7 @@ public class CityController {
     }
     @GetMapping("/city/{id}")
     City getCity(@PathVariable("id") Integer id){
+        log.warn("searching for id:" + id);
         return cityService.getCityById(id);
     }
     @GetMapping("/city/{name}/name")
