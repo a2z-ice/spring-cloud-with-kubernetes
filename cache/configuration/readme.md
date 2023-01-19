@@ -2,6 +2,8 @@
 # ChatGPT text
 configure infinispan embed hibernate spring l2c distributed cache multiple replication on kubernetes with example of configmap, service, application.yaml
 
+configure infinispan hibernate spring application l2c distributed remote cache multiple replication on kubernetes with example of cluster infinispan.yaml, configmap, service, application.yaml, deployment.yaml
+
 ```
 # 1. Create a ConfigMap that contains the Infinispan configuration file, for example, infinispan.xml. In this file, you can configure the cache mode, replication, and other Infinispan settings.
 ```
