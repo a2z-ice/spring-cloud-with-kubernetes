@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: infinispan-cluster
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: infinispan-cluster
+  template:
+    metadata:
+      labels:
+        app: infinispan-cluster
+    spec:
+      containers:
+      - name: infinispan
+        image: infinispan/server
+        ports:
+        - containerPort: 11222
+        volumeMounts:
+        - name: infinispan-config
+          mountPath: /opt/infinispan/server/conf
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms1g -Xmx1g"
+      volumes:
+      - name: infinispan-config
+        configMap:
+          name: infinispan-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infinispan-cluster
+spec:
+  selector:
+    app: infinispan-cluster
+  ports:
+  - name: infinispan
+    port: 11222
+    targetPort: 11222
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: infinispan-config
+data:
+  standalone.xml: |
+    <infinispan>
+      <cache-container>
+        <transport stack="tcp"/>
+        <distributed-cache name="default" mode="ASYNC">
+          <transaction mode="NON_XA"/>
+        </distributed-cache>
+      </cache-container>
+    </infinispan>
+---
+# Spring application
+spring:
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.infinispan.hibernate.cache.v53.InfinispanRegionFactory
+          infinispan:
+            config_file_resource_path: classpath:infinispan.xml
+            cache_manager: infinispan-remote-cache-manager
+            entity:
+              eviction:
+                max_entries: 10000
+                strategy: LRU
+              expiration:
+                max_idle: 3600s
+---
