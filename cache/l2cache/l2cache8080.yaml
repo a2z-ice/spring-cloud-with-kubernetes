@@ -8,5 +8,5 @@ metadata:
 spec:
   serviceAccountName: jgroups-kubeping-service-account
   containers:
-  - image: assaduzzaman/l2cache:8080v7
+  - image: assaduzzaman/l2cache:8080v11
     name: l2cache8080

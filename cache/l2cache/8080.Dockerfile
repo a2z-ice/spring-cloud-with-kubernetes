@@ -3,4 +3,4 @@ ADD l2cache-8080.jar l2cache-8080.jar
 ADD infinispan-configs.xml infinispan-configs.xml
 ADD default-configs default-configs
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","l2cache-8080.jar"]
+ENTRYPOINT ["java","-jar","l2cache-8080.jar","-Djava.net.preferIPv4Stack=true","-Djgroups.dns.query=kubernetes"]
