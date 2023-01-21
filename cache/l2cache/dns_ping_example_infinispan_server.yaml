@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: infinispan-cluster-1
+spec:
+  selector:
+    app: infinispan
+  ports:
+    - name: jgroups
+      port: 7800
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infinispan-cluster-2
+spec:
+  selector:
+    app: infinispan
+  ports:
+    - name: jgroups
+      port: 7800
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: infinispan-cluster-1
+spec:
+  selector:
+    matchLabels:
+      app: infinispan
+  serviceName: infinispan-cluster-1
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: infinispan
+    spec:
+      containers:
+        - name: infinispan
+          image: infinispan/server:latest
+          ports:
+            - name: jgroups
+              containerPort: 7800
+          env:
+            - name: JGROUPS_DISCOVERY_PROTOCOL
+              value: "DNS_PING"
+            - name: JGROUPS_DISCOVERY_PROPERTIES
+              value: "dns_query=_jgroups._udp.cluster.local"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: infinispan-cluster-2
+spec:
+  selector:
+    matchLabels:
+      app: infinispan
+  serviceName: infinispan-cluster-2
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: infinispan
+    spec:
+      containers:
+        - name: infinispan
+          image: infinispan/server:latest
+          ports:
+            - name: jgroups
+              containerPort: 7800
+          env:
+            - name: JGROUPS_DISCOVERY_PROTOCOL
+              value: "DNS_PING"
+            - name: JGROUPS_DISCOVERY_PROPERTIES
+              value: "dns_query=_jgroups._udp.cluster.local"

@@ -1,0 +1,11 @@
+#Build configuration
+images:
+  server: quay.io/infinispan/server:latest
+  initContainer: registry.access.redhat.com/ubi8-micro
+#Deployment configuration
+deploy:
+  #Add a user with full security authorization.
+  security:
+    batch: "user create admin -p changeme"
+  #Create a cluster with two pods.
+  replicas: 3

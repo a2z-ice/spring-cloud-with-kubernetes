@@ -6,7 +6,6 @@ metadata:
     run: l2cache8080
   name: l2cache8080
 spec:
-  serviceAccountName: jgroups-kubeping-service-account
   containers:
-  - image: assaduzzaman/l2cache:8080v11
+  - image: assaduzzaman/l2cache:8080v3
     name: l2cache8080

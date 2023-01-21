@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: infinispan
+  labels:
+    app: infinispan
+spec:
+  selector:
+    app: infinispan
+  ports:
+    - name: jgroups
+      port: 7800
+      targetPort: 7800
+  clusterIP: None
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: infinispan-config
+data:
+  infinispan.xml: |
+    <infinispan>
+      <cache-container name="infinispan" default-cache="default">
+        <transport stack="tcp"/>
+        <replicated-cache name="default">
+          <transaction mode="NON_XA"/>
+          <eviction strategy="LRU" max-entries="10000"/>
+          <expiration lifespan="600000"/>
+          <state-transfer timeout="240000"/>
+          <partition-handling when-split="ALLOW_READ_WRITES"/>
+        </replicated-cache>
+        <discovery>
+          <dns-ping timeout="1000" dns-query="_infinispan._tcp.infinispan.default.svc.cluster.local"/>
+        </discovery>
+      </cache-container>
+    </infinispan>
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: infinispan
+spec:
+  serviceName: infinispan
+  replicas: 2
+  selector:
+    matchLabels:
+      app: infinispan
+  template:
+    metadata:
+      labels:
+        app: infinispan
+    spec:
+      containers:
+        - name: infinispan
+          image: infinispan/server:latest
+          ports:
+            - containerPort: 11222
+            - containerPort: 7800
+          volumeMounts:
+            - name: infinispan-config
+              mountPath: /opt/jboss/infinispan/standalone/configuration/infinispan.xml
+              subPath: infinispan.xml
+          env:
+            - name: JGROUPS_DISCOVERY_PROTOCOL
+              value: DNS_PING
+            - name: JGROUPS_DISCOVERY_PROPERTIES
+              value: dns_query=_infinispan._tcp.infinispan.default.svc.cluster.local
+      volumes:
+        - name: infinispan-config
+          configMap:
+            name: infinispan-config
+

@@ -25,14 +25,9 @@
         thread_pool.thread_dumps_threshold="${jgroups.thread_dumps_threshold:10000}"
    />
    <RED/>
-<!--
-   <dns.DNS_PING dns_query="${jgroups.dns.query}"
+   <dns.DNS_PING dns_query="jgroups-dns-ping.default.svc.cluster.local"
                  num_discovery_runs="3"
    />
-   -->
-   <dns.DNS_PING dns_query="${jgroups.dns.query}"
-                 num_discovery_runs="3"
-
    <MERGE3 min_interval="10000"
            max_interval="30000"
    />

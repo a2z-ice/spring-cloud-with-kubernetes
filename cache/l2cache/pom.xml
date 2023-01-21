@@ -49,9 +49,13 @@
 			<artifactId>infinispan-hibernate-cache-v60</artifactId>
 			<version>14.0.5.Final</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.infinispan</groupId>-->
+<!--			<artifactId>infinispan-spring-boot-starter-embedded</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.infinispan</groupId>
-			<artifactId>infinispan-spring-boot-starter-embedded</artifactId>
+			<artifactId>infinispan-spring-boot-starter-remote</artifactId>
 		</dependency>
 
 		<!-- cache end -->
