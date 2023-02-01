@@ -21,7 +21,7 @@ public class DynamicSqlRepo {
     public List<Map<String, Object>> executeQuery(String sql){
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createNativeQuery(sql);
-        query.unwrap(NativeQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        query.unwrap(NativeQuery.class).setTupleTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 
         return query.getResultList();
 
