@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import com.example.l2cache.serializer.DraftData;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,6 +37,11 @@ public class CityController {
     @GetMapping("/cache/clean")
     ResponseEntity<?> clear(){
         entityManagerFactory.getCache().unwrap(org.hibernate.Cache.class).evictAllRegions();
+        return new ResponseEntity<>("Cache cleared", HttpStatus.OK);
+    }
+    @PostMapping("/test")
+    public  ResponseEntity<?> test(@Validated @RequestBody DraftData draftData) {
+        System.out.println(draftData);
         return new ResponseEntity<>("Cache cleared", HttpStatus.OK);
     }
 }
