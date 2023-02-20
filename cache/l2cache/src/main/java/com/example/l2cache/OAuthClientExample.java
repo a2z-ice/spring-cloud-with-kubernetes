@@ -1,6 +1,6 @@
 package com.example.l2cache;
 
-import com.example.l2cache.config.Oauth2ConfigProperties;
+import com.example.l2cache.jwt.config.Oauth2ConfigProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
