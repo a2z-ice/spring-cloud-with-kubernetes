@@ -28,7 +28,7 @@ public class ApiError {
     }
 
     public String getMessage() {
-        return errorDetail == null ? message : null;
+        return errorDetail != null ? message : null;
     }
 
     public String getDescription() {
