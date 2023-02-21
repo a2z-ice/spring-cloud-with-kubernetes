@@ -1,6 +1,7 @@
 package com.example.l2cache.jwt.error;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.infinispan.commons.dataconversion.internal.Json;
 import org.springframework.http.HttpStatusCode;
 
 public class ApiError {
@@ -20,9 +21,9 @@ public class ApiError {
         return status;
     }
 
-//    public String getMessage() {
-//        return message;
-//    }
+    public String getMessage() {
+        return errorDetail == null ? message : null;
+    }
 
     public String getDescription() {
         return description;
