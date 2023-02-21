@@ -4,16 +4,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.infinispan.commons.dataconversion.internal.Json;
 import org.springframework.http.HttpStatusCode;
 
+import java.util.Map;
+
 public class ApiError {
     private final HttpStatusCode status;
     private final String message;
     private final String description;
-    private final JsonNode errorDetail;
+    private final Map<String, Object> errorDetail;
 
-    public ApiError(HttpStatusCode status, String message, String description, JsonNode errorDetail) {
+    public ApiError(HttpStatusCode status, String message, String description, Map<String, Object> errorDetail) {
         this.status = status;
         this.message = message;
         this.description = description;
+        //If we wish to remove some confidentail infor to remove we can do so from below example
+//        if(errorDetail.containsKey("path")){
+//            errorDetail.remove("path");
+//        }
         this.errorDetail = errorDetail;
     }
 
@@ -29,7 +35,7 @@ public class ApiError {
         return description;
     }
 
-    public JsonNode getErrorDetail(){
+    public Map<String, Object> getErrorDetail(){
         return errorDetail;
     }
 }

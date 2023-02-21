@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @AllArgsConstructor
 @RestControllerAdvice
 public class WebClientExceptionHandlerAdvice {
@@ -29,14 +32,14 @@ public class WebClientExceptionHandlerAdvice {
         } else if (ex instanceof MyThirdCustomException) {
             status = ((MyThirdCustomException) ex).getStatusCode();
         }
-        JsonNode jsonNode = null;
+        Map<String,Object> errorDetail = null;
         try {
-             jsonNode = objectMapper.readTree(message);
+             errorDetail = objectMapper.readValue(message, HashMap.class);
         } catch (JsonProcessingException e) {
 
         }
 
-        ApiError error = new ApiError(status, message, request.getDescription(false), jsonNode);
+        ApiError error = new ApiError(status, message, request.getDescription(false), errorDetail);
         return new ResponseEntity<>(error, error.getStatus());
     }
 
