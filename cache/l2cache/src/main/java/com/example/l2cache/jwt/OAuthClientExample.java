@@ -3,9 +3,9 @@ package com.example.l2cache.jwt;
 
 import com.example.l2cache.jwt.config.CmsProperties;
 import com.example.l2cache.jwt.config.Oauth2ConfigProperties;
-import com.example.l2cache.jwt.error.MyCustomException;
-import com.example.l2cache.jwt.error.MyOtherCustomException;
-import com.example.l2cache.jwt.error.MyThirdCustomException;
+import com.example.l2cache.jwt.error.Remote4XXException;
+import com.example.l2cache.jwt.error.Remote5XXException;
+import com.example.l2cache.jwt.error.RemoteResponseMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +73,7 @@ public class OAuthClientExample {
 
                             String stringFromByte = new String(exception.getResponseBodyAsByteArray(), StandardCharsets.UTF_8);
                             log.info("stringFromByte {}",stringFromByte);
-                            return Mono.error(new MyCustomException(response.statusCode(),responseBodyAsString));
+                            return Mono.error(new Remote4XXException(response.statusCode(),responseBodyAsString));
                 }
 
                 );
@@ -81,13 +81,13 @@ public class OAuthClientExample {
 
     private Mono<? extends Throwable> handleServerError(ClientResponse response) {
         return response.createException()
-                .flatMap(exception -> Mono.error(new MyOtherCustomException(exception.getMessage())));
+                .flatMap(exception -> Mono.error(new Remote5XXException(exception.getMessage())));
     }
 
     private Throwable handleWebClientException(WebClientResponseException e) {
         HttpStatusCode statusCode = e.getStatusCode();
         String message = e.getMessage();
-        return new MyThirdCustomException(statusCode, message);
+        return new RemoteResponseMappingException(statusCode, message);
     }
 
 }

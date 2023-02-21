@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatusCode;
 
 
 @Getter
-public class MyThirdCustomException extends RuntimeException {
+public class RemoteResponseMappingException extends RuntimeException {
     HttpStatusCode statusCode;
     String message;
-    public MyThirdCustomException(HttpStatusCode statusCode, String message) {
+    public RemoteResponseMappingException(HttpStatusCode statusCode, String message) {
         this.statusCode = statusCode;
         this.message = message;
     }
