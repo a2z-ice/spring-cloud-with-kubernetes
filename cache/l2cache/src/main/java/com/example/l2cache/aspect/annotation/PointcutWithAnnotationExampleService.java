@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class MyService {
+public class PointcutWithAnnotationExampleService {
 
-    @MyAnnotation
+    @PointcutPlaceHolderAnnotation
     public String doSomething() {
         log.info("do something is calling");
       return "do something is calling";

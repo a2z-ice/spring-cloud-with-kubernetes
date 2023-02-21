@@ -9,18 +9,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class MyAspect {
+public class AnnotationBasedAspect {
 
-    @Pointcut("@annotation(com.example.l2cache.aspect.annotation.MyAnnotation)")
-    public void myAnnotationPointcut() {}
+    @Pointcut("@annotation(com.example.l2cache.aspect.annotation.PointcutPlaceHolderAnnotation)")
+    public void annotationBasedPointcut() {}
 
-    @Before("myAnnotationPointcut()")
-    public void beforeMyAnnotationMethod(JoinPoint joinPoint) {
+    @Before("annotationBasedPointcut()")
+    public void beforeAnnotationMethod(JoinPoint joinPoint) {
         System.out.println("Before method " + joinPoint.getSignature().getName());
     }
 
-    @After("myAnnotationPointcut()")
-    public void afterMyAnnotationMethod(JoinPoint joinPoint) {
+    @After("annotationBasedPointcut()")
+    public void afterAnnotationMethod(JoinPoint joinPoint) {
         System.out.println("After method " + joinPoint.getSignature().getName());
     }
 }
