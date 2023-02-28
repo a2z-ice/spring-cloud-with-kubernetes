@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.example.convert;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class ConvertPathVariableApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(ConvertPathVariableApplication.class, args);
 	}
 
 }
