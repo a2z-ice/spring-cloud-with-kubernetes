@@ -1,3 +1,31 @@
+# To enable hibernate audit support in spring data jap add following properties in application.yaml file
+
+```yaml
+spring:
+    jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        org.hibernate.envers.audit_table_suffix: _aud
+```
+# add @Audited annotation to the entity class
+# create the same table with same column and _aud suffix with following additional properties
+
+```bash
+              - column:
+                  name: REV
+                  type: INT
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+```
+
 # https://github.com/txn2/kubefwd
 ```
 kubefwd is a command line utility built to port forward multiple services within one or more namespaces on one or more Kubernetes clusters. kubefwd uses the same port exposed by the service and forwards it from a loopback IP address on your local workstation. kubefwd temporally adds domain entries to your /etc/hosts file with the service names it forwards.
