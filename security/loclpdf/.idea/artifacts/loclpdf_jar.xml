@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="loclpdf:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/loclpdf_jar</output-path>
+    <root id="archive" name="loclpdf.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="loclpdf" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/itextpdf/itextpdf/5.5.13.3/itextpdf-5.5.13.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bouncycastle/bcprov-jdk15on/1.70/bcprov-jdk15on-1.70.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bouncycastle/bcmail-jdk16/1.46/bcmail-jdk16-1.46.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/bouncycastle/bcmail-jdk14/139/bcmail-jdk14-139.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bouncycastle/bctsp-jdk16/1.46/bctsp-jdk16-1.46.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bouncycastle/bcprov-jdk16/1.46/bcprov-jdk16-1.46.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
