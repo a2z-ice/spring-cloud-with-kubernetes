@@ -1,0 +1,9 @@
+server:
+  port: 8080
+spring:
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: ${realms.url}
+#          jwk-set-uri: ${realms.url}/protocol/openid-connect/certs
