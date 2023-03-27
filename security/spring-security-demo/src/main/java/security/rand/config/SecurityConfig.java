@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 public class SecurityConfig {
    private final CorporateWiseAuthenticationManager corporateWiseAuthenticationManager;
     private final ContextHolder contextHolder;
