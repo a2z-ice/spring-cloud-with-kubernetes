@@ -17,7 +17,6 @@ public class ContextHolder {
 
 
     public  void put(JwtAuthenticationToken jwt){
-
             String username = (String) jwt.getToken().getClaims().get("preferred_username");
             Context context = new Context(username, jwt.getToken().getTokenValue());
             userContext.get().put(USER_CONTEXT, context);
