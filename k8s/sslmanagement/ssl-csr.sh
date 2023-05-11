@@ -10,3 +10,6 @@ openssl req -new -key admin.key -subj "/CN=kube-admin/O=system:masters" -out adm
 
 openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 
+# to Check certificate 
+openssl x509 -in certificatefile.crt -text -noout
+
