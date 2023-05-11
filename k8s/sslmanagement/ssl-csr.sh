@@ -12,4 +12,6 @@ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 
 # to Check certificate 
 openssl x509 -in certificatefile.crt -text -noout
+# check journalctl
+journalctl -u etcd.service -l
 
