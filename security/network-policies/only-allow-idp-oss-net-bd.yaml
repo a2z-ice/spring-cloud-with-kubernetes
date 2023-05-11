@@ -38,3 +38,37 @@ spec:
 
 # to test run -->  kubectl exec pod-a -- curl https://idp.oss.net.bd  # result success
 # to test run -->  kubectl exec pod-a -- curl https://google.com  # result failed
+
+---
+# Cilium FQDN example
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-a2c
+spec:
+  endpointSelector:
+    matchLabels:
+      app: my-app
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app: my-app-c
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toFQDNs:
+        - matchPattern: "*.oss.net.bd"
+        - matchPattern: "google.com"
+    - toCIDRSet: # For IP based
+        - cidr: 103.205.182.18/32
