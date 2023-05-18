@@ -1,4 +1,18 @@
-
+# Propagate headers including Authentication bearer token in feign client
+```java
+@Component
+class CurrentRequestHeadersInterceptor implements RequestInterceptor {
+  @Override
+  public void apply(RequestTemplate template) {
+    RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+    if (requestAttributes instanceof ServletRequestAttributes) {
+      HttpServletRequest webRequest = ((ServletRequestAttributes) requestAttributes).getRequest();
+      webRequest.getHeaderNames().asIterator()
+          .forEachRemaining(h -> template.header(h, webRequest.getHeader(h)));
+    }
+  }
+}
+```
 # https://github.com/txn2/kubefwd
 ```
 kubefwd is a command line utility built to port forward multiple services within one or more namespaces on one or more Kubernetes clusters. kubefwd uses the same port exposed by the service and forwards it from a loopback IP address on your local workstation. kubefwd temporally adds domain entries to your /etc/hosts file with the service names it forwards.
