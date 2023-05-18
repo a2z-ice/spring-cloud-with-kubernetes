@@ -1,3 +1,12 @@
+```yaml
+#Spring security log setting
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+```
 ```java
 package com.example.l2cache;
 
