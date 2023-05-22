@@ -1,0 +1,49 @@
+cat idpv2.assad.net.bd.conf 
+
+server {
+    listen 80;
+    server_name idpv2.assad.net.bd;
+    return  301 https://$server_name$request_uri;
+} 
+
+  server {
+   listen       443 ssl;
+   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+   server_name      idpv2.assad.net.bd;
+   access_log            /var/log/nginx/idpv2.net.bd.log;
+   ssl_certificate         /etc/nginx/conf.d/ssl/loger.crt;
+   ssl_certificate_key     /etc/nginx/conf.d/ssl/loger.key;    
+   ssl_session_cache shared:SSL:120m;   
+   ssl_ciphers HIGH:!aNULL:!MD5;
+   ssl_prefer_server_ciphers on;
+   #client_max_body_size 25M;
+
+ location / {
+  proxy_pass       http://192.168.8.66:8088/;
+   autoindex off;
+   server_tokens off;
+                proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+
+                ### Set headers ####
+                proxy_set_header        Accept-Encoding   "";
+                proxy_set_header        Host            $host;
+                proxy_set_header        X-Real-IP       $remote_addr;
+                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+
+                ### Most PHP, Python, Rails, Java App can use this header ###
+                #proxy_set_header X-Forwarded-Proto https;##
+                #This is better##
+                proxy_set_header        X-Forwarded-Proto $scheme;
+                add_header              Front-End-Https   on;
+
+
+                ### By default we don't want to redirect it ####
+                proxy_redirect     off;
+               
+                ### For big url request
+		proxy_busy_buffers_size   512k;
+		proxy_buffers   4 512k;
+		proxy_buffer_size   256k;
+
+                }
+        }
