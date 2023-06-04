@@ -34,7 +34,7 @@ spec:
           protocol: TCP
     - to:
       - ipBlock:
-          cidr: 103.205.182.18/32 # <-- Ip of idp.oss.net.bd
+          cidr: 103.205.182.18/32 # <-- Ip of idp.oss.net.bd the ip block 32 means single ip block (single ip)
 
 # to test run -->  kubectl exec pod-a -- curl https://idp.oss.net.bd  # result success
 # to test run -->  kubectl exec pod-a -- curl https://google.com  # result failed
