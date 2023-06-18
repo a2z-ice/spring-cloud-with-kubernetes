@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  yugabytedb:
+    image: docker.io/yugabytedb/yugabyte:latest
+    command: |
+      bash -c "
+      # create database and user as soon as database is up
+      until [ -z "POSTGRES_USER" ] || PGPASSWORD=yugabyte bin/ysqlsh -v ON_ERROR_STOP=1 \\
+       -c \"create database $${POSTGRES_DB:-$${POSTGRES_USER}} \" \\
+       -c \"create user $${POSTGRES_USER} password '$${POSTGRES_PASSWORD}' \" \\
+       2>/dev/null
+       do
+        echo \"Waiting for YugabyteDB to be up for creating user $${POSTGRES_USER}.\" ; sleep 5
+       done &
+      # start YugabyteDB
+      bin/yugabyted start --listen 0.0.0.0 --daemon=false --tserver_flags='ysql_enable_auth=true'
+      "
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: knextest
+      POSTGRES_DB: knex_test
+    ports:
+      - "5433:5433"
+      - "7000:7000"
+      - "9000:9000"
+      - "9042:9042"
+
+
+
+

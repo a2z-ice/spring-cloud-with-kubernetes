@@ -1,0 +1,11 @@
+server:
+  port: 12345
+spring:
+  profiles:
+    active: '@active.profile@'
+  output:
+    ansi:
+      enabled: always
+logging:
+  level:
+    io.netty.resolver.dns.DnsServerAddressStreamProviders: off

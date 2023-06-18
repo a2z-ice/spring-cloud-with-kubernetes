@@ -1,0 +1,32 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: qapi
+  datasource:
+#    url: jdbc:yugabytedb://localhost:5433/qcloud?load-balance=true #throws exception need to test with multi replication environment
+    url: jdbc:yugabytedb://localhost:5433/qcloud
+    username: yugabyte
+    driver-class-name: com.yugabyte.Driver
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 20
+      auto-commit: false
+#      transaction-isolation: TRANSACTION_SERIALIZABLE # optional
+#    type: com.zaxxer.hikari.HikariDataSource # optional
+# To check number of connection created by applications with following queries
+#SELECT count(distinct(numbackends)) FROM pg_stat_database;
+#SELECT datname, numbackends FROM pg_stat_database;
+
+  liquibase:
+    url: ${spring.datasource.url} #jdbc:postgresql://localhost:5433/qcloud
+    user: yugabyte
+#    password: 12345
+    default-schema: qapi
+    drop-first: true
+    change-log: classpath:/db/changelog/db.changelog-master.yml
+    driver-class-name: ${spring.datasource.driver-class-name}

@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-token-detail-table
+      author: zamir
+      changes:
+        - createTable:
+            tableName: token_detail
+            columns:
+              - column:
+                  name: ID
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: VERSION
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: TOKEN_ID
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_token_id
+                    references: token(ID)
+                    deleteCascade: true
+              - column:
+                  name: SC_ID
+                  type: varchar(36)
+              - column:
+                  name: SDC_ID
+                  type: varchar(36)
+              - column:
+                  name: SVC_SERVED_BY_USER_ID
+                  type: varchar(36)
+              - column:
+                  name: SERVICE_ID
+                  type: varchar(36)
+              - column:
+                  name: STATE
+                  type: INT
+                  remarks: 0 - not served, 1 - service started (in-progress), 3 - service served, 4 service canceled,
+              - column:
+                  name: SVC_SEQ_NO
+                  type: INT
+              - column:
+                  name: SVC_START_DATE
+                  type: datetime
+              - column:
+                  name: SVC_END_DATE
+                  type: datetime

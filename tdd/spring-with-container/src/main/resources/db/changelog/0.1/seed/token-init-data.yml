@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: token-init-data
+      author: Assad
+      changes:
+        - loadData:
+            file: data/token.csv
+            relativeToChangelogFile: true
+            tableName: token
+            column:
+             name: META_DATA
+             type: TEXT
+            quotchar: '"'
+            separator: ','

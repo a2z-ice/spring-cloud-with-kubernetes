@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: token-detail-init-data
+      author: Assad
+      changes:
+        - loadData:
+            file: data/token_detail.csv
+            relativeToChangelogFile: true
+            tableName: token_detail
+            quotchar: '"'
+            separator: ','

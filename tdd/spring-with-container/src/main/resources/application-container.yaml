@@ -1,0 +1,32 @@
+spring:
+  docker:
+    compose:
+      lifecycle-management: start-only
+      file: ./docker-compose.yaml
+      profiles:
+        active: "test"
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+  datasource:
+    url: jdbc:yugabytedb://localhost:5433/knex_test
+    username: testuser
+    password: knextest
+    driver-class-name: com.yugabyte.Driver
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 20
+      auto-commit: false
+  liquibase:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    default-schema: public
+    drop-first: true
+    change-log: classpath:/db/changelog/db.changelog-master.yml
+    driver-class-name: ${spring.datasource.driver-class-name}
