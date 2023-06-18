@@ -4,7 +4,7 @@ spring:
       lifecycle-management: start-only
       file: ./docker-compose.yaml
       profiles:
-        active: "test"
+        active: "container"
   output:
     ansi:
       enabled: always
@@ -23,9 +23,9 @@ spring:
       maximum-pool-size: 20
       auto-commit: false
   liquibase:
-    url: ${spring.datasource.url}
-    user: ${spring.datasource.username}
-    password: ${spring.datasource.password}
+#    url: ${spring.datasource.url}
+#    user: ${spring.datasource.username}
+#    password: ${spring.datasource.password}
     default-schema: public
     drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master.yml
