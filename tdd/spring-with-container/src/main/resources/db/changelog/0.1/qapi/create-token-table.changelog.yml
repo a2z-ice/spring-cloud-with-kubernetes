@@ -86,3 +86,15 @@ databaseChangeLog:
               - column:
                   name: META_DATA
                   type: TEXT
+              - column:
+                  name: CREATED
+                  type: datetime
+              - column:
+                  name: CREATED_BY
+                  type: varchar(36)
+              - column:
+                  name: MODIFIED
+                  type: datetime
+              - column:
+                  name: MODIFIED_BY
+                  type: varchar(36)
