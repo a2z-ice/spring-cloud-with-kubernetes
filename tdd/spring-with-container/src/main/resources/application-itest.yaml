@@ -1,4 +1,10 @@
 spring:
+  docker:
+    compose:
+      lifecycle-management: start-only
+      file: ./docker-compose.yaml
+      profiles:
+        active: "test"
   output:
     ansi:
       enabled: always
@@ -7,16 +13,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
-        show_sql: false
-        format_sql: true
-    #  datasource:
-#    url: jdbc:yugabytedb://localhost:5433/knex_test
-#    username: testuser
-#    password: knextest
+  datasource:
+    url: jdbc:yugabytedb://localhost:5433/knex_test
+    username: testuser
+    password: knextest
     driver-class-name: com.yugabyte.Driver
     hikari:
       minimum-idle: 1
-      maximum-pool-size: 2
+      maximum-pool-size: 20
       auto-commit: false
   liquibase:
     url: ${spring.datasource.url}
@@ -26,17 +30,3 @@ spring:
     drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master-test.yml
     driver-class-name: ${spring.datasource.driver-class-name}
-logging:
-  level:
-    com: error
-    queue.pro: error
-    liquibase: error
-    org:
-      springframework: error
-      hibernate:
-        persister: error
-        stat: debug
-        cache: error
-        sql: debug
-        type.descriptor.sql.BasicBinder: trace
-    root: trace

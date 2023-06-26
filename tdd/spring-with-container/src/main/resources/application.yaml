@@ -1,5 +1,5 @@
 server:
-  port: 12345
+  port: 8080
 spring:
   profiles:
     active: '@active.profile@'
@@ -9,3 +9,26 @@ spring:
 logging:
   level:
     io.netty.resolver.dns.DnsServerAddressStreamProviders: off
+    com: error
+    queue.pro: error
+    liquibase: error
+    org:
+      jboss: error
+      springframework: error
+      hibernate:
+        query: error
+        cfg: error
+        type: error
+        boot: error
+        integrator: error
+        service: error
+        engine: error
+        resource: error
+        validator: error
+        jpa: error
+        internal: error
+        event: error
+        stat: error
+        cache: error
+        sql: error
+        type.descriptor.sql.BasicBinder: error

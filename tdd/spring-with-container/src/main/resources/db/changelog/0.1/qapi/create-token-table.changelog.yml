@@ -23,6 +23,12 @@ databaseChangeLog:
                   name: SVC_SEQ_NO_IN_A_TOKEN
                   type: INT
               - column:
+                  name: STATE
+                  type: INT
+                  remarks: 0 - not served, 1 - service started (in-progress), 3 - service served, 4 service canceled
+                  constraints:
+                    nullable: false
+              - column:
                   name: TOKEN_PREFIX
                   type: varchar(3)
               - column:
@@ -41,6 +47,12 @@ databaseChangeLog:
                   name: SC_ID
                   type: varchar(36)
               - column:
+                  name: SDC_ID
+                  type: varchar(36)
+              - column:
+                  name: SDC_USER_ID
+                  type: varchar(36)
+              - column:
                   name: LANG_ID
                   type: INT
               - column:
@@ -49,6 +61,10 @@ databaseChangeLog:
               - column:
                   name: SERVICE_ID
                   type: varchar(36)
+                  constraints:
+                    foreignKeyName: fk_service_id
+                    deleteCascade: true
+                    references: service(ID)
               - column:
                   name: SVC_PRIORITY
                   type: INT
@@ -60,10 +76,10 @@ databaseChangeLog:
                   type: datetime
               - column:
                   name: HAS_ANY_FOLLOWUP_SVC
-                  type: tinyint(1)
+                  type: boolean
               - column:
                   name: IS_THIS_A_FOLLOWUP_SVC
-                  type: tinyint(1)
+                  type: boolean
               - column:
                   name: TKIS_PAGE_NAVIGATION
                   type: varchar(36)
@@ -89,12 +105,26 @@ databaseChangeLog:
               - column:
                   name: CREATED
                   type: datetime
+                  constraints:
+                    nullable: false
               - column:
                   name: CREATED_BY
                   type: varchar(36)
+                  constraints:
+                    nullable: false
               - column:
                   name: MODIFIED
                   type: datetime
+                  constraints:
+                    nullable: false
               - column:
                   name: MODIFIED_BY
                   type: varchar(36)
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: token_token_issue_date_idx
+            tableName: token
+            columns:
+              - column:
+                  name: TOKEN_ISSUE_DATE

@@ -2,8 +2,10 @@ spring:
   output:
     ansi:
   datasource:
+#    url: jdbc:yugabytedb://localhost:5433/yugabyte?load-balance=true
     url: jdbc:postgresql://localhost:5433/yugabyte
     username: yugabyte
+#    driver-class-name: com.yugabyte.Driver
     hikari:
       minimum-idle: 5
       maximum-pool-size: 20
@@ -13,8 +15,8 @@ spring:
 #    username: yugabyte
 ##    password: 12345
   liquibase:
-#    url: jdbc:postgresql://localhost:5433/yugabyte
-#    user: yugabyte
+    url: jdbc:postgresql://localhost:5433/yugabyte
+    user: yugabyte
 #    password: 12345
     default-schema: qapi
     drop-first: false

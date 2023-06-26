@@ -1,5 +1,8 @@
 databaseChangeLog:
   - include:
+      file: qapi/create-service-table.changelog.yml
+      relativeToChangelogFile: true
+  - include:
       file: qapi/create-token-table.changelog.yml
       relativeToChangelogFile: true
   - include:

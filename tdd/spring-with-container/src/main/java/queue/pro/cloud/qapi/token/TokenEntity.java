@@ -1,10 +1,8 @@
 package queue.pro.cloud.qapi.token;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,16 +11,18 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
-@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@DynamicUpdate
 @Table(name = "token")
-public class Token {
+public class TokenEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "queue.pro.cloud.qapi.common.UUIDGenerator")
@@ -35,6 +35,9 @@ public class Token {
     private Integer categoryWiseTokenSeqNo;
     @Column(name = "svc_seq_no_in_a_token")
     private Integer svcSeqNoInAToken;
+    @Column(name = "state")
+    private Integer state;
+
     @Column(name = "token_prefix")
     private String tokenPrefix;
     @Column(name = "token_no_int")
@@ -42,23 +45,29 @@ public class Token {
     @Column(name = "token_no_str")
     private String tokenNoStr;
     @Column(name = "token_issue_date")
-    private Date tokenIssueDate;
+    private LocalDateTime  tokenIssueDate;
     @Column(name = "tkis_id")
     private String tkisId;
     @Column(name = "sc_id")
     private String scId;
+    @Column(name = "sdcId")
+    private String sdcId;
+    @Column(name = "sdc_user_id")
+    private String sdcUserId;
     @Column(name = "lang_id")
-    private String langId;
+    private Integer langId;
     @Column(name = "token_priority")
     private Integer tokenPriority;
+
     @Column(name = "service_id")
     private String serviceId;
+
     @Column(name = "svc_priority")
     private Integer svcPriority;
     @Column(name = "no_of_try")
     private Integer noOfTry;
     @Column(name = "next_try_time")
-    private Date nextTryTime;
+    private LocalDateTime  nextTryTime;
     @Column(name = "has_any_followup_svc")
     private Boolean hasAnyFollowupSvc;
     @Column(name = "is_this_a_followup_svc")
@@ -94,3 +103,4 @@ public class Token {
     private LocalDateTime modified;
 
 }
+
