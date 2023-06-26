@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-queue-service-table
+      author: assad
+      changes:
+        - createTable:
+            tableName: service
+            columns:
+              - column:
+                  name: ID
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: NAME
+                  type: varchar(225)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PREFIX
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PRIORITY
+                  type: INT
+              - column:
+                  name: VERSION
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: CREATED
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: service_priority_idx
+            tableName: service
+            columns:
+              - column:
+                  name: PRIORITY

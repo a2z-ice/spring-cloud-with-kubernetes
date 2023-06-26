@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: service-init-data
+      author: Assad
+      changes:
+        - loadData:
+            file: data/service.csv
+            relativeToChangelogFile: true
+            tableName: service
+            column:
+             name: META_DATA
+             type: TEXT
+            quotchar: '"'
+            separator: ','
