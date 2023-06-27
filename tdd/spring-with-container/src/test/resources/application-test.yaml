@@ -25,7 +25,7 @@ spring:
     default-schema: public
     drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master-test.yml
-#    driver-class-name: ${spring.datasource.driver-class-name} # The driver class will be needed only for yugabytedb
+    driver-class-name: ${spring.datasource.driver-class-name}
 logging:
   level:
     com: error

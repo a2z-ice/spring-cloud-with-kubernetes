@@ -24,7 +24,7 @@ public class PostgresSupportedBaseTest {
         registry.add("spring.datasource.url", container::getJdbcUrl);
         registry.add("spring.datasource.username", container::getUsername);
         registry.add("spring.datasource.password", container::getPassword);
-//        registry.add("spring.datasource.driver-class-name", () -> "com.yugabyte.Driver");
+        registry.add("spring.datasource.driver-class-name", container::getDriverClassName);
     }
 
     static {
