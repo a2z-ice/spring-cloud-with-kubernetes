@@ -1,5 +1,6 @@
 package queue.pro.cloud.qapi.annotation;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;

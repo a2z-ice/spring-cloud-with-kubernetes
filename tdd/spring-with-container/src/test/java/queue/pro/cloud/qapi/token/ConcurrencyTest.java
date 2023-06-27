@@ -13,6 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import queue.pro.cloud.qapi.PostgresSupportedBaseTest;
 import queue.pro.cloud.qapi.YugabyteDBSupportedBaseTest;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
@@ -22,8 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @DataJpaTestWithContainer
-
-public class ConcurrencyTest extends YugabyteDBSupportedBaseTest {
+public class ConcurrencyTest extends PostgresSupportedBaseTest {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired private TokenRepo tokenRepo;
@@ -42,7 +42,7 @@ public class ConcurrencyTest extends YugabyteDBSupportedBaseTest {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Sql(scripts = {"/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql"})
     void testConcurrentUpdateOptimisticLock_failToUpdateStateTo4(){
-
+        log.info("starting test");
         TokenEntity token1 = tokenRepo.findById("b77ff216-5e24-4170-8f4d-fcd58f865f65").orElseThrow();
         TokenEntity token2 = tokenRepo.findById("b77ff216-5e24-4170-8f4d-fcd58f865f65").orElseThrow();
         token1.setState(3);
