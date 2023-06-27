@@ -13,7 +13,7 @@ spring:
 #    url: jdbc:yugabytedb://localhost:5433/knex_test
 #    username: testuser
 #    password: knextest
-    driver-class-name: com.yugabyte.Driver
+#    driver-class-name: com.yugabyte.Driver
     hikari:
       minimum-idle: 1
       maximum-pool-size: 2

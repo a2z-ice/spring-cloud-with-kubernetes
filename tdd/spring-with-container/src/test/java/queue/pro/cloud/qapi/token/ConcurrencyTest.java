@@ -13,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import queue.pro.cloud.qapi.BaseTest;
+import queue.pro.cloud.qapi.YugabyteDBSupportedBaseTest;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @DataJpaTestWithContainer
 
-public class ConcurrencyTest extends BaseTest {
+public class ConcurrencyTest extends YugabyteDBSupportedBaseTest {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired private TokenRepo tokenRepo;

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
-import queue.pro.cloud.qapi.BaseTest;
+import queue.pro.cloud.qapi.YugabyteDBSupportedBaseTest;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.token.repo.TokenFilter;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTestWithContainer
-public class TokenEntityRepoWithSqlQAlgorithmTest extends BaseTest {
+public class TokenEntityRepoWithSqlQAlgorithmTest extends YugabyteDBSupportedBaseTest {
 
     @Autowired private EntityManager entityManager;
     @Autowired private TokenRepo tokenRepo;
