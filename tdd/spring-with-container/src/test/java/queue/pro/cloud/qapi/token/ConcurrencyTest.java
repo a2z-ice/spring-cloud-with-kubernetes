@@ -13,8 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import queue.pro.cloud.qapi.PostgresSupportedBaseTest;
-import queue.pro.cloud.qapi.YugabyteDBSupportedBaseTest;
+import queue.pro.cloud.qapi.commons.PostgresSupportedBaseTest;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 

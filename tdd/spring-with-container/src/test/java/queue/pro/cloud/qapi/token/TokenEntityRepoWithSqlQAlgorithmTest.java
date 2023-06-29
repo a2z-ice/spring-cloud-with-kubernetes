@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
-import queue.pro.cloud.qapi.YugabyteDBSupportedBaseTest;
+import queue.pro.cloud.qapi.commons.YugabyteDBSupportedBaseTest;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.token.repo.TokenFilter;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
