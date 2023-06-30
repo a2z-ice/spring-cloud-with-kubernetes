@@ -7,6 +7,13 @@ spring:
         active: "pg-container"
   output:
     ansi:
+      enabled: always
+  spring:
+    security:
+      oauth2:
+        resource-server:
+          jwt:
+            issuer-uri: https://idpv2.oss.net.bd/realms/q-cloud
   jpa:
     properties:
       hibernate:
