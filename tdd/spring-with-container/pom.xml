@@ -17,6 +17,7 @@
         <java.version>20</java.version>
         <testcontainers.version>1.18.3</testcontainers.version>
         <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <wiremock.version>2.35.0</wiremock.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -41,6 +42,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -119,11 +124,27 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8-standalone</artifactId>
+            <version>${wiremock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>wiremock-jre8-standalone</id>
+            <name>wiremock-jre8-standalone</name>
+            <url>https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock-jre8-standalone</url>
+        </repository>
+
+    </repositories>
     <build>
         <plugins>
             <plugin>

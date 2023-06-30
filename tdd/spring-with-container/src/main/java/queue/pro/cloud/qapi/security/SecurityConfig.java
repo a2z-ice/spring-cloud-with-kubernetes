@@ -15,7 +15,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Value("${spring.spring.security.oauth2.resource-server.jwt.issuer-uri}")
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     String issuerUri;
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {

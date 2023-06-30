@@ -8,8 +8,7 @@ spring:
   output:
     ansi:
       enabled: always
-  spring:
-    security:
+  security:
       oauth2:
         resource-server:
           jwt:

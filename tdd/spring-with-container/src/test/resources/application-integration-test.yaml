@@ -2,6 +2,12 @@ spring:
   output:
     ansi:
       enabled: always
+  spring:
+    security:
+      oauth2:
+        resource-server:
+          jwt:
+            issuer-uri: OVERRIDE_BY_TEST
   jpa:
     properties:
       hibernate:
@@ -10,9 +16,9 @@ spring:
         show_sql: false
         format_sql: true
       datasource:
-        url: OVERRIDEN_BY_TEST
-        username: OVERRIDEN_BY_TEST
-        password: OVERRIDEN_BY_TEST
+        url: OVERRIDE_BY_TEST
+        username: OVERRIDE_BY_TEST
+        password: OVERRIDE_BY_TEST
 #    driver-class-name: com.yugabyte.Driver
     hikari:
       minimum-idle: 1
@@ -26,10 +32,19 @@ spring:
     drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master-test.yml
     driver-class-name: ${spring.datasource.driver-class-name}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: OVERRIDE_BY_TEST
+  main:
+    allow-bean-definition-overriding: true
 logging:
   level:
     com: error
+    com.github.tomakehurst.wiremock: info
     queue.pro: error
+    queue.pro.cloud.qapi: info
     liquibase: error
     org:
       springframework: error
