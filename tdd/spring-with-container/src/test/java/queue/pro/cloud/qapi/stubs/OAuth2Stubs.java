@@ -33,7 +33,7 @@ public class OAuth2Stubs {
                         aResponse()
                             .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                             .withBody(
-                                            """
+                                """
                                 {
                                  "issuer":"%s",
                                  "jwks_uri":"%s"
