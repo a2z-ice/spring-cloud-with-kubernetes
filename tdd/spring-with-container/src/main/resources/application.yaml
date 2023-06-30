@@ -15,6 +15,7 @@ logging:
     org:
       jboss: error
       springframework: error
+      postgresql: error
       hibernate:
         query: error
         cfg: error
