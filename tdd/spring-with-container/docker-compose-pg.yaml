@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15.3
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testuser
+      POSTGRES_DB: token
+    ports:
+      - "5432:5432"
+#    volumes:
+#      - postgres_dev:/var/lib/postgresql/data
+
+
+
+

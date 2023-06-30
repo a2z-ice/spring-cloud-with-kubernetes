@@ -22,7 +22,7 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    default-schema: public
+    default-schema: ${spring.jpa.properties.hibernate.default_schema}
     drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master-test.yml
     driver-class-name: ${spring.datasource.driver-class-name}

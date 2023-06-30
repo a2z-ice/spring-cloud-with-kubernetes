@@ -2,31 +2,34 @@ spring:
   docker:
     compose:
       lifecycle-management: start-only
-      file: ./docker-compose.yaml
+      file: ./docker-compose-pg.yaml
       profiles:
-        active: "container"
+        active: "pg-container"
   output:
     ansi:
-      enabled: always
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
+        show_sql: false
+        format_sql: true
   datasource:
-    url: jdbc:yugabytedb://localhost:5433/knex_test
+    url: jdbc:postgresql://localhost:5433/token
     username: testuser
-    password: knextest
-    driver-class-name: com.yugabyte.Driver
+    password: testuser
     hikari:
-      minimum-idle: 1
-      maximum-pool-size: 20
+      minimum-idle: 2
+      maximum-pool-size: 5
       auto-commit: false
+  #  r2dbc:
+#    url: r2dbc:postgresql://localhost:5433/qcloud
+#    username: yugabyte
+##    password: 12345
   liquibase:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    default-schema: public
-    drop-first: true
+    default-schema: ${spring.jpa.properties.hibernate.default_schema}
+    drop-first: false
     change-log: classpath:/db/changelog/db.changelog-master.yml
-    driver-class-name: ${spring.datasource.driver-class-name}
