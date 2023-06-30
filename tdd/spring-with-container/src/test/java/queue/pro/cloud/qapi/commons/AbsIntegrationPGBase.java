@@ -44,7 +44,7 @@ public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
                         .claim("email", email)
                         .claim("scope", "openid email profile")
                         .claim("azp", "react-client")
-                        .claim("realm_access", Map.of("roles", List.of()))
+                        .claim("realm_access", Map.of("roles", List.of("admin","user")))
                         .expirationTime(Date.from(Instant.now().plusSeconds(120)))
                         .issueTime(new Date())
                         .build();
