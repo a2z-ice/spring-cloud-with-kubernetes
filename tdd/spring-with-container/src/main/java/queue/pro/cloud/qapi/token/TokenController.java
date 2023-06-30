@@ -19,4 +19,8 @@ public class TokenController {
     Mono<Integer> getTokens(@PathVariable("id") Integer id){
         return Mono.just(1);
     }
+    @GetMapping("/token/info")
+    Mono<String> getTokenInfo(){
+        return Mono.just("Welcome to qpro cloud");
+    }
 }

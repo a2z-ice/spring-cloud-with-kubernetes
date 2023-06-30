@@ -25,10 +25,13 @@ public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
     protected String getSignedJWT() throws JOSEException {
         return createJWT("duke", "duke@spring.io");
     }
+    protected String getSignedJWT(String...roles) throws JOSEException {
+        return createJWT("duke", "duke@spring.io",roles);
+    }
     protected String getSignedJWT(String username, String email) throws JOSEException {
         return createJWT(username, email);
     }
-    private String createJWT(String username, String email) throws JOSEException {
+    private String createJWT(String username, String email, String...roles) throws JOSEException {
         JWSHeader header =
                 new JWSHeader.Builder(JWSAlgorithm.RS256)
                         .type(JOSEObjectType.JWT)
@@ -44,7 +47,7 @@ public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
                         .claim("email", email)
                         .claim("scope", "openid email profile")
                         .claim("azp", "react-client")
-                        .claim("realm_access", Map.of("roles", List.of("admin","user")))
+                        .claim("realm_access", Map.of("roles", List.of(roles)))
                         .expirationTime(Date.from(Instant.now().plusSeconds(120)))
                         .issueTime(new Date())
                         .build();
