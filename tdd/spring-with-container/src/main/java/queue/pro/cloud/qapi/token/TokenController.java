@@ -10,6 +10,6 @@ import reactor.core.publisher.Flux;
 public class TokenController {
     @GetMapping("/tokens")
     Flux<Integer> getTokens(){
-        return Flux.just(1,2,3);
+        return Flux.just(1,2,3).log();
     }
 }

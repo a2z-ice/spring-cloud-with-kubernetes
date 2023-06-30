@@ -33,6 +33,7 @@ public class WiremockInitializer implements ApplicationContextInitializer<Config
 
         applicationContext.getBeanFactory().registerSingleton("wiremockServer",wireMockServer);
         applicationContext.getBeanFactory().registerSingleton("oAuth2Stubs",oAuth2Stubs);
+        applicationContext.getBeanFactory().registerSingleton("rsaKeyGenerator",rsaKeyGenerator);
 
         applicationContext.addApplicationListener(applicationEvent ->{
             if(applicationEvent instanceof ContextClosedEvent){

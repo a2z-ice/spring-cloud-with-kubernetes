@@ -41,6 +41,9 @@ spring:
     allow-bean-definition-overriding: true
 logging:
   level:
+    reactor: error
+    jdk: error
+    io.netty: error
     com: error
     com.github.tomakehurst.wiremock: info
     queue.pro: error
