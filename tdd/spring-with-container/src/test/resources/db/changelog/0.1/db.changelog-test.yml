@@ -8,3 +8,16 @@ databaseChangeLog:
   - include:
       file: qapi/create-token-detail-table.changelog.yml
       relativeToChangelogFile: true
+  # ----------------seed data------------------------------
+  - include:
+      file: seed/service-init-data.yml
+      relativeToChangelogFile: true
+      contextFilter: "!test"
+  - include:
+      file: seed/token-init-data.yml
+      relativeToChangelogFile: true
+      contextFilter: "!test"
+  - include:
+      file: seed/token-detail-init-data.yml
+      relativeToChangelogFile: true
+      contextFilter: "!test"

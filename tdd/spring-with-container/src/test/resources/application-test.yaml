@@ -26,6 +26,7 @@ spring:
     drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master-test.yml
     driver-class-name: ${spring.datasource.driver-class-name}
+    contexts: test
 logging:
   level:
     com: error
