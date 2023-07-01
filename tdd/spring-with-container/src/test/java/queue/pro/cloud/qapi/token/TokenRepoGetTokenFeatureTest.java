@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.YugabyteDBYSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 
