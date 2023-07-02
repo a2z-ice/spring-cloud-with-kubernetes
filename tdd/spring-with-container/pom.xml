@@ -18,6 +18,7 @@
         <testcontainers.version>1.18.3</testcontainers.version>
         <spring-cloud.version>2022.0.3</spring-cloud.version>
         <wiremock.version>2.35.0</wiremock.version>
+        <mockito.version>5.2.0</mockito.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -122,14 +123,17 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-jre8-standalone</artifactId>
             <version>${wiremock.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.projectreactor</groupId>
