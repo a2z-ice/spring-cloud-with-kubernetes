@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import queue.pro.cloud.qapi.annotation.DataJpaTestWithContainer;
 import queue.pro.cloud.qapi.commons.PostgresSupportedBaseTest;
+import queue.pro.cloud.qapi.token.data.TokenTestDataInitiator;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 
 import static org.junit.jupiter.api.Assertions.*;

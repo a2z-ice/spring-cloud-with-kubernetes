@@ -1,5 +1,6 @@
-package queue.pro.cloud.qapi.token;
+package queue.pro.cloud.qapi.token.data;
 
+import queue.pro.cloud.qapi.token.TokenEntity;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 
 import java.time.LocalDateTime;
@@ -18,8 +19,9 @@ public class TokenTestDataInitiator {
                         .serviceId("39b77775-4da2-49ee-9618-3cb84e84a384").svcPriority(100)
                         .noOfTry(0).nextTryTime(null).hasAnyFollowupSvc(false).isThisAFollowupSvc(false)
                         .tkisPageNavigation(null).custIdentificationType(null).custIdentificationNumber(null)
-                        .customerMobNumber(null).remarks(null).metaData(null).created(LocalDateTime.now())
-                        .createdBy("tdd").modified(LocalDateTime.now()).modifiedBy("tdd").build()
+                        .customerMobNumber(null).remarks(null).metaData(null)
+                        .createdBy("tdd").created(LocalDateTime.now())
+                        .modifiedBy("tdd").modified(LocalDateTime.now()).build()
         ).toList();
         tokenRepo.saveAllAndFlush(tokenEntities);
     }
