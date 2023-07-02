@@ -30,7 +30,7 @@ spring:
 logging:
   level:
     com: error
-    queue.pro: error
+    queue.pro: info
     liquibase: error
     org:
       springframework: error

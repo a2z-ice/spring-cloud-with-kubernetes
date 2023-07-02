@@ -46,14 +46,30 @@ public class ConcurrencyTest extends PostgresSupportedBaseTest {
         TokenEntity token2 = tokenRepo.findById("b77ff216-5e24-4170-8f4d-fcd58f865f65").orElseThrow();
         token1.setState(3);
         TransactionStatus transaction = this.platformTransactionManager.getTransaction(null);
+        log.info("-------------------start first transaction---------------------------------------");
         tokenRepo.saveAndFlush(token1);
         this.platformTransactionManager.commit(transaction);
+        log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJust Before First transaction commitXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+
+        log.info("(((((((((((((((((((((((((((((((Find token1 version");
+        token1 = tokenRepo.findById("b77ff216-5e24-4170-8f4d-fcd58f865f65").orElseThrow();
+        log.info("Find token1 version))))))))))))))))))))))))))))))))))))");
+        assertEquals(1, token1.getVersion(), "Check version for token1 should be 1");
+        log.info("---------------commit----end first transaction---------------------------------------");
+        assertEquals(0, token2.getVersion());
         final TransactionStatus transaction1 = this.platformTransactionManager.getTransaction(null);
+        log.info("**********************start second transaction************************************");
         token2.setState(4);
+        log.info("##############Just before token2.setState(4)##################");
         assertThrows(OptimisticLockingFailureException.class,() -> {
+            log.info("==========save and flush second transaction=================");
             tokenRepo.saveAndFlush(token2);
+            log.info("===============end flush second transaction=================");
             this.platformTransactionManager.commit(transaction1);
+            log.info("%%%%%%%%%%%%%Just before second transaction commit%%%%%%%%%%%%%%%%");
         });
+
+        assertEquals(0, token2.getVersion(), "Check version for token2 should be 0");
     }
 
 
