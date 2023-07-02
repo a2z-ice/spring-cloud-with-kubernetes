@@ -27,10 +27,8 @@ public class TokenEntityRepoWithSqlQAlgorithmTest extends PostgresSupportedBaseT
     @Autowired private DataSource dataSource;
     @Autowired private TestEntityManager testEntityManager;
 
-
     @Test
     void notNull() {
-
         assertNotNull(entityManager);
         assertNotNull(tokenRepo);
         assertNotNull(testEntityManager);
