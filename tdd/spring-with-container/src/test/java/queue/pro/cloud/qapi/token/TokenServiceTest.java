@@ -86,14 +86,13 @@ public class TokenServiceTest {
     @Test
     @DisplayName("Test getTokenAll - Empty List")
     public void testGetTokenAll_EmptyList() {
+        //Given
         List<TokenEntity> emptyTokenEntities = Collections.emptyList();
-
-        // Mock the tokenRepo.findAll() method to return an empty list as a stream
+        //When
         when(tokenRepo.findAll()).thenReturn(emptyTokenEntities);
-
-        // Invoke the getTokenAll method and verify using StepVerifier
+        //Then
         Flux<TokenEntity> result = tokenSvc.getTokenAll();
-
+        //Verify
         StepVerifier.create(result)
                 .expectComplete()
                 .verify();
