@@ -15,8 +15,6 @@ import queue.pro.cloud.qapi.initializer.WiremockInitializer;
 import queue.pro.cloud.qapi.token.data.TokenTestDataInitiator;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 
-import static  queue.pro.cloud.qapi.token.data.TokenTestDataInitiator.*;
-
 @ActiveProfiles("integration-test")
 @ContextConfiguration(initializers = WiremockInitializer.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -29,12 +27,12 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
     TokenRepo tokenRepo;
 
     @BeforeEach
-    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     public void initToken(){
         TokenTestDataInitiator.populateIdenticalTokensWithGivenIds(tokenRepo,"b77ff216-5e24-4170-8f4d-fcd58f865f65","79130a0c-dbda-4844-b245-3581bcaa054e");
     }
     @Test
-    void testIWithAdminRoleWllBe200SuccessAndReturnTotal3Elements() throws JOSEException {
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
+    void testIWithAdminRoleWllBe200SuccessAndReturnTotal2Elements() throws JOSEException {
         String validJWT = getSignedJWT("admin");
         webTestClient.get()
                 .uri("/v1/tokens")
@@ -52,11 +50,9 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
         ;
     }
     @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     void testRoleUserAccessUrlWhichHasOnlyAdminPermissionShouldBe403Forbidden() throws JOSEException {
-
-
         String validJWT = getSignedJWT("user");
-
         webTestClient.get()
                 .uri("/v1/tokens")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + validJWT)
@@ -65,6 +61,7 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
         ;
     }
     @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     void testWithoutRoleShouldBeForbidden403Error() throws JOSEException {
         String validJWT = getSignedJWT();
 
@@ -77,6 +74,7 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
     }
 
     @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     void testRoleUserAccessUrlWhichHasOnlyAdminAndUserPermissionShouldBe200Success() throws JOSEException {
         String validJWT = getSignedJWT("user");
         webTestClient.get()
@@ -90,7 +88,6 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
                 .jsonPath("$.tokenPrefix").isEqualTo("A")
         ;
     }
-
 }
 
 

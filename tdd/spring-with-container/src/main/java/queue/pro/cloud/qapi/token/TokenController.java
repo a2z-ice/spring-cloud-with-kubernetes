@@ -15,7 +15,7 @@ public class TokenController {
     private final TokenSvc tokenSvc;
     @GetMapping("/tokens")
     Flux<TokenEntity> getTokens(){
-        return tokenSvc.getTokenAll();
+        return tokenSvc.getTokenAllOrderByIdDesc();
     }
 
     @GetMapping("/token/{id}")

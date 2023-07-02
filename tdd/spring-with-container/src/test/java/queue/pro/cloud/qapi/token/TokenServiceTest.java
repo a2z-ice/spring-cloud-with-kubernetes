@@ -73,7 +73,7 @@ public class TokenServiceTest {
         //When
         when(tokenRepo.findAll()).thenReturn(tokenEntities);
         //Then
-        Flux<TokenEntity> result = tokenSvc.getTokenAll();
+        Flux<TokenEntity> result = tokenSvc.getTokenAllOrderByIdDesc();
         //Verify
         StepVerifier.create(result)
                 .expectNextMatches(tokenEntity -> tokenEntity.getId().equals(expectedId))
@@ -91,7 +91,7 @@ public class TokenServiceTest {
         //When
         when(tokenRepo.findAll()).thenReturn(emptyTokenEntities);
         //Then
-        Flux<TokenEntity> result = tokenSvc.getTokenAll();
+        Flux<TokenEntity> result = tokenSvc.getTokenAllOrderByIdDesc();
         //Verify
         StepVerifier.create(result)
                 .expectComplete()
