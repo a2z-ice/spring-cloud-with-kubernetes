@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/v1")
 public class TokenController {
     private final TokenSvc tokenSvc;
-    @GetMapping("/tokens")
+    @GetMapping("/token")
     Flux<TokenEntity> getTokens(){
         return tokenSvc.getTokenAllOrderByIdDesc();
     }

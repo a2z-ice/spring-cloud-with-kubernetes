@@ -28,6 +28,8 @@ public class SecurityConfig {
 
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     String issuerUri;
+    @Value("${spring.application.name}")
+    String resourceName;
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
@@ -39,7 +41,7 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
 //                                .jwtAuthenticationConverter(grantedAuthoritiesExtractor())
-                                .jwtAuthenticationConverter(new CustomAuthenticationConverter())
+                                .jwtAuthenticationConverter(new CustomAuthenticationConverter(resourceName))
                         )
                 );
         return http.build();

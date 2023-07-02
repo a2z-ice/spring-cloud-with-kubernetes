@@ -8,6 +8,7 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import queue.pro.cloud.qapi.initializer.RSAKeyGenerator;
 import queue.pro.cloud.qapi.stubs.OAuth2Stubs;
 
@@ -17,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
+
+    @Value("${spring.application.name}")
+    String resourceName;
     @Autowired
     private RSAKeyGenerator rsaKeyGenerator;
 
@@ -38,6 +42,16 @@ public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
                         .keyID(RSAKeyGenerator.KEY_ID)
                         .build();
 
+        /*
+          "resource_access": {
+    "qapi": {
+      "roles": [
+        "admin"
+      ]
+    }
+  }
+         */
+
         JWTClaimsSet payload =
                 new JWTClaimsSet.Builder()
                         .issuer(oAuth2Stubs.getIssuerUri())
@@ -47,7 +61,9 @@ public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
                         .claim("email", email)
                         .claim("scope", "openid email profile")
                         .claim("azp", "react-client")
-                        .claim("realm_access", Map.of("roles", List.of(roles)))
+                        .claim("resource_access", Map.of(resourceName, Map.of("roles",List.of(roles))))
+
+
                         .expirationTime(Date.from(Instant.now().plusSeconds(120)))
                         .issueTime(new Date())
                         .build();

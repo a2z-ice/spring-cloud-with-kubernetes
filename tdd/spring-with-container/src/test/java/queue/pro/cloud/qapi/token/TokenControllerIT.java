@@ -35,7 +35,7 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
     void testIWithAdminRoleWllBe200SuccessAndReturnTotal2Elements() throws JOSEException {
         String validJWT = getSignedJWT("admin");
         webTestClient.get()
-                .uri("/v1/tokens")
+                .uri("/v1/token")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + validJWT)
                 .exchange()
                 .expectStatus().is2xxSuccessful()

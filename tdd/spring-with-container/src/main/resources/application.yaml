@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  application:
+    name: qapi
   profiles:
     active: '@active.profile@'
   output:
