@@ -46,7 +46,6 @@ public class ConcurrencyTest extends PostgresSupportedBaseTest {
         TokenEntity token2 = tokenRepo.findById("b77ff216-5e24-4170-8f4d-fcd58f865f65").orElseThrow();
         token1.setState(3);
         TransactionStatus transaction = this.platformTransactionManager.getTransaction(null);
-        tokenRepo.save(token1);
         tokenRepo.saveAndFlush(token1);
         this.platformTransactionManager.commit(transaction);
         final TransactionStatus transaction1 = this.platformTransactionManager.getTransaction(null);
