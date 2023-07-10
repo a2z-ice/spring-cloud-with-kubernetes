@@ -61,6 +61,7 @@ public abstract class AbsIntegrationPGBase extends PostgresSupportedBaseTest{
                         .claim("email", email)
                         .claim("scope", "openid email profile")
                         .claim("azp", "react-client")
+                        .claim("preferred_username", username)
                         .claim("resource_access", Map.of(resourceName, Map.of("roles",List.of(roles))))
 
 

@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sdc-info-table
+      author: assad
+      changes:
+        - createTable:
+            tableName: sdc_info
+            columns:
+              - column:
+                  name: ID
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: VERSION
+                  type: INT
+                  defaultValueNumeric: '0'
+              - column:
+                  name: NAME
+                  type: varchar(155)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: SDU_ID
+                  type: varchar(36)
+              - column:
+                  name: LED_ID
+                  type: varchar(36)
+              - column:
+                  name: SERVING_TOKEN_NO
+                  type: varchar(10)
+              - column:
+                  name: SERVING_USER_LOGIN_ID
+                  type: varchar(36)
+              - column:
+                  name: SERVING_USER_LOGIN_TIME
+                  type: datetime
+              - column:
+                  name: SERVING_USER_LOGIN_STATE
+                  type: varchar(36)
+              - column:
+                  name: ACCOUNT_HOLDER_RATIO
+                  type: INT
+              - column:
+                  name: SERVING_UPDATE_ON
+                  type: datetime
+              - column:
+                  name: START_TIME
+                  type: datetime
+              - column:
+                  name: END_TIME
+                  type: datetime
+              - column:
+                  name: STATE
+                  type: INT
+                  defaultValueNumeric: '1'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MODIFIED_BY
+                  type: varchar(36)
+                  constraints:
+                    nullable: false

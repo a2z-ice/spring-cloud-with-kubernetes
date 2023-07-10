@@ -35,6 +35,7 @@ public class SecurityConfig {
         http
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/v1/tokens").hasRole("admin")
+                        .pathMatchers("/v1/token/sdc-user").authenticated()
                         .pathMatchers("/v1/token/{id}").hasAnyRole("admin","user")
                         .anyExchange().authenticated()
                 )

@@ -1,12 +1,17 @@
 package queue.pro.cloud.qapi.token;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import queue.pro.cloud.qapi.sdc.SdcInfoEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -23,4 +28,11 @@ public class TokenController {
         return tokenSvc.getTokenById(id);
     }
 
+    @GetMapping("/token/sdc-user")
+    Mono<Optional<SdcInfoEntity>> getCounterToken(@AuthenticationPrincipal Mono<Jwt> jwtPrincipal){
+        return jwtPrincipal
+                .map(jwt -> jwt.getClaimAsString("preferred_username"))
+                .flatMap(tokenSvc::getLogInCounterUserToken)
+                .defaultIfEmpty(Optional.empty());
+    }
 }
