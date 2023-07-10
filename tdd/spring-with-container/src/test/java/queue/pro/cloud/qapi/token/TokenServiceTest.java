@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,6 +17,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,7 +73,7 @@ public class TokenServiceTest {
 
         );
         //When
-        when(tokenRepo.findAll()).thenReturn(tokenEntities);
+        when(tokenRepo.findAll(any(Sort.class))).thenReturn(tokenEntities);
         //Then
         Flux<TokenEntity> result = tokenSvc.getTokenAllOrderByIdDesc();
         //Verify
@@ -84,12 +86,12 @@ public class TokenServiceTest {
     }
 
     @Test
-    @DisplayName("Test getTokenAll - Empty List")
-    public void testGetTokenAll_EmptyList() {
+    @DisplayName("Test testGetTokenAllOrderByIdDesc - Empty List")
+    public void testGetTokenAllOrderByIdDesc_ShouldReturnEmptyList() {
         //Given
         List<TokenEntity> emptyTokenEntities = Collections.emptyList();
         //When
-        when(tokenRepo.findAll()).thenReturn(emptyTokenEntities);
+        when(tokenRepo.findAll(any(Sort.class))).thenReturn(emptyTokenEntities);
         //Then
         Flux<TokenEntity> result = tokenSvc.getTokenAllOrderByIdDesc();
         //Verify
