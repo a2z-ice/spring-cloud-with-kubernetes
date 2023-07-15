@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockOAuth2Login;
 
 @WebFluxTest(controllers = FluxAndMonoController.class)
 @AutoConfigureWebTestClient
@@ -31,11 +32,11 @@ public class FluxAndMonoControllerJwtMockTest {
 
 
     @Test
-    void flux(){
+    void flux_onlyAuthenticationNoClaimsDefine(){
 
 
         webTestClient
-                .mutateWith(mockedJwt)
+                .mutateWith(mockOAuth2Login())
                 .get()
                 .uri("/flux")
                 .exchange()
@@ -46,7 +47,7 @@ public class FluxAndMonoControllerJwtMockTest {
     }
 
     @Test
-    void mono(){
+    void mono_withClaimsAddedToJwtToken(){
 
         final Flux<String> response = webTestClient
                 .mutateWith(mockedJwt)
