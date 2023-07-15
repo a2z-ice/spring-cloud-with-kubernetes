@@ -1,9 +1,11 @@
 package queue.pro.cloud.qapi.learn;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
@@ -16,20 +18,24 @@ public class FluxAndMonoControllerJwtMockTest {
     @Autowired
     WebTestClient webTestClient;
 
+    static SecurityMockServerConfigurers.JwtMutator mockedJwt;
+
+    @BeforeAll
+    static void  setMockedJwt(){
+        mockedJwt = SecurityMockServerConfigurers.mockJwt().jwt(jwt -> {
+            jwt.claims(claims -> {
+                claims.put("scope", "message-read");
+            }).subject("client");
+        });
+    }
+
+
     @Test
     void flux(){
 
-//        final SecurityMockServerConfigurers.JwtMutator jwt = SecurityMockServerConfigurers.mockJwt().jwt(jwt -> {
-//            jwt.claims(claims -> {
-//                claims.put("scope", "message-read");
-//            }).subject("messaging");
-//        });
+
         webTestClient
-                .mutateWith(mockJwt().jwt(jwt-> {
-                    jwt.claims(claimes -> {
-                        claimes.put("scope", "message-read");
-                    }).subject("client");
-                }))
+                .mutateWith(mockedJwt)
                 .get()
                 .uri("/flux")
                 .exchange()
@@ -41,12 +47,9 @@ public class FluxAndMonoControllerJwtMockTest {
 
     @Test
     void mono(){
+
         final Flux<String> response = webTestClient
-                .mutateWith(mockJwt().jwt(jwt -> {
-                    jwt.claims(claimes -> {
-                        claimes.put("scope", "message-read");
-                    }).subject("client");
-                }))
+                .mutateWith(mockedJwt)
                 .get()
                 .uri("/mono")
                 .exchange()
