@@ -20,7 +20,7 @@ import queue.pro.cloud.qapi.token.repo.TokenRepo;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("integration-test")
 @ContextConfiguration(initializers = WiremockInitializer.class)
@@ -50,10 +50,10 @@ public class SdcWiseTokenControllerIT extends AbsIntegrationPGBase {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + validJWT)
                 .exchange()
                 //Then
-                .expectStatus().is2xxSuccessful().expectBody(Optional.class)
+                .expectStatus().is2xxSuccessful().expectBody(SdcInfoEntity.class)
                 .consumeWith(response ->{
-                    Optional<SdcInfoEntity> optionalSdcInfoEntity = response.getResponseBody();
-                    assertFalse(optionalSdcInfoEntity.isPresent(), "Expected Optional not to be present");
+                    SdcInfoEntity optionalSdcInfoEntity = response.getResponseBody();
+                    assertNull(optionalSdcInfoEntity, "Expected Optional not to be present");
                     });
 
         ;

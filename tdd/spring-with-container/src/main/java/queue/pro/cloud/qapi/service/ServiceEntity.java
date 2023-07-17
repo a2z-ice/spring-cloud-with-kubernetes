@@ -2,6 +2,7 @@ package queue.pro.cloud.qapi.service;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EntityListeners(AuditingEntityListener.class)
+@DynamicUpdate
 @Entity
 @Table(name = "service")
 public class ServiceEntity {

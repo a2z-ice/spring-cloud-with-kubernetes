@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Configuration
-@EnableJpaAuditing(auditorAwareRef = "dateZoneAuditWare")
+//@EnableJpaAuditing(auditorAwareRef = "dateZoneAuditWare")
+@EnableJpaAuditing
 public class AuditConfiguration {
-    @Bean
-    public AuditorAware<LocalDateTime> dateZoneAuditWare(){
-        return new CustomDateZoneAuditAware();
-    }
+//    @Bean
+//    public AuditorAware<LocalDateTime> dateZoneAuditWare(){
+//        return new CustomDateZoneAuditAware();
+//    }
 }

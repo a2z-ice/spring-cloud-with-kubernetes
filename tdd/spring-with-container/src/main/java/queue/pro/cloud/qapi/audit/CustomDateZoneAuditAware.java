@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.TimeZone;
 
+//@Component
 
 public class CustomDateZoneAuditAware implements AuditorAware<LocalDateTime> {
     @Override
