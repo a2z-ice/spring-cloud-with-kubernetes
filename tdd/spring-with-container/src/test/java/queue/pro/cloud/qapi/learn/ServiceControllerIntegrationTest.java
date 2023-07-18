@@ -10,19 +10,16 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.testcontainers.containers.PostgreSQLContainer;
-import queue.pro.cloud.qapi.commons.PostgresSupportedBaseTest;
 import queue.pro.cloud.qapi.service.ServiceEntity;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockOAuth2Login;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("integration-test")
-class ServiceControllerTest {
+class ServiceControllerIntegrationTest {
     @Autowired
     WebTestClient webTestClient;
     public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:15.3")
