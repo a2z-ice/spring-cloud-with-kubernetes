@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockOAuth2Login;
 //import static reactor.core.publisher.Mono.when;
 
@@ -46,7 +47,9 @@ public class LearnServiceControllerUniteTest {
 
         when(learnServiceSvc.addService(isA(ServiceEntity.class))).thenReturn(Mono.just(svc));
 
-        webTestClient.mutateWith(mockOAuth2Login())
+        webTestClient
+                .mutateWith(mockOAuth2Login())
+                .mutateWith(csrf())
                 .post().uri("/learn/service")
                 .bodyValue(svc)
                 .exchange().expectStatus().isBadRequest();
