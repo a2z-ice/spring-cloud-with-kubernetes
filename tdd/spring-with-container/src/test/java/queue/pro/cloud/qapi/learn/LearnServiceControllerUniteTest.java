@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import queue.pro.cloud.qapi.security.SecurityConfig;
 import queue.pro.cloud.qapi.service.ServiceEntity;
 import queue.pro.cloud.qapi.service.ServiceRepo;
 import reactor.core.publisher.Mono;
@@ -24,6 +26,8 @@ public class LearnServiceControllerUniteTest {
     @Autowired
     WebTestClient webTestClient;
 
+
+
     @MockBean
     LearnServiceSvc learnServiceSvc;
 
@@ -40,7 +44,7 @@ public class LearnServiceControllerUniteTest {
         svc.setModified(LocalDateTime.now());
 
 
-        when(learnServiceSvc.addService(svc)).thenReturn(Mono.just(svc));
+        when(learnServiceSvc.addService(isA(ServiceEntity.class))).thenReturn(Mono.just(svc));
 
         webTestClient.mutateWith(mockOAuth2Login())
                 .post().uri("/learn/service")
