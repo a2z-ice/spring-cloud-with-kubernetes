@@ -32,13 +32,13 @@ public class SecurityConfig {
     String resourceName;
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http
+        http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/v1/tokens").hasRole("admin")
                         .pathMatchers("/v1/token/sdc-user").authenticated()
                         .pathMatchers("/v1/token/{id}").hasAnyRole("admin","user")
                         .anyExchange().authenticated()
-                ).csrf(csrf -> csrf.disable())
+                )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
 //                                .jwtAuthenticationConverter(grantedAuthoritiesExtractor())
