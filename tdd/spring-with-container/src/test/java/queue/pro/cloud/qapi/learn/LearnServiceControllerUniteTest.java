@@ -3,41 +3,28 @@ package queue.pro.cloud.qapi.learn;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.testcontainers.containers.PostgreSQLContainer;
 import queue.pro.cloud.qapi.service.ServiceEntity;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockOAuth2Login;
+import static reactor.core.publisher.Mono.when;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebFluxTest(controllers = LearnServiceController.class)
 @AutoConfigureWebTestClient
-@ActiveProfiles("integration-test")
 public class LearnServiceControllerUniteTest {
     @Autowired
     WebTestClient webTestClient;
-    public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:15.3")
-            .withDatabaseName("test")
-            .withUsername("duke")
-            .withPassword("s3cret")
-            .withReuse(true)
-            ;
-    @DynamicPropertySource
-    static void datasourceProps(final DynamicPropertyRegistry registry){
-        registry.add("spring.datasource.url",container::getJdbcUrl);
-        registry.add("spring.datasource.username",container::getUsername);
-        registry.add("spring.datasource.password",container::getPassword);
-        registry.add("spring.datasource.driver-class-name",container::getDriverClassName);
-    }
 
-    static{
-        container.start();
-    }
+    @MockBean
+    LearnServiceSvc learnServiceSvc;
+
     @Test
     void printResponseToSeeWhatTheControllerReturnsForInvalidEntry(){
         //Given
@@ -50,7 +37,7 @@ public class LearnServiceControllerUniteTest {
         svc.setModifiedBy("test");
         svc.setModified(LocalDateTime.now());
 
-
+        when(learnServiceSvc.addService(any(ServiceEntity.class))).thenReturn(Mono.just(svc));
 
         webTestClient.mutateWith(mockOAuth2Login())
                 .post().uri("/learn/service")
