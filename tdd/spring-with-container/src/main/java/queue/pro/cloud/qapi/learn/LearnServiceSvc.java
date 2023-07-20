@@ -22,6 +22,7 @@ public class LearnServiceSvc {
     }
 
     public Mono<ServiceEntity> addService(ServiceEntity service) {
+        System.out.println("value of serviceRepo: *************************" + serviceRepo);
         return Mono.fromSupplier(() -> serviceRepo.save(service))
                 .subscribeOn(Schedulers.boundedElastic());
     }

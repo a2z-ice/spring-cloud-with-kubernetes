@@ -1,6 +1,8 @@
 package queue.pro.cloud.qapi.service;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,6 +30,7 @@ public class ServiceEntity {
     @GenericGenerator(name = "UUID", strategy = "queue.pro.cloud.qapi.common.UUIDGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
     private String id;
+    @NotBlank(message = "service.name must be present")
     @Column(nullable = false, updatable = false)
     private String name;
     @Column(nullable = false, updatable = false)

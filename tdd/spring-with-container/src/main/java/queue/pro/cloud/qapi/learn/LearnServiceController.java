@@ -1,5 +1,6 @@
 package queue.pro.cloud.qapi.learn;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +18,7 @@ public class LearnServiceController {
     final LearnServiceSvc learnServiceSvc;
     @PostMapping(value = "/service", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    Mono<ServiceEntity> addService(@RequestBody ServiceEntity service){
+    Mono<ServiceEntity> addService(@RequestBody @Valid ServiceEntity service){
         return learnServiceSvc.addService(service).log();
 
     }
