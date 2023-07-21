@@ -166,10 +166,8 @@ class ServiceControllerIntegrationTest {
                 .bodyValue(svc)
                 .exchange()
                 .expectStatus().isNotFound()
-                .expectBody(String.class)
-                .consumeWith(response -> {
-                    System.out.println("response body:" + response.getResponseBody());
-                })
+                .expectBody()
+                .jsonPath("$.error").isEqualTo("not found")
         ;
     }
 
