@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
@@ -40,7 +41,7 @@ public class LearnServiceControllerUniteTest {
         svc.setModifiedBy("test");
         svc.setModified(LocalDateTime.now());
 
-
+        //When
         when(learnServiceSvc.addService(isA(ServiceEntity.class))).thenReturn(Mono.just(svc));
 
         webTestClient
@@ -48,13 +49,16 @@ public class LearnServiceControllerUniteTest {
                 .mutateWith(csrf())
                 .post().uri("/learn/service")
                 .bodyValue(svc)
+                //Then
                 .exchange().expectStatus()
                 .isBadRequest()
                 .expectBody(String.class)
                 .consumeWith(stringEntityExchangeResult -> {
                     final String response = stringEntityExchangeResult.getResponseBody();
+                    var expectedErrorMessage = "service.name must be present";
                     System.out.println(response);
                     assert response != null;
+                    assertEquals(expectedErrorMessage,response);
                 })
         ;
 
