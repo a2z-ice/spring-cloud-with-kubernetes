@@ -41,9 +41,7 @@ public class LearnServiceController {
     }
     @PutMapping("/service-null/{id}")
     Mono<ResponseEntity<?>> updateServiceOrNull(@RequestBody ServiceEntity updatedService, @PathVariable String id){
-        final Map<String,String> map = new HashMap<>();
-        map.put("serviceId", id);
-        map.put("error", "not found");
+
         return  learnServiceSvc.performUpdateOrNull(updatedService,id)
                 .map(monoServiceEntity -> ResponseEntity.ok().body(monoServiceEntity))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
@@ -51,6 +49,9 @@ public class LearnServiceController {
                     if (response.getStatusCode().is2xxSuccessful()) {
                         return response; // If it's a success response, keep it as is.
                     } else {
+                        final Map<String,String> map = new HashMap<>();
+                        map.put("serviceId", id);
+                        map.put("error", "not found");
                         // If it's not a success response, create a custom response with a string body.
                         String customErrorMessage = "Custom error message: Service not found or update failed.";
                         return ResponseEntity.status(response.getStatusCode())
