@@ -2,6 +2,7 @@ package queue.pro.cloud.qapi.learn;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import queue.pro.cloud.qapi.service.ServiceEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -37,12 +40,33 @@ public class LearnServiceController {
         return learnServiceSvc.updateService(updatedService, id);
     }
     @PutMapping("/service-null/{id}")
-    Mono<ResponseEntity<ServiceEntity>> updateServiceOrNull(@RequestBody ServiceEntity updatedService, @PathVariable String id){
+    Mono<ResponseEntity<?>> updateServiceOrNull(@RequestBody ServiceEntity updatedService, @PathVariable String id){
+        final Map<String,String> map = new HashMap<>();
+        map.put("serviceId", id);
+        map.put("error", "not found");
         return  learnServiceSvc.performUpdateOrNull(updatedService,id)
                 .map(monoServiceEntity -> ResponseEntity.ok().body(monoServiceEntity))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
+                .map(response -> {
+                    if (response.getStatusCode().is2xxSuccessful()) {
+                        return response; // If it's a success response, keep it as is.
+                    } else {
+                        // If it's not a success response, create a custom response with a string body.
+                        String customErrorMessage = "Custom error message: Service not found or update failed.";
+                        return ResponseEntity.status(response.getStatusCode())
+                                .headers(response.getHeaders())
+                                .body(map);
+                    }
+                })
                .log()
         ;
+    }
+
+    private Mono<ResponseEntity<?>> customErrorResponse() {
+        String customErrorMessage = "Custom error message: Service not found or update failed.";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(customErrorMessage));
     }
 
 }

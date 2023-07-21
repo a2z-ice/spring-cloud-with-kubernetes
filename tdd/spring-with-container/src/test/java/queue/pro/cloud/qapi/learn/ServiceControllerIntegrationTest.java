@@ -165,7 +165,12 @@ class ServiceControllerIntegrationTest {
         webTestClient.mutateWith(mockOAuth2Login()).put().uri("/learn/service-null/{id}",serviceId)
                 .bodyValue(svc)
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isNotFound()
+                .expectBody(String.class)
+                .consumeWith(response -> {
+                    System.out.println("response body:" + response.getResponseBody());
+                })
+        ;
     }
 
 }
