@@ -62,6 +62,13 @@ public class LearnServiceController {
                .log()
         ;
     }
+    @PutMapping("/service-not-found-ex/{id}/using-controller-advice")
+    Mono<ResponseEntity<ServiceEntity>> updateIfNotThrowNotFoundException(@RequestBody ServiceEntity updatedService, @PathVariable String id){
+        return learnServiceSvc.performUpdateIfNotThrowNotFoundException(updatedService,id)
+                .map(monoService -> ResponseEntity.ok().body(monoService))
+                ;
+
+    }
 
     private Mono<ResponseEntity<?>> customErrorResponse() {
         String customErrorMessage = "Custom error message: Service not found or update failed.";

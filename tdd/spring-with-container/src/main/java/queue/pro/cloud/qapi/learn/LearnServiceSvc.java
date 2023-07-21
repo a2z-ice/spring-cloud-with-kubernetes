@@ -2,7 +2,9 @@ package queue.pro.cloud.qapi.learn;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
+import queue.pro.cloud.qapi.error.NotFoundException;
 import queue.pro.cloud.qapi.service.ServiceEntity;
 import queue.pro.cloud.qapi.service.ServiceRepo;
 import reactor.core.publisher.Flux;
@@ -53,6 +55,19 @@ public class LearnServiceSvc {
             if(dbService == null) return null;
             dbService.setName(updatedService.getName());
             return serviceRepo.saveAndFlush(dbService);
+
+    }
+
+    public Mono<ServiceEntity> performUpdateIfNotThrowNotFoundException(ServiceEntity service,String id){
+        return Mono.fromSupplier(()-> updateIfNotThrowNotFoundException(service,id))
+                .subscribeOn(Schedulers.boundedElastic()).log();
+    }
+
+    private ServiceEntity updateIfNotThrowNotFoundException(ServiceEntity updatedService, String id) {
+        final ServiceEntity dbService = serviceRepo.findById(id)
+                .orElseThrow(()-> new NotFoundException(new NotFoundException.Reason("error", "The " + id + " not found")));
+        dbService.setName(updatedService.getName());
+        return serviceRepo.saveAndFlush(dbService);
 
     }
 }

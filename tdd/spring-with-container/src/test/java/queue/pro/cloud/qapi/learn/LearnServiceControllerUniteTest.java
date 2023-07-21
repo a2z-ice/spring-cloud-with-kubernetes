@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import queue.pro.cloud.qapi.error.NotFoundException;
 import queue.pro.cloud.qapi.service.ServiceEntity;
 import reactor.core.publisher.Mono;
 
@@ -88,6 +89,35 @@ public class LearnServiceControllerUniteTest {
                 .expectStatus().isNotFound()
                 .expectBody()
                 .jsonPath("$.error").isEqualTo("not found")
+        ;
+    }
+
+    @Test
+    void serviceUpdateNullTest_shouldBeNotFoundException() {
+        //Given
+        var serviceId = "id-not-in-db";
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("test post");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
+
+        //When
+        when(learnServiceSvc.performUpdateIfNotThrowNotFoundException(isA(ServiceEntity.class),any(String.class))).thenThrow(new NotFoundException(new NotFoundException.Reason("error", serviceId + " id not found")));
+
+        // When
+        webTestClient.mutateWith(mockOAuth2Login()).mutateWith(csrf())
+                .put().uri("/learn/service-not-found-ex/{id}/using-controller-advice",serviceId)
+                .bodyValue(svc)
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody()
+                .jsonPath("$.errorType").isEqualTo("error")
+                .jsonPath("$.errorDetail").isEqualTo("id-not-in-db id not found")
+
         ;
     }
 }
