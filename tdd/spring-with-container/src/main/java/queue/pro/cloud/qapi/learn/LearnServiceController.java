@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import queue.pro.cloud.qapi.service.ServiceEntity;
 import reactor.core.publisher.Flux;
@@ -34,6 +35,14 @@ public class LearnServiceController {
     @PutMapping("/service/{id}")
     Mono<ServiceEntity> updateService(@RequestBody ServiceEntity updatedService, @PathVariable String id){
         return learnServiceSvc.updateService(updatedService, id);
+    }
+    @PutMapping("/service-null/{id}")
+    Mono<ResponseEntity<ServiceEntity>> updateServiceOrNull(@RequestBody ServiceEntity updatedService, @PathVariable String id){
+        return  learnServiceSvc.performUpdateOrNull(updatedService,id)
+                .map(monoServiceEntity -> ResponseEntity.ok().body(monoServiceEntity))
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
+               .log()
+        ;
     }
 
 }

@@ -124,5 +124,48 @@ class ServiceControllerIntegrationTest {
 
     }
 
+    @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
+    void serviceUpdateNullTest_shouldUpdateNameWithGivenIdExpectSuccess() {
+        //Given
+        var serviceId = "4e392b34-a027-4bef-b906-02631f55be77";
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("test post");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
+
+        // When
+        webTestClient.mutateWith(mockOAuth2Login()).put().uri("/learn/service-null/{id}",serviceId)
+                .bodyValue(svc)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(serviceId);
+    }
+
+    @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
+    void serviceUpdateNullTest_shouldBeNotFound() {
+        //Given
+        var serviceId = "id-not-in-db";
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("test post");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
+
+        // When
+        webTestClient.mutateWith(mockOAuth2Login()).put().uri("/learn/service-null/{id}",serviceId)
+                .bodyValue(svc)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 
 }

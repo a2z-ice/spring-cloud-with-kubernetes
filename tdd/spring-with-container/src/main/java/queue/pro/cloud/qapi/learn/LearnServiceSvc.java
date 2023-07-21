@@ -43,4 +43,16 @@ public class LearnServiceSvc {
             return serviceRepo.saveAndFlush(dbService);
 
     }
+
+    public Mono<ServiceEntity> performUpdateOrNull(final ServiceEntity updateService, final String id){
+        return Mono.fromSupplier(() -> performUpdateIfNotNull(updateService,id))
+                .subscribeOn(Schedulers.boundedElastic()).log();
+    }
+    private ServiceEntity performUpdateIfNotNull(ServiceEntity updatedService, String id) {
+            final ServiceEntity dbService = serviceRepo.findById(id).orElse(null);
+            if(dbService == null) return null;
+            dbService.setName(updatedService.getName());
+            return serviceRepo.saveAndFlush(dbService);
+
+    }
 }

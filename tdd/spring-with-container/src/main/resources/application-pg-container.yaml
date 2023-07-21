@@ -39,3 +39,19 @@ spring:
     default-schema: ${spring.jpa.properties.hibernate.default_schema}
     drop-first: false
     change-log: classpath:/db/changelog/db.changelog-master.yml
+#logging:
+#  level:
+#    com: debug
+#    queue.pro: info
+#    liquibase: error
+#    reactor: debug
+#    org:
+#      springframework: debug
+#      springframework.orm.jpa: debug
+#      hibernate:
+#        persister: error
+#        stat: debug
+#        cache: error
+#        sql: debug
+#        type.descriptor.sql.BasicBinder: trace
+#    root: debug
