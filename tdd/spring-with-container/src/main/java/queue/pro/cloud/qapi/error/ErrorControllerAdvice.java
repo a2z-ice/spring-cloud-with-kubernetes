@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class ErrorControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex){

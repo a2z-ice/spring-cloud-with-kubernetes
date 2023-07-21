@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/learn")
 public class LearnServiceController {
     final LearnServiceSvc learnServiceSvc;
-    @PostMapping(value = "/service", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/service")
     @ResponseStatus(HttpStatus.CREATED)
     Mono<ServiceEntity> addService(@RequestBody @Valid ServiceEntity service){
         return learnServiceSvc.addService(service).log();

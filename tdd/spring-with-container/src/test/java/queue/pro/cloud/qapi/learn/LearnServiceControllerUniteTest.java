@@ -48,7 +48,15 @@ public class LearnServiceControllerUniteTest {
                 .mutateWith(csrf())
                 .post().uri("/learn/service")
                 .bodyValue(svc)
-                .exchange().expectStatus().isBadRequest();
+                .exchange().expectStatus()
+                .isBadRequest()
+                .expectBody(String.class)
+                .consumeWith(stringEntityExchangeResult -> {
+                    final String response = stringEntityExchangeResult.getResponseBody();
+                    System.out.println(response);
+                    assert response != null;
+                })
+        ;
 
 
     }
