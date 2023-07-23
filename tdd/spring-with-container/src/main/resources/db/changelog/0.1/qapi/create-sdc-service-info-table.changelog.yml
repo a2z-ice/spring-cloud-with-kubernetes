@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sdc-service-info-table
+      author: assad
+      changes:
+        - createTable:
+            tableName: sdc_service_info
+            columns:
+              - column:
+                  name: SDC_ID
+                  type: varchar(36)
+                  constraints:
+                    foreignKeyName: FK_SSI_SDC_ID
+                    references: sdc_info(ID)
+                    nullable: false
+              - column:
+                  name: SERVICE_ID
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: FK_SSI_SERVICE_ID
+                    references: service(ID)

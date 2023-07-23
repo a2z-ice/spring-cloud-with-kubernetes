@@ -11,8 +11,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import queue.pro.cloud.qapi.sdc.SdcInfoEntity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,6 +33,16 @@ public class ServiceEntity {
     @GenericGenerator(name = "UUID", strategy = "queue.pro.cloud.qapi.common.UUIDGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
     private String id;
+
+    @ManyToMany
+    @JoinTable(
+            name = "sdc_service_info",
+            joinColumns = @JoinColumn(name = "service_id"),
+            inverseJoinColumns = @JoinColumn(name = "sdc_id")
+    )
+    private Set<SdcInfoEntity> sdcInfos = new HashSet<>();
+
+
     @NotBlank(message = "service.name must be present")
     @Column(nullable = false, updatable = false)
     private String name;

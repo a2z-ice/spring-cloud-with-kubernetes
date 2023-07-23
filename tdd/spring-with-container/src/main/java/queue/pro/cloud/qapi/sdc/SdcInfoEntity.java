@@ -9,8 +9,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import queue.pro.cloud.qapi.common.entity.BaseEntity;
+import queue.pro.cloud.qapi.service.ServiceEntity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,6 +31,10 @@ public class SdcInfoEntity extends BaseEntity {
     @Version
     @Column(name = "VERSION")
     private Integer version;
+
+    @ManyToMany(mappedBy = "sdcInfos")
+    private Set<ServiceEntity> services = new HashSet<>();
+
     @Column(name="name")
     private String name;
     @Column(name="sdu_id")

@@ -1,0 +1,5 @@
+TRUNCATE service CASCADE;
+insert into service (id,name,prefix,priority,version,created,created_by,modified,modified_by) values
+('4e392b34-a027-4bef-b906-02631f55be77','Cash deposit','A',8,0,'2023-06-14 14:57:04.000','auto','2023-06-14 14:57:04.000','auto'),
+('39b77775-4da2-49ee-9618-3cb84e84a384','Cash withdraw','B',8,0,'2023-06-14 14:57:04.000','auto','2023-06-14 14:57:04.000','auto');
+

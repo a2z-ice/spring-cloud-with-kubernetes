@@ -12,6 +12,9 @@ databaseChangeLog:
   - include:
       file: qapi/create-sdc-info-table.changelog.yml
       relativeToChangelogFile: true
+  - include:
+      file: qapi/create-sdc-service-info-table.changelog.yml
+      relativeToChangelogFile: true
 # ----------------seed data------------------------------
   - include:
       file: seed/service-init-data.yml
