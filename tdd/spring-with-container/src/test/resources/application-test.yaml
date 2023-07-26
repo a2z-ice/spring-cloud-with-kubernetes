@@ -32,8 +32,10 @@ logging:
     com: error
     queue.pro: info
     liquibase: error
+    reactor: info
     org:
       springframework: error
+      springframework.orm.jpa: error
       hibernate:
         persister: error
         stat: debug

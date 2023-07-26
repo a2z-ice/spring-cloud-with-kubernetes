@@ -10,10 +10,15 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.testcontainers.containers.PostgreSQLContainer;
+import queue.pro.cloud.qapi.error.NotFoundException;
 import queue.pro.cloud.qapi.service.ServiceEntity;
 
 import java.time.LocalDateTime;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockOAuth2Login;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -124,5 +129,79 @@ class ServiceControllerIntegrationTest {
 
     }
 
+    @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
+    void serviceUpdateNullTest_shouldUpdateNameWithGivenIdExpectSuccess() {
+        //Given
+        var serviceId = "4e392b34-a027-4bef-b906-02631f55be77";
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("test post");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
+
+        // When
+        webTestClient.mutateWith(mockOAuth2Login()).put().uri("/learn/service-null/{id}",serviceId)
+                .bodyValue(svc)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(serviceId);
+    }
+
+    @Test
+    @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
+    void serviceUpdateNullTest_shouldBeNotFound() {
+        //Given
+        var serviceId = "id-not-in-db";
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("test post");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
+
+        // When
+        webTestClient.mutateWith(mockOAuth2Login()).put().uri("/learn/service-null/{id}",serviceId)
+                .bodyValue(svc)
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody()
+                .jsonPath("$.error").isEqualTo("not found");
+    }
+
+
+    @Test
+    void serviceUpdateNullTest_shouldBeNotFoundException() {
+        //Given
+        var serviceId = "id-not-in-db";
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("test post");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
+
+
+
+        // When
+        webTestClient.mutateWith(mockOAuth2Login()).mutateWith(csrf())
+                .put().uri("/learn/service-not-found-ex/{id}/using-controller-advice",serviceId)
+                .bodyValue(svc)
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody()
+                .jsonPath("$.errorType").isEqualTo("error")
+                .jsonPath("$.errorDetail").isEqualTo("The id-not-in-db not found")
+
+        ;
+    }
 
 }

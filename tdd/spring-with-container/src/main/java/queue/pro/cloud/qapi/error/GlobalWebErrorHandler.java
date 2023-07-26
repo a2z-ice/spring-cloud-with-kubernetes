@@ -8,10 +8,10 @@ import reactor.core.publisher.Mono;
 import java.util.Objects;
 
 //@Component
-public class GlobalWebErrorHandler implements ErrorWebExceptionHandler {
-    @Override
-    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-
-        return null;
-    }
+public class GlobalWebErrorHandler {
+//    @Override
+//    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+//
+//        return null;
+//    }
 }
