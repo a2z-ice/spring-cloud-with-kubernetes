@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import queue.pro.cloud.qapi.error.NotFoundException;
@@ -22,6 +23,8 @@ import static org.springframework.security.test.web.reactive.server.SecurityMock
 //import static reactor.core.publisher.Mono.when;
 
 @WebFluxTest(controllers = LearnServiceController.class)
+// Use @ContextConfiguration(classes={ClassThatNeedToBeLoaded.class}) to load other dependent beans
+@ActiveProfiles("test")
 @AutoConfigureWebTestClient
 public class LearnServiceControllerUniteTest {
     @Autowired

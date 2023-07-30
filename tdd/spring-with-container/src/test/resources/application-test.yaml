@@ -36,6 +36,8 @@ logging:
     org:
       springframework: error
       springframework.orm.jpa: error
+      org.springframework.web.reactive: debug
+      org.springframework.web.server.adapter: debug
       hibernate:
         persister: error
         stat: debug
