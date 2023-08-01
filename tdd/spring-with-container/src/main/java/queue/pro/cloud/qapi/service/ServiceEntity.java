@@ -1,5 +1,6 @@
 package queue.pro.cloud.qapi.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,6 +35,7 @@ public class ServiceEntity {
     @Column(name = "ID", updatable = false, nullable = false)
     private String id;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "sdc_service_info",
@@ -46,6 +48,7 @@ public class ServiceEntity {
     @NotBlank(message = "service.name must be present")
     @Column(nullable = false, updatable = false)
     private String name;
+    @NotBlank(message = "service.prefix must be present")
     @Column(nullable = false, updatable = false)
     private String prefix;
     @Column(nullable = false, updatable = false)

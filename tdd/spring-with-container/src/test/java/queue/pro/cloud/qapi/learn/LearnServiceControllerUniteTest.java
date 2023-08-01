@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -61,13 +63,40 @@ public class LearnServiceControllerUniteTest {
                 .expectBody(String.class)
                 .consumeWith(stringEntityExchangeResult -> {
                     final String response = stringEntityExchangeResult.getResponseBody();
-                    var expectedErrorMessage = "service.name must be present";
+                    var expectedErrorMessage = "{\"status\":400,\"messages\":[\"service.name must be present\"]}";
                     System.out.println(response);
                     assert response != null;
                     assertEquals(expectedErrorMessage,response);
                 });
     }
+    @Test
+    void postRequestWithErrorInput_shouldExpectBandRequestWithProperInfo(){
+        //Given
+        ServiceEntity svc = new ServiceEntity();
+        svc.setName("");
+        svc.setPrefix("A");
+        svc.setPriority(8);
+        svc.setCreatedBy("test");
+        svc.setCreated(LocalDateTime.now());
+        svc.setModifiedBy("test");
+        svc.setModified(LocalDateTime.now());
 
+        //When
+        when(learnServiceSvc.addService(isA(ServiceEntity.class))).thenReturn(Mono.just(svc));
+
+        webTestClient
+                .mutateWith(mockOAuth2Login())
+                .mutateWith(csrf())
+                .post().uri("/learn/service")
+                .bodyValue(svc)
+                //Then
+                .exchange().expectStatus()
+                .isBadRequest()
+                .expectBody()
+                .jsonPath("$.status").isEqualTo(HttpStatus.BAD_REQUEST.value())
+                .jsonPath("$.messages.size()").isNotEmpty()
+                .jsonPath("$.messages[0]").isEqualTo("service.name must be present");
+    }
     @Test
     void serviceUpdateNullTest_shouldBeNotFound() {
         //Given

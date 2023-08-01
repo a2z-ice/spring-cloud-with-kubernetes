@@ -19,6 +19,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @DynamicUpdate
 @Table(name= "sdc_info")
