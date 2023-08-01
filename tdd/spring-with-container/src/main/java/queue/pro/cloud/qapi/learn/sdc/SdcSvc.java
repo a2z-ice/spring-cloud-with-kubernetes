@@ -16,10 +16,12 @@ import java.util.List;
 @Service
 public class SdcSvc {
 
+    private final SdcInfoRepo sdcInfoRepo;
     public Flux<SdcInfoEntity> getSdcInfoList(Pageable page) {
         return Flux.empty();
     }
     public Mono<Page<SdcInfoEntity>> getSdcInfoPage(Pageable page) {
-        return null;
+        return Mono.just(sdcInfoRepo.findAll(page))
+                .subscribeOn(Schedulers.boundedElastic());
     }
 }
