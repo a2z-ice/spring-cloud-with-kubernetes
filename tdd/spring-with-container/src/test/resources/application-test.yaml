@@ -38,10 +38,13 @@ logging:
       springframework.orm.jpa: error
       org.springframework.web.reactive: debug
       org.springframework.web.server.adapter: debug
+      org.springframework.data.jpa.repository: OFF
       hibernate:
         persister: error
         stat: debug
         cache: error
         sql: debug
+        sql.results: OFF
         type.descriptor.sql.BasicBinder: trace
+        results: OFF
     root: trace
