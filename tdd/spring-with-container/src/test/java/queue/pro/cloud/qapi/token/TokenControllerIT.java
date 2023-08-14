@@ -15,6 +15,8 @@ import queue.pro.cloud.qapi.initializer.WiremockInitializer;
 import queue.pro.cloud.qapi.token.data.TokenTestDataInitiator;
 import queue.pro.cloud.qapi.token.repo.TokenRepo;
 
+import java.util.List;
+
 @ActiveProfiles("integration-test")
 @ContextConfiguration(initializers = WiremockInitializer.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,9 +29,11 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
     TokenRepo tokenRepo;
 
     @BeforeEach
-    public void initToken(){
-        TokenTestDataInitiator.populateIdenticalTokensWithGivenIds(tokenRepo,"b77ff216-5e24-4170-8f4d-fcd58f865f65","79130a0c-dbda-4844-b245-3581bcaa054e");
+    public void initToken() {
+        TokenTestDataInitiator.populateIdenticalTokensWithGivenIds(tokenRepo, "b77ff216-5e24-4170-8f4d-fcd58f865f65", "79130a0c-dbda-4844-b245-3581bcaa054e");
     }
+
+
     @Test
     @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     void testIWithAdminRoleWllBe200SuccessAndReturnTotal2Elements() throws JOSEException {
@@ -49,6 +53,7 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
                 .jsonPath("$[1].tokenPrefix").isEqualTo("A")
         ;
     }
+
     @Test
     @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     void testRoleUserAccessUrlWhichHasOnlyAdminPermissionShouldBe403Forbidden() throws JOSEException {
@@ -60,6 +65,7 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
                 .expectStatus().isForbidden()
         ;
     }
+
     @Test
     @Sql(scripts = "/scripts/tokenalg/truncate_then_init_service_with_8_priority.sql")
     void testWithoutRoleShouldBeForbidden403Error() throws JOSEException {
@@ -78,7 +84,7 @@ public class TokenControllerIT extends AbsIntegrationPGBase {
     void testRoleUserAccessUrlWhichHasOnlyAdminAndUserPermissionShouldBe200Success() throws JOSEException {
         String validJWT = getSignedJWT("user");
         webTestClient.get()
-                .uri("/v1/token/{id}","79130a0c-dbda-4844-b245-3581bcaa054e")
+                .uri("/v1/token/{id}", "79130a0c-dbda-4844-b245-3581bcaa054e")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + validJWT)
                 .exchange()
                 .expectStatus().is2xxSuccessful()

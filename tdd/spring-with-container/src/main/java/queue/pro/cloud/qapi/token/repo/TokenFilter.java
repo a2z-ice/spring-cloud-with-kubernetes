@@ -14,5 +14,7 @@ import java.util.List;
 public class TokenFilter  {
     private String scId;
     private String sdcId;
+    private String corporateId;
     private List<Integer> states;
+    private List<String> serviceIds;
 }

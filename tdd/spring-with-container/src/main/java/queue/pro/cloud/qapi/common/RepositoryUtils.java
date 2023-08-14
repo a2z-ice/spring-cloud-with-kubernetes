@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class RepositoryUtils {
     public static String getOrderByClause(String tableAlias, Sort sort) {
-        if(sort == null) return "";
+        if(sort == null || sort.isUnsorted()) return "";
 
         StringBuilder sortOrder = new StringBuilder(" ORDER BY ");
         Iterator<Sort.Order> iterator = sort.iterator();
