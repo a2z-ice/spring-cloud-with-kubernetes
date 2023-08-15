@@ -43,7 +43,6 @@ public record SDCTokenService (SdcServiceRepo sdcServiceRepo, TokenDetailRepo to
                 .build();
         List<TokenDetailEntity> tokenDetails = tokenDetailRepo.getSdcServiceToken(filter, Sort.unsorted(), FIRST_ONE_ROW);
         return tokenDetails.stream().map(value -> modelMapper.map(value, SDCTokenBean.class)).collect(Collectors.toList());
-
     }
 
 
