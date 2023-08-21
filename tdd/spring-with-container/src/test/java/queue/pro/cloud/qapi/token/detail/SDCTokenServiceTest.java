@@ -36,11 +36,7 @@ public class SDCTokenServiceTest {
     @Mock
     SdcServiceRepo sdcServiceRepo;
     @Mock TokenDetailRepo tokenDetailRepo;
-
     @Mock ModelMapper modelMapper;
-
-
-
     @InjectMocks
     SDCTokenService sdcTokenService;
     @Test
