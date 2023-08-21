@@ -2,6 +2,7 @@ package queue.pro.cloud.qapi.token.detail;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 @Entity
 @DynamicUpdate

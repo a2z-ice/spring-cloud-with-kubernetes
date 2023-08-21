@@ -60,7 +60,8 @@ public class SdcInfoEntity extends BaseEntity {
     private LocalDateTime endTime;
     @Column(name="state")
     private Integer state;
-
+    @Column(name = "sc_id")
+    private String scId;
     @Column(name = "corporate_id")
     private String corporateId;
     @CreatedBy

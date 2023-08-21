@@ -28,6 +28,9 @@ databaseChangeLog:
                   name: LED_ID
                   type: varchar(36)
               - column:
+                  name: SC_ID
+                  type: varchar(36)
+              - column:
                   name: SERVING_TOKEN_NO
                   type: varchar(10)
               - column:

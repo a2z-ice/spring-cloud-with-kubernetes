@@ -1,5 +1,6 @@
 package queue.pro.cloud.qapi.sdc.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public record SDCTokenService (SdcServiceRepo sdcServiceRepo, TokenDetailRepo tokenDetailRepo, ModelMapper modelMapper){
 
@@ -32,6 +34,7 @@ public record SDCTokenService (SdcServiceRepo sdcServiceRepo, TokenDetailRepo to
 
     List<SDCTokenBean> getSdcToken(LoginUserInfoBean loginUserInfoBean){
         List<SdcWithServiceInfo> serviceList = sdcServiceRepo.findServiceListByLoginUserId(loginUserInfoBean.loginId());
+        log.info("service list!!!!!!!!!!!!!!!!!!!!!{}",serviceList);
         if(serviceList.isEmpty()) return Collections.emptyList();
         SdcWithServiceInfo sdcSvcInfo = serviceList.get(0);
         TokenFilter filter = TokenFilter.builder()
@@ -42,6 +45,7 @@ public record SDCTokenService (SdcServiceRepo sdcServiceRepo, TokenDetailRepo to
                 .serviceIds(serviceList.stream().map(SdcWithServiceInfo::getServiceId).collect(Collectors.toList()))
                 .build();
         List<TokenDetailEntity> tokenDetails = tokenDetailRepo.getSdcServiceToken(filter, Sort.unsorted(), FIRST_ONE_ROW);
+        log.info("token details...............{}",tokenDetails);
         return tokenDetails.stream().map(value -> modelMapper.map(value, SDCTokenBean.class)).collect(Collectors.toList());
     }
 
