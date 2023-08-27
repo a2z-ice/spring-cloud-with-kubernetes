@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import queue.pro.cloud.qapi.bean.LoginUserInfoBean;
@@ -119,7 +120,6 @@ public class SDCTokenServiceTest {
                         assertThat(sdcTokenBean.getScId()).isEqualTo("scId");
                     })
                     .verifyComplete();
-
         }
     }
 
