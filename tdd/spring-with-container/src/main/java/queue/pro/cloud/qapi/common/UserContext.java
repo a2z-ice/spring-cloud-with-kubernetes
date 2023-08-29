@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import queue.pro.cloud.qapi.bean.LoginUserInfoBean;
 import queue.pro.cloud.qapi.error.NotFoundException;
@@ -17,14 +16,15 @@ public class UserContext {
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
                 .handle((auth, sink) -> {
-                    Jwt principal = (Jwt) auth.getPrincipal();
-                    Object username = principal.getClaims().get("preferred_username");
-                    log.info("Type of auth principal: " + auth.getPrincipal());
-                    if(username == null || username.toString().isEmpty()) {
+                    if(auth.getPrincipal() instanceof Jwt jwt
+                            && jwt.getClaims().get("preferred_username") != null
+                            && !jwt.getClaims().get("preferred_username").toString().isEmpty()
+                    ){
+                        Object username = jwt.getClaims().get("preferred_username");
+                        sink.next(new LoginUserInfoBean(username.toString(), "", ""));
+                    } else {
                         sink.error(new NotFoundException(new NotFoundException.Reason("missing", "User is missing")));
-                        return;
                     }
-                    sink.next(new LoginUserInfoBean(username.toString(), "", ""));
                 });
     }
 }

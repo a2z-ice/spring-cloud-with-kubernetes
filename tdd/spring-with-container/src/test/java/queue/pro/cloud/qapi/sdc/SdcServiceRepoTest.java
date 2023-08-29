@@ -17,8 +17,7 @@ public class SdcServiceRepoTest extends PostgresSupportedBaseTest {
 
     @Autowired SdcServiceRepo sdcServiceRepo;
     @Autowired SdcInfoRepo sdcInfoRepo;
-    @Autowired
-    ServiceRepo serviceRepo;
+    @Autowired ServiceRepo serviceRepo;
     @Test
     void findServiceListByLoginUserIdTest(){
         //Given

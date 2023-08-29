@@ -34,7 +34,6 @@ public record SDCTokenService (SdcServiceRepo sdcServiceRepo, TokenDetailRepo to
 
     List<SDCTokenBean> getSdcToken(LoginUserInfoBean loginUserInfoBean){
         List<SdcWithServiceInfo> serviceList = sdcServiceRepo.findServiceListByLoginUserId(loginUserInfoBean.loginId());
-        log.info("service list!!!!!!!!!!!!!!!!!!!!!{}",serviceList);
         if(serviceList.isEmpty()) return Collections.emptyList();
         SdcWithServiceInfo sdcSvcInfo = serviceList.get(0);
         TokenFilter filter = TokenFilter.builder()
