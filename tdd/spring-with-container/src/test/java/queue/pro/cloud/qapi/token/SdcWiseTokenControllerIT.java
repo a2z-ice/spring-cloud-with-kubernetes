@@ -56,7 +56,6 @@ public class SdcWiseTokenControllerIT extends AbsIntegrationPGBase {
                     assertNull(optionalSdcInfoEntity, "Expected Optional not to be present");
                     });
 
-        ;
     }
 
     @Test
