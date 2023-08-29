@@ -23,7 +23,7 @@ public class TokenDetailCustomRepoImpl implements TokenDetailCustomRepo {
            AND td.serviceId in (:serviceIds)
            AND (td.sdcId = :sdcId AND td.state in (:states)) OR (td.sdcId IS NULL AND td.state=0)
            AND FUNCTION('DATE', td.tokenIssueDate) = CURRENT_DATE
-           AND td.nextTryTime IS NULL OR td.nextTryTime < NOW()
+           AND td.nextTryTime IS NULL OR td.nextTryTime <= NOW()
            """;
 
         return entityManager.createQuery(jpql + RepositoryUtils.getOrderByClause("td",sort), TokenDetailEntity.class)

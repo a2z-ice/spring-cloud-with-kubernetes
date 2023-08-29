@@ -29,6 +29,7 @@ public class SDCTokenServiceIT extends PostgresSupportedBaseTest {
     @Autowired SdcServiceRepo sdcServiceRepo;
     @Autowired SdcInfoRepo sdcInfoRepo;
     @Autowired ServiceRepo serviceRepo;
+    @Autowired TokenDetailRepo tokenDetailRepo;
 
     private static String userName = "assad@batworld.com";
     final static SecurityMockServerConfigurers.JwtMutator mockedJwt = mockJwt().jwt(jwt -> jwt.claims(claims -> {
@@ -63,8 +64,10 @@ public class SDCTokenServiceIT extends PostgresSupportedBaseTest {
     private void insertData(){
         //Given
         String corportateId = "testcorporate";
+        String scId = "scId";
         SdcInfoEntity sdcInfoEntity = SdcInfoEntity.builder()
                 .name("test")
+                .scId(scId)
                 .corporateId(corportateId)
                 .state(0)
                 .servingUserLoginId(userName)
@@ -88,7 +91,7 @@ public class SDCTokenServiceIT extends PostgresSupportedBaseTest {
 
         SDCServiceEntity sdcServiceEntity = SDCServiceEntity.builder()
                 .serviceId(serviceEntity.getId())
-                .state(1)
+                .state(0)
                 .sdcId(sdcInfoEntity.getId())
                 .created(LocalDateTime.now())
                 .createdBy("test")
@@ -97,6 +100,23 @@ public class SDCTokenServiceIT extends PostgresSupportedBaseTest {
                 .build();
 
         sdcServiceRepo.save(sdcServiceEntity);
+
+
+        TokenDetailEntity tokenDetail = TokenDetailEntity.builder()
+                .corporateId(corportateId)
+                .sdcId(sdcInfoEntity.getId())
+                .serviceId(sdcServiceEntity.getId())
+                .createdBy(userName)
+                .scId(scId)
+                .state(0)
+                .tokenIssueDate(LocalDateTime.now())
+                .created(LocalDateTime.now())
+                .modified(LocalDateTime.now())
+                .modifiedBy(userName)
+                .sdcUserId(userName)
+                .build();
+
+        tokenDetailRepo.save(tokenDetail);
     }
 
 }
