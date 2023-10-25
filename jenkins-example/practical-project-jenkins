@@ -1,0 +1,156 @@
+pipeline {
+    agent any
+    parameters {
+        choice(choices: ['','_project_-dev','_project_-uat','_project_-prod'], description: 'Select environment for deploy API ?', name: 'DEPLOYMENT_ENV')
+        choice(choices: ['','_project_-dev','_project_-uat','_project_-prod'], description: 'Select Deploy NameSpace?', name: 'NAMESPACE')    
+    }
+    environment {
+        REGISTRY="docker-hub.land.gov.bd"
+        DEPLOYMENT_ENV="$DEPLOYMENT_ENV"
+        IMAGE_CREATED_BY="jenkins"
+        PROJECT_NAME="cms-not_project_ation-consumer"
+        K8S_NAMESPACE="$NAMESPACE"
+
+        //Port configuration
+        K8S_CONTAINER_AND_TARGET_PORT="8854"
+        K8S_SERVICE_PORT="8854"
+        
+        CONTAINER_PORT_NAME="cmsnc-cport"
+        SERVICE_PORT_NAME="http"
+        
+        //Memory allocation       
+        K8S_MAX_RAM_POD="525Mi"
+
+        //Application configurations and credentials
+        K8S_CONFIGMAP_NAME="$PROJECT_NAME-cmp"
+        K8S_SECRET_NAME="$PROJECT_NAME-sec"
+        
+        GIT_TAG=sh(returnStdout: true, script: '''        
+            echo $(git describe --tags)
+        ''').trim()
+     
+        //Host spec_project_ configuration
+        HOST_VOLUME_LOCATION="$JENKINS_DATA_LOCATION"
+        M2_REPO="$JENKINS_DATA_LOCATION/.m2"
+
+        PROJECT_LOCATION="$HOST_VOLUME_LOCATION/workspace/$JOB_NAME"
+        IMAGE_VERSION="$BUILD_NUMBER-$IMAGE_CREATED_BY-$GIT_TAG-$DEPLOYMENT_ENV"
+        IMAGE_REPOSITORY_NAME="$REGISTRY/$PROJECT_NAME"
+        DOCKER_TAG="$IMAGE_REPOSITORY_NAME:$IMAGE_VERSION"
+        DEPLOYMENT_DIRECTORY="./deploy/k8s"
+        
+        //k8s cluster spec_project_ configuration
+        K8S_SERVICE_NAME="$PROJECT_NAME"
+        K8S_CHANGE_CAUSE="$IMAGE_VERSION"
+
+        dockerImage = ''
+        dockerRegistryCredential='docker-hub.land.gov.bd'
+        DOCKER_REGISTRY_URL="https://$REGISTRY"
+    
+
+    }
+
+    stages {
+        stage('Pre-flight check') {
+            steps {
+                sh '''       
+                if [ -z "$DEPLOYMENT_ENV" ] #empty check
+                 then
+                    echo ERROR: Please select aquirate Environment
+                    exit 1 # terminate and indicate error                 
+                fi
+                echo "Applying $PROJECT_NAME for $DEPLOYMENT_ENV"
+                '''    
+            }
+        }
+
+        stage('Check for tag') {
+            steps {
+                sh '''       
+                if [ -z "$GIT_TAG" ] #empty check
+                 then
+                    echo ERROR: Tag not found
+                    exit 1 # terminate and indicate error                 
+                fi
+                echo "git checking out to $GIT_TAG tag"
+                git checkout $GIT_TAG 
+                '''    
+            }
+        }
+
+        
+
+        stage('Test') {
+            steps {
+                sh '''
+                echo "Node port value -------->$K8S_NODE_PORT jenkins location ==> $JENKINS_DATA_LOCATION job name $JOB_NAME tag name $GIT_TAG"
+                '''
+            }
+        }
+
+        stage('Maven Build') {
+            steps {
+                    sh '''
+                    echo "release.version=Release Version is $IMAGE_VERSION" > src/main/resources/release-note.properties
+                    echo "release.lastcommitid=Release Version is $(git log -1|head -1|awk -F ' ' '{print $NF}')" >> src/main/resources/release-note.properties
+                    echo "Maven build for Tag.....$GIT_TAG"
+                    docker run --rm \
+                    -v $PROJECT_LOCATION:/app \
+                    -v $M2_REPO:/root/.m2/ -w /app \
+                    maven:3.8.6-eclipse-temurin-19-alpine \
+                    mvn clean package -B \
+                    -Dmaven.test.skip=true \
+                    -Dactive.profile=$DEPLOYMENT_ENV
+                    '''
+                }      
+    }
+
+        stage('Building Docker image') { 
+            steps { 
+                script { 
+                dockerImage = docker.build("$DOCKER_TAG", "-f $DEPLOYMENT_DIRECTORY/k8s.Dockerfile .")
+                }
+                sh '''
+                docker images|grep $PROJECT_NAME
+                '''
+        } 
+    }
+    
+
+        stage('Push docker image') {
+            steps{
+                script {
+                    docker.withRegistry( "$DOCKER_REGISTRY_URL", dockerRegistryCredential ) {
+                    dockerImage.push()
+                    sh "docker images | grep $IMAGE_REPOSITORY_NAME"
+                }
+                
+            }
+        }
+    }
+        stage('Clear image from local after push to Registry') {
+            steps {
+                echo "Cleaning local docker registry $IMAGE_REPOSITORY_NAME"
+                sh '''
+                docker rmi $(docker images | grep $IMAGE_REPOSITORY_NAME | awk -F' ' '{print $3}')
+                '''
+        }
+    }
+        stage('Deploy Pod') {
+            steps {
+                sh '''
+                envsubst < $DEPLOYMENT_DIRECTORY/_project_/$DEPLOYMENT_ENV/k8s-deploy.yaml | xargs -I{} echo {}
+                envsubst < $DEPLOYMENT_DIRECTORY/_project_/$DEPLOYMENT_ENV/k8s-deploy.yaml | kubectl apply -f -
+                '''
+        }
+    }
+        stage('Deploy Service') {
+            steps {
+                sh '''
+                envsubst < $DEPLOYMENT_DIRECTORY/_project_/$DEPLOYMENT_ENV/k8s-service.yaml | xargs -I{} echo {}
+                envsubst < $DEPLOYMENT_DIRECTORY/_project_/$DEPLOYMENT_ENV/k8s-service.yaml | kubectl apply -f -
+                '''
+                }
+            } 
+        }                    
+    }
