@@ -44,7 +44,7 @@ pipeline {
         K8S_CHANGE_CAUSE="$IMAGE_VERSION"
 
         dockerImage = ''
-        dockerRegistryCredential='docker-hub.land.gov.bd'
+        dockerRegistryCredential='hub.docker.com'
         DOCKER_REGISTRY_URL="https://$REGISTRY"
     
 
