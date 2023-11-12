@@ -1,3 +1,4 @@
+# To run payment-resource-springfwk which is springframework you have to run the war in tomcat (jdk 8 and tomcat 8 will be needed)
 ```javascript
 url = 'http://localhost:8080/paymentResource/payNow'
 method = 'POST'
@@ -10,4 +11,5 @@ requestBody = {
 ```
 ```bash
 docker run --detach --name=mysql_5_7  -p 3306:3306  --env="MYSQL_ROOT_PASSWORD=cisco" mysql:5.7
+
 ```
