@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+
+  # Applications
+
+
+  edge-service:
+    # Build image with "./gradlew bootBuildImage from edge-service project"
+    image: edge-service:routes
+    container_name: edge-service
+    depends_on:
+      - keycloak
+      - redis
+    ports:
+      - 9000:9000
+    environment:
+      - BOOK_SERVICE_URL=http://book-service:9001
+      - LOKI_URI=http://loki:3100/loki/api/v1/push
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://tempo:9411
+
+  
+  
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.3
+    container_name: keycloak
+    command: start-dev --import-realm
+    volumes:
+      - ./platform/keycloak:/opt/keycloak/data/import
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - 8080:8080
