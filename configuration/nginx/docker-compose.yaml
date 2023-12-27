@@ -1,24 +1,14 @@
 version: "3.8"
 services:
-
   # Applications
-
-
-  edge-service:
+  shopecom-service:
     # Build image with "./gradlew bootBuildImage from edge-service project"
-    image: edge-service:routes
-    container_name: edge-service
+    image: shopecom-service
+    container_name: shopecom-service
     depends_on:
       - keycloak
-      - redis
     ports:
-      - 9000:9000
-    environment:
-      - BOOK_SERVICE_URL=http://book-service:9001
-      - LOKI_URI=http://loki:3100/loki/api/v1/push
-      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://tempo:9411
-
-  
+      - 80:80
   
   keycloak:
     image: quay.io/keycloak/keycloak:23.0.3
