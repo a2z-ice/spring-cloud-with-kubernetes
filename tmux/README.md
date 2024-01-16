@@ -12,3 +12,8 @@ setw -g mode-keys vi
 ```
 https://tmuxcheatsheet.com/
 ```
+
+# Install tmux on mac
+```
+brew install tmux
+```
