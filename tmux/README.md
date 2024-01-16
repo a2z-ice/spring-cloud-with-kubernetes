@@ -8,3 +8,7 @@ set -g mouse on
 setw -g mode-keys vi
 
 ```
+# cheatsheet of keyboard shortcuts
+```
+https://tmuxcheatsheet.com/
+```
