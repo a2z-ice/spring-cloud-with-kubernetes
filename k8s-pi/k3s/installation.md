@@ -1,3 +1,6 @@
+# Main video link
+https://www.youtube.com/watch?v=9sgPRxDiRzQ
+
 ```
 # Make sure that you have added following in  /boot/firmware/cmdline.txt 
 
