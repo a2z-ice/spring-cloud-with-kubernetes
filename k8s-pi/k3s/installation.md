@@ -1,6 +1,21 @@
 # Main video link
 https://www.youtube.com/watch?v=9sgPRxDiRzQ
 
+# Cilium
+```
+https://cilium-genbit.readthedocs.io/en/latest/gettingstarted/k3s.html
+
+# to get token 
+sudo /var/lib/rancher/k3s/server/node-token
+
+#Master
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--flannel-backend=none' sh -
+
+#Agent or Worker
+curl -sfL https://get.k3s.io | K3S_URL="https://${MASTER_IP}:6443" K3S_TOKEN=${NODE_TOKEN} sh -
+
+```
+
 ```
 # Make sure that you have added following in  /boot/firmware/cmdline.txt 
 
